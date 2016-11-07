@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Immutable
 @Table(name = "room", schema = "booking")
 @Cacheable
 @Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
@@ -34,6 +35,7 @@ public class Room extends AbstractEntity {
     private int price;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @Immutable
     @Cache(usage =CacheConcurrencyStrategy.READ_ONLY, region = "room")
     private List<Booking> bookingEntities;
 
