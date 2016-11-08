@@ -8,31 +8,28 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Repository
 public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
-    private static UserDAOImpl instance;
     private final Logger LOG = Logger.getLogger(UserDAOImpl.class);
 
-    private UserDAOImpl() {
-        super(User.class);
-    }
-
-    public static synchronized UserDAOImpl getInstance() {
-        if (instance == null) {
-            instance = new UserDAOImpl();
-        }
-        return instance;
+    @Autowired
+    private UserDAOImpl(SessionFactory sessionFactory) {
+        super(User.class, sessionFactory);
     }
 
     @Override
     public User logIn(String login, String password) throws DaoException {
         User user;
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             Query query = session.createQuery("FROM User WHERE login= :login AND password = :password");
             query.setParameter("login", login);
             query.setParameter("password", hash(password));
@@ -49,7 +46,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     @Override
     public void register(String firstName, String lastName, String login, String password) throws DaoException {
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             User user = new User();
             user.setFirstName(firstName);
             user.setLastName(lastName);

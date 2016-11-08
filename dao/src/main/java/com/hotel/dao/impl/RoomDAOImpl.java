@@ -10,6 +10,8 @@ import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,20 +20,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     private final String GET_ALL_ROOMS = " from Room";
-    private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
-    private RoomDAOImpl() {
-        super(Room.class);
-    }
-
-    public static synchronized RoomDAOImpl getInstance() {
-        if (instance == null) {
-            instance = new RoomDAOImpl();
-        }
-        return instance;
+    @Autowired
+    private RoomDAOImpl(SessionFactory sessionFactory) {
+        super(Room.class, sessionFactory);
     }
 
     @Override
@@ -48,6 +44,8 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
         return rooms;
     }
 
+
+    //TO DO
     @Override
     public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
@@ -83,7 +81,7 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     public List<Room> getAll(int recordsPerPage, int currentPage) throws DaoException {
         List<Room> rooms;
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             Query query = session.createQuery(GET_ALL_ROOMS);
             query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
@@ -102,7 +100,7 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     public Long getAmount() throws DaoException {
         Long amount;
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             Criteria criteria = session.createCriteria(Room.class);
             criteria.setProjection(Projections.rowCount());
             criteria.setCacheable(true);

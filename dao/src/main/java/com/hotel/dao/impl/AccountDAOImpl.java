@@ -9,30 +9,26 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
-    private static AccountDAOImpl instance;
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
 
-    private AccountDAOImpl() {
-        super(Account.class);
-    }
-
-    public static synchronized AccountDAOImpl getInstance() {
-        if (instance == null) {
-            instance = new AccountDAOImpl();
-        }
-        return instance;
+    @Autowired
+    private AccountDAOImpl(SessionFactory sessionFactory) {
+        super(Account.class, sessionFactory);
     }
 
     @Override
     public void addAccount(int summa, Booking booking) throws DaoException {
         Account account = new Account();
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             account.setSumma(summa);
             booking.setStatus("billed");
             account.setBooking(booking);
@@ -51,7 +47,7 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     public List<Account> getAllAccountByUser(int userId) throws DaoException {
         List<Account> accounts;
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             Query query = session.createQuery("FROM Account WHERE booking.userId=:userId");
             query.setParameter("userId", userId);
             accounts = query.list();
@@ -63,5 +59,4 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
         }
         return accounts;
     }
-
 }
