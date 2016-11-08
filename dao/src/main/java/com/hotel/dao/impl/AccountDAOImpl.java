@@ -12,6 +12,7 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+
 public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     private static AccountDAOImpl instance;
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
