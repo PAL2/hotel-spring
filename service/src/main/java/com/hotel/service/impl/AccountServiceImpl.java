@@ -1,5 +1,6 @@
 package com.hotel.service.impl;
 
+import com.hotel.dao.AccountDAO;
 import com.hotel.dao.impl.AccountDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Account;
@@ -9,27 +10,21 @@ import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Алексей on 02.10.2016.
  */
+
+@Service
 public class AccountServiceImpl extends AbstractService<Account> implements AccountService {
-    final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
-    private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
+    private final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
 
-    private static AccountServiceImpl instance;
-
-    public AccountServiceImpl() {
-    }
-
-    public static synchronized AccountServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new AccountServiceImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private AccountDAO accountDAO;
 
     public List<Account> getAll() throws ServiceException {
         List<Account> accounts;

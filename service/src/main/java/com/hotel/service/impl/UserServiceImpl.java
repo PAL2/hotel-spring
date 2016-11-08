@@ -1,5 +1,6 @@
 package com.hotel.service.impl;
 
+import com.hotel.dao.UserDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.dao.impl.UserDAOImpl;
 import com.hotel.entity.User;
@@ -9,26 +10,21 @@ import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Алексей on 01.10.2016.
  */
+
+@Service
 public class UserServiceImpl extends AbstractService<User> implements UserService {
-    private static UserServiceImpl instance;
-    private UserDAOImpl userDAO = UserDAOImpl.getInstance();
-    final Logger LOG = Logger.getLogger(UserServiceImpl.class);
+    private final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl() {
-    }
-
-    public static synchronized UserServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new UserServiceImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private UserDAO userDAO;
 
     public User logIn(String login, String password) throws ServiceException {
         User user;

@@ -1,8 +1,8 @@
 package com.hotel.service.impl;
 
+import com.hotel.dao.AccountDAO;
+import com.hotel.dao.BookingDAO;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.dao.impl.AccountDAOImpl;
-import com.hotel.dao.impl.BookingDAOImpl;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.service.AbstractService;
@@ -11,6 +11,8 @@ import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -19,21 +21,16 @@ import java.util.List;
 /**
  * Created by Алексей on 01.10.2016.
  */
+
+@Service
 public class BookingServiceImpl extends AbstractService<Booking> implements BookingService {
-    private static BookingServiceImpl instance;
-    private BookingDAOImpl bookingDAO = BookingDAOImpl.getInstance();
-    private AccountDAOImpl accountDAO = AccountDAOImpl.getInstance();
-    final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
+    private final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
-    public BookingServiceImpl() {
-    }
+    @Autowired
+    private BookingDAO bookingDAO;
 
-    public static synchronized BookingServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new BookingServiceImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private AccountDAO accountDAO;
 
     public List<Booking> getAllBookingWithAccount() throws ServiceException {
         List<Booking> bookings;

@@ -17,7 +17,6 @@ import java.util.List;
 public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     private final Logger LOG = Logger.getLogger(AbstractDAO.class);
 
-
     private Class pClass;
 
     @Autowired

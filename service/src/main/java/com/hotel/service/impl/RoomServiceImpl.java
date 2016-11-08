@@ -1,7 +1,6 @@
 package com.hotel.service.impl;
 
 import com.hotel.dao.RoomDAO;
-import com.hotel.dao.impl.RoomDAOImpl;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
@@ -11,26 +10,21 @@ import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Алексей on 01.10.2016.
  */
-public class RoomServiceImpl extends AbstractService<Room> implements RoomService{
-    private static RoomServiceImpl instance;
-    private RoomDAOImpl roomDAO = RoomDAOImpl.getInstance();
-    final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 
-    public RoomServiceImpl() {
-    }
+@Service
+public class RoomServiceImpl extends AbstractService<Room> implements RoomService {
+    private final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 
-    public static synchronized RoomServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new RoomServiceImpl();
-        }
-        return instance;
-    }
+    @Autowired
+    private RoomDAO roomDAO;
 
     public List<Room> getAll(int recordsPerPage, int currentPage) throws ServiceException {
         List<Room> rooms;
