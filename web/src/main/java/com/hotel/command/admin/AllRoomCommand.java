@@ -4,8 +4,9 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Room;
-import com.hotel.service.impl.RoomServiceImpl;
+import com.hotel.service.RoomService;
 import com.hotel.service.exceptions.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,6 +14,9 @@ import java.util.List;
 public class AllRoomCommand implements ActionCommand {
     private int currentPage;
     private int recordsPerPage;
+
+    @Autowired
+    private RoomService roomService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -24,9 +28,9 @@ public class AllRoomCommand implements ActionCommand {
             currentPage = 1;
         }
         try {
-            int numberOfPages = RoomServiceImpl.getInstance().getNumberOfPages(recordsPerPage);
+            int numberOfPages = roomService.getNumberOfPages(recordsPerPage);
             page = ConfigurationManager.getProperty("path.page.allRooms");
-            List<Room> rooms = RoomServiceImpl.getInstance().getAll(recordsPerPage, currentPage);
+            List<Room> rooms = roomService.getAll(recordsPerPage, currentPage);
             request.setAttribute("allRooms", rooms);
             request.setAttribute("numberOfPages", numberOfPages);
             request.setAttribute("currentPage", currentPage);

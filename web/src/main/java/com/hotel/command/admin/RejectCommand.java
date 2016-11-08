@@ -4,14 +4,18 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class RejectCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -20,8 +24,8 @@ public class RejectCommand implements ActionCommand {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.admin");
-            BookingServiceImpl.getInstance().rejectBooking(bookingId);
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+            bookingService.rejectBooking(bookingId);
+            List<Booking> bookings = bookingService.getAllNewBooking();
             request.setAttribute("newBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");

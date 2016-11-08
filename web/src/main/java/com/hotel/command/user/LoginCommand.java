@@ -5,15 +5,23 @@ import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
-import com.hotel.service.impl.BookingServiceImpl;
-import com.hotel.service.impl.UserServiceImpl;
+import com.hotel.service.BookingService;
+import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.hibernate.type.SpecialOneToOneType;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class LoginCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -22,14 +30,16 @@ public class LoginCommand implements ActionCommand {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         try {
-            User user = UserServiceImpl.getInstance().logIn(login, password);
+            System.out.println(userService);
+            User user = userService.logIn(login, password);
+            System.out.println(userService);
             request.getSession().setAttribute("user", user);
             LOG.info("On the site came user with login : " + login);
             try {
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
                     page = ConfigurationManager.getProperty("path.page.admin");
                     request.getSession().setAttribute("isAdmin", true);
-                    List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+                    List<Booking> bookings = bookingService.getAllNewBooking();
                     request.setAttribute("newBooking", bookings);
                 } else {
                     page = ConfigurationManager.getProperty("path.page.order");

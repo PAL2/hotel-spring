@@ -4,14 +4,18 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DeleteBookingCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -20,8 +24,8 @@ public class DeleteBookingCommand implements ActionCommand {
         int bookingId = Integer.parseInt(request.getParameter("booking_id"));
         try {
             page = ConfigurationManager.getProperty("path.page.allBookings");
-            BookingServiceImpl.getInstance().delete(bookingId);
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAll();
+            bookingService.delete(bookingId);
+            List<Booking> bookings = bookingService.getAll();
             request.setAttribute("allBooking", bookings);
             LOG.info("Booking № " + bookingId + " was deleted");
         } catch (ServiceException e) {

@@ -36,10 +36,10 @@ public class AccountServiceImplTest {
 
     @BeforeClass
     public static void initTest() {
-        accountService = AccountServiceImpl.getInstance();
+        /*accountService = AccountServiceImpl.getInstance();
         bookingService = BookingServiceImpl.getInstance();
         roomService = RoomServiceImpl.getInstance();
-        userService = UserServiceImpl.getInstance();
+        userService = UserServiceImpl.getInstance();*/
     }
 
     @Before

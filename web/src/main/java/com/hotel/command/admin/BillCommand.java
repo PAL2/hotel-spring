@@ -4,14 +4,18 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
-import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class BillCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -21,8 +25,8 @@ public class BillCommand implements ActionCommand {
         int bookingId = (int) request.getSession().getAttribute("booking_id");
         try {
             page = ConfigurationManager.getProperty("path.page.admin");
-            BookingServiceImpl.getInstance().chooseRoom(bookingId, roomId);
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAllNewBooking();
+            bookingService.chooseRoom(bookingId, roomId);
+            List<Booking> bookings = bookingService.getAllNewBooking();
             request.setAttribute("newBooking", bookings);
             LOG.info("Booking № " + bookingId + " confirmed and sent account");
         } catch (ServiceException e) {

@@ -4,15 +4,19 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.User;
-import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class OrderCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -30,7 +34,7 @@ public class OrderCommand implements ActionCommand {
             LocalDate startDate = LocalDate.parse(startDateString, formatter);
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             if (startDate.isAfter(LocalDate.now()) && startDate.isBefore(endDate)) {
-                BookingServiceImpl.getInstance().addBooking(startDate, endDate, userId, place, category);
+                bookingService.addBooking(startDate, endDate, userId, place, category);
                 page = ConfigurationManager.getProperty("path.page.order");
                 request.setAttribute("roomSuccess", MessageManager.getProperty("message.roomSuccess"));
                 LOG.info("User " + login + " booked room class " + category + ", number of places: " + place

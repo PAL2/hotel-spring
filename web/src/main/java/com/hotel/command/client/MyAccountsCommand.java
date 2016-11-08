@@ -6,14 +6,21 @@ import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
-import com.hotel.service.impl.AccountServiceImpl;
-import com.hotel.service.impl.BookingServiceImpl;
+import com.hotel.service.AccountService;
+import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class MyAccountsCommand implements ActionCommand {
+
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private AccountService accountService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -21,9 +28,9 @@ public class MyAccountsCommand implements ActionCommand {
         try {
             User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUserId();
-            List<Booking> bookings = BookingServiceImpl.getInstance().getAllBookingWithFinishedAccount(userId);
+            List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(userId);
             request.setAttribute("bookingByUser", bookings);
-            List<Account> accounts = AccountServiceImpl.getInstance().getAllAccountByUser(userId);
+            List<Account> accounts = accountService.getAllAccountByUser(userId);
             request.setAttribute("accountById", accounts);
             page = ConfigurationManager.getProperty("path.page.myAccounts");
         } catch (ServiceException e) {

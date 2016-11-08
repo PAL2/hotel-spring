@@ -3,13 +3,17 @@ package com.hotel.command.user;
 import com.hotel.command.ActionCommand;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
-import com.hotel.service.impl.UserServiceImpl;
+import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class RegCommand implements ActionCommand {
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -20,7 +24,7 @@ public class RegCommand implements ActionCommand {
             String lastName = request.getParameter("lastName");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
-            UserServiceImpl.getInstance().register(firstName, lastName, login, password);
+            userService.register(firstName, lastName, login, password);
             request.setAttribute("regSuccess", MessageManager.getProperty("message.regSuccess"));
             page = ConfigurationManager.getProperty("path.page.login");
             LOG.info("Register a new user with the login " + login + ", name and surname: " +
