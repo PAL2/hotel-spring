@@ -2,16 +2,15 @@ package com.hotel.service.impl;
 
 import com.hotel.dao.UserDAO;
 import com.hotel.dao.exceptions.DaoException;
-import com.hotel.dao.impl.UserDAOImpl;
 import com.hotel.entity.User;
 import com.hotel.service.AbstractService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,73 +19,58 @@ import java.util.List;
  */
 
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     private final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDAO userDAO;
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User logIn(String login, String password) throws ServiceException {
         User user;
-        Session session = util.getSession();
-        Transaction transaction = null;
         try {
-            transaction = session.beginTransaction();
             user = userDAO.logIn(login, password);
-            transaction.commit();
             LOG.info(user);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            transaction.rollback();
             LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return user;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<User> getAll() throws ServiceException {
         List<User> users;
-        Session session = util.getSession();
-        Transaction transaction = null;
         try {
-            transaction = session.beginTransaction();
             users = userDAO.getAll();
-            transaction.commit();
             LOG.info(users);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            transaction.rollback();
             LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
         return users;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void register(String firstName, String lastName, String login, String password) throws ServiceException {
-        Session session = util.getSession();
-        Transaction transaction = null;
         try {
-            transaction = session.beginTransaction();
             userDAO.register(firstName, lastName, login, password);
-            transaction.commit();
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            transaction.rollback();
             LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(User user) throws ServiceException {
-        Session session = util.getSession();
-        Transaction transaction = null;
         try {
-            transaction = session.beginTransaction();
             userDAO.save(user);
-            transaction.commit();
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            transaction.rollback();
             LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }
@@ -97,16 +81,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) throws ServiceException {
-        Session session = util.getSession();
-        Transaction transaction = null;
         try {
-            transaction = session.beginTransaction();
             userDAO.delete(id);
-            transaction.commit();
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            transaction.rollback();
             LOG.error(TRANSACTION_FAIL);
             throw new ServiceException(e.getMessage());
         }

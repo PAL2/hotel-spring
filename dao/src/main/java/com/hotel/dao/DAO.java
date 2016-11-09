@@ -17,4 +17,6 @@ public interface DAO<T extends AbstractEntity> {
     void delete(int id) throws DaoException;
 
     List<T> getAll() throws DaoException;
+
+    T get(int id) throws DaoException;
 }

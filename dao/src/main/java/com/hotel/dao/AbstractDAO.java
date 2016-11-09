@@ -55,7 +55,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             session.delete(account);
         } catch (HibernateException e) {
             e.printStackTrace();
-            LOG.error("Unable to delete the book. Error in DAO");
+            LOG.error("Error in DAO");
             throw new DaoException();
         }
 
@@ -70,9 +70,23 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             results = criteria.list();
             LOG.info(results);
         } catch (HibernateException e) {
-            LOG.error("Unable to create a list of accounts. Error in DAO");
+            LOG.error("Error in DAO");
             throw new DaoException();
         }
         return results;
+    }
+
+    @Override
+    public T get(int id) throws DaoException {
+        T entity;
+        try {
+            Session session = getCurrentSession();
+            entity = (T) session.get(pClass, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            LOG.error("Error in DAO");
+            throw new DaoException();
+        }
+        return entity;
     }
 }
