@@ -25,11 +25,15 @@ import java.util.List;
 public class RoomServiceImpl extends AbstractService<Room> implements RoomService {
     private final Logger LOG = Logger.getLogger(RoomServiceImpl.class);
 
-    @Autowired
     private RoomDAO roomDAO;
 
     @Autowired
     private BookingDAO bookingDAO;
+
+    @Autowired
+    public RoomServiceImpl(RoomDAO roomDAO) {
+        this.roomDAO = roomDAO;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Room> getAll(int recordsPerPage, int currentPage) throws ServiceException {

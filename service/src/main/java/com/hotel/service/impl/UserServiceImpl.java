@@ -23,11 +23,16 @@ import java.util.List;
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     private final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
-    @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User logIn(String login, String password) throws ServiceException {
+        System.out.println("log in");
         User user;
         try {
             user = userDAO.logIn(login, password);

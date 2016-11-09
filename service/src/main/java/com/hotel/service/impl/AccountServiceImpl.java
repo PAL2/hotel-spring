@@ -23,8 +23,12 @@ import java.util.List;
 public class AccountServiceImpl extends AbstractService<Account> implements AccountService {
     private final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
 
-    @Autowired
     private AccountDAO accountDAO;
+
+    @Autowired
+    public AccountServiceImpl(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Account> getAll() throws ServiceException {

@@ -10,8 +10,6 @@ import com.hotel.service.AbstractService;
 import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,7 +28,6 @@ import java.util.List;
 public class BookingServiceImpl extends AbstractService<Booking> implements BookingService {
     private final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
-    @Autowired
     private BookingDAO bookingDAO;
 
     @Autowired
@@ -38,6 +35,11 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
 
     @Autowired
     private RoomDAO roomDAO;
+
+    @Autowired
+    public BookingServiceImpl(BookingDAO bookingDAO) {
+        this.bookingDAO = bookingDAO;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Booking> getAllBookingWithAccount() throws ServiceException {
