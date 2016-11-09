@@ -4,6 +4,7 @@ import com.hotel.command.ActionCommand;
 import com.hotel.command.ActionFactory;
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,8 +17,8 @@ import java.io.IOException;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/controller")
 @org.springframework.stereotype.Controller
+@RequestMapping (value = "/")
 public class Controller extends HttpServlet {
 
     /**
@@ -34,6 +35,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
