@@ -1,4 +1,4 @@
-package com.hotel.servlet;
+package com.hotel.controllers;
 
 import com.hotel.dao.BookingDAO;
 import com.hotel.dao.exceptions.DaoException;
