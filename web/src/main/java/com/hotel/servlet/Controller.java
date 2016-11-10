@@ -17,8 +17,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class Controller
  */
-@org.springframework.stereotype.Controller
-@RequestMapping (value = "/")
+
 public class Controller extends HttpServlet {
 
     /**
