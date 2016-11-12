@@ -14,7 +14,7 @@
 		  <br/>Password:<br/> 
 		  <input type="password" name="password" value="" required pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$"/>
 			<br/>
-			<a href=reg.jsp>Registration</a>
+			<a href=WEB-INF/views/user/reg.jsp>Registration</a>
 		<h4>${errorLoginPassMessage}</h4>
 		${wrongAction}
 		${nullPage}

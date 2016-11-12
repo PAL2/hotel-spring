@@ -20,19 +20,18 @@ public class FirstController {
     private BookingService bookingService;
 
 
-    @RequestMapping (value = "/index", method = RequestMethod.GET)
-    public String index (){
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index() {
         System.out.println("index");
-
-        return "redirect:/user";
+        return "redirect:/user/login";
     }
 
-    @RequestMapping (value = "/user", method = RequestMethod.GET)
-       public String login(Model model) throws ServiceException {
-        System.out.println("method GET");
-        System.out.println(new User().toString());
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String login(Model model) throws ServiceException {
+        /*System.out.println("method GET");
+        System.out.println(new User().toString());*/
         User user = new User();
-        user.setUserRole("client");
+        /*user.setUserRole("client");*/
         System.out.println(model.toString());
         model.addAttribute("user", user);
         System.out.println(model.toString());
@@ -40,7 +39,7 @@ public class FirstController {
         return "user/login";
     }
 
-    @RequestMapping (value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ModelAndView main2(Model model) {
 
         System.out.println("POST");
@@ -50,7 +49,6 @@ public class FirstController {
         System.out.println(model.toString());
         model.addAttribute("user", user);
         System.out.println(model.toString());
-        return new ModelAndView("user/login", "user", new User());
+        return new ModelAndView("redirect:user/login", "user", new User());
     }
-
 }
