@@ -85,8 +85,8 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
             Query query = session.createQuery(GET_ALL_ROOMS);
             query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
-            query.setCacheable(true);
-            query.setCacheMode(CacheMode.NORMAL);
+            //query.setCacheable(true);
+            //query.setCacheMode(CacheMode.NORMAL);
             rooms = query.list();
             LOG.info(rooms);
         } catch (HibernateException e) {

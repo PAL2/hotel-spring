@@ -59,7 +59,6 @@ public class AuthentificationFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {
         withoutReg = new ArrayList<>(3);
-        withoutReg.add("/index.jsp");
         withoutReg.add("/login.jsp");
         withoutReg.add("/reg.jsp");
     }
