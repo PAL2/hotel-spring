@@ -92,4 +92,18 @@ public class AdminController {
         }
         return page;
     }
+
+    @RequestMapping(value = "/allusers", method = RequestMethod.POST)
+    public String allUsers(Model model) {
+        String page;
+        try {
+            page = null;
+            List<User> users = userService.getAll();
+            model.addAttribute("allUsers", users);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
 }

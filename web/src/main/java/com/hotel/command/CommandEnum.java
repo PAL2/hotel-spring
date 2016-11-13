@@ -51,11 +51,6 @@ public enum CommandEnum {
 			this.command = new DeleteBookingCommand();
 		}
 	},
-	ALLUSER {
-		{
-			this.command = new AllUserCommand();
-		}
-	},
 	ALLROOM {
 		{
 			this.command = new AllRoomCommand();
