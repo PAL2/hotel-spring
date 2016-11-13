@@ -66,9 +66,8 @@
             </form>
         </td>
         <td>
-            <form method="post" action="controller">
-                <input type="hidden" name="command" value="allroom"/> <input
-                    type="submit" value="Show all rooms"/>
+            <form method="post" action=http://localhost:8080/hotel/admin/allrooms>
+                <input type="submit" value="Show all rooms"/>
             </form>
         </td>
     </tr>

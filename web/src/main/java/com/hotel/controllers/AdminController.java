@@ -4,13 +4,16 @@ import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
+import com.hotel.entity.Room;
 import com.hotel.entity.User;
 import com.hotel.service.AccountService;
 import com.hotel.service.BookingService;
+import com.hotel.service.RoomService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private RoomService roomService;
 
     @Autowired
     private UserService userService;
@@ -100,6 +106,42 @@ public class AdminController {
             page = null;
             List<User> users = userService.getAll();
             model.addAttribute("allUsers", users);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/allrooms", method = RequestMethod.POST)
+    public String allRooms(Model model) {
+        String page;
+        int recordsPerPage = 10;
+        int currentPage = 1;
+        try {
+            page = null;
+            int numberOfPages = roomService.getNumberOfPages(recordsPerPage);
+            List<Room> rooms = roomService.getAll(recordsPerPage, currentPage);
+            model.addAttribute("allRooms", rooms);
+            model.addAttribute("numberOfPages", numberOfPages);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/allrooms", method = RequestMethod.GET, params = "currentPage")
+    public String allRoomsPag(Model model, @ModelAttribute("currentPage") int currentPage) {
+        String page;
+        int recordsPerPage = 10;
+        try {
+            page = null;
+            int numberOfPages = roomService.getNumberOfPages(recordsPerPage);
+            List<Room> rooms = roomService.getAll(recordsPerPage, currentPage);
+            model.addAttribute("allRooms", rooms);
+            model.addAttribute("numberOfPages", numberOfPages);
+            model.addAttribute("currentPage", currentPage);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));

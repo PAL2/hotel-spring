@@ -31,7 +31,7 @@
 
 <c:choose>
     <c:when test="${currentPage != 1}">
-        <td><a href="controller?command=allroom&currentPage=${currentPage - 1}">Предыдущая</a></td>
+        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage - 1}">Предыдущая</a></td>
     </c:when>
     <c:otherwise>
         <td></td>
@@ -44,14 +44,14 @@
             <td>${i}</td>
         </c:when>
         <c:otherwise>
-            <td><a href="controller?command=allroom&currentPage=${i}">${i}</a></td>
+            <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${i}">${i}</a></td>
         </c:otherwise>
     </c:choose>
 </c:forEach>
 
 <c:choose>
     <c:when test="${currentPage lt numberOfPages}">
-        <td><a href="controller?command=allroom&currentPage=${currentPage + 1}">Следующая</a></td>
+        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage + 1}">Следующая</a></td>
     </c:when>
     <c:otherwise>
         <td></td>
