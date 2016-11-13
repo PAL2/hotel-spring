@@ -24,7 +24,7 @@ public class AdminController {
     private BookingService bookingService;
 
     @RequestMapping(value = "/newbooking", method = RequestMethod.GET)
-    public String newBooking(Model model) throws ServiceException {
+    public String newBookingGet(Model model) throws ServiceException {
         String page;
         try {
             page = null;
@@ -37,12 +37,26 @@ public class AdminController {
         return page;
     }
 
+    @RequestMapping(value = "/newbooking", method = RequestMethod.POST)
+    public String newBookingPost(Model model) throws ServiceException {
+        String page;
+        try {
+            List<Booking> bookings = bookingService.getAllNewBooking();
+            model.addAttribute("newBooking", bookings);
+            page = null;
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
     @RequestMapping(value = "/allbookings", method = RequestMethod.POST)
     public String allBooking(Model model) {
         String page;
         try {
-            System.out.println("cd");
-            page = ConfigurationManager.getProperty("path.page.allBookings");
+            page = null;
+            /*page = ConfigurationManager.getProperty("path.page.allBookings");*/
             List<Booking> bookings = bookingService.getAll();
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {

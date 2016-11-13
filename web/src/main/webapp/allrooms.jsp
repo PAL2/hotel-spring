@@ -62,15 +62,13 @@
 <table>
     <tr>
         <td>
-            <form method="post" action="controller">
-                <input type="hidden" name="command" value="newbooking"/> <input
-                    type="submit" value="Show new bookings"/>
+            <form method="post" action=http://localhost:8080/hotel/admin/newbooking>
+                <input type="submit" value="Show new bookings"/>
             </form>
         </td>
         <td>
-            <form method="post" action="controller">
-                <input type="hidden" name="command" value="allbooking"/> <input
-                    type="submit" value="Show all bookings"/>
+            <form method="post" action=http://localhost:8080/hotel/admin/allbookings>
+                <input type="submit" value="Show all bookings"/>
             </form>
         </td>
         <td>

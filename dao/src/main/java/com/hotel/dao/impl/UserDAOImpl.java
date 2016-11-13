@@ -34,7 +34,6 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             query.setParameter("login", login);
             query.setParameter("password", hash(password));
             user = (User) query.uniqueResult();
-            LOG.info(user);
         } catch (HibernateException e) {
             e.printStackTrace();
             LOG.error("Unable to login. Error in DAO");

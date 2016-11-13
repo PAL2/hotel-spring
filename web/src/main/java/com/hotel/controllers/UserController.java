@@ -54,7 +54,6 @@ public class UserController {
                     page = ConfigurationManager.getProperty("path.page.order");
                 }
             } catch (ServiceException e) {
-                System.out.println();
                 page = ConfigurationManager.getProperty("path.page.errorDatabase");
                 model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
             }
