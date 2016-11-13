@@ -2,19 +2,18 @@ package com.hotel.controllers;
 
 import com.hotel.command.ConfigurationManager;
 import com.hotel.command.MessageManager;
-import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.BookingService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import java.util.List;
+import org.springframework.web.bind.support.SessionStatus;
 
 /**
  * Created by Алексей on 11.11.2016.
@@ -43,31 +42,27 @@ public class FirstController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String showLoginPage(@ModelAttribute("newUser") User user, Model model) {
+    public String showLoginPage(@ModelAttribute("newUser") User user, ModelMap model, SessionStatus session) {
         String page;
         try {
-            user = userService.logIn(user.getLogin(), user.getPassword());
-            model.addAttribute("user", user);
             try {
+                user = userService.logIn(user.getLogin(), user.getPassword());
+                model.addAttribute("user", user);
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
                     page = ConfigurationManager.getProperty("path.page.newBooking");
-                    List<Booking> bookings = bookingService.getAllNewBooking();
-                    model.addAttribute("newBooking", bookings);
                 } else {
                     page = ConfigurationManager.getProperty("path.page.order");
                 }
             } catch (ServiceException e) {
+                System.out.println();
                 page = ConfigurationManager.getProperty("path.page.errorDatabase");
                 model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
             }
         } catch (NullPointerException e) {
+            session.setComplete();
             model.addAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
             page = ConfigurationManager.getProperty("path.page.login");
-        } catch (ServiceException e) {
-            page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }
         return page;
     }
-
 }
