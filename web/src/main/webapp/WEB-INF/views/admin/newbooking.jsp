@@ -63,9 +63,8 @@
             </form>
         </td>
         <td>
-            <form method="post" action="controller">
-                <input type="hidden" name="command" value="allaccount"/> <input
-                    type="submit" value="Show all accounts"/>
+            <form method="post" action=http://localhost:8080/hotel/admin/allaccounts>
+                <input type="submit" value="Show all accounts"/>
             </form>
         </td>
         <td>
