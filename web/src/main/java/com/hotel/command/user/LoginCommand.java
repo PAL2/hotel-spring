@@ -9,10 +9,7 @@ import com.hotel.service.BookingService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
-import org.hibernate.type.SpecialOneToOneType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -39,7 +36,7 @@ public class LoginCommand implements ActionCommand {
             LOG.info("On the site came user with login : " + login);
             try {
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
-                    page = ConfigurationManager.getProperty("path.page.admin");
+                    page = ConfigurationManager.getProperty("path.page.newBooking");
                     request.getSession().setAttribute("isAdmin", true);
                     List<Booking> bookings = bookingService.getAllNewBooking();
                     request.setAttribute("newBooking", bookings);

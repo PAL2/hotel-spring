@@ -32,7 +32,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User logIn(String login, String password) throws ServiceException {
-        System.out.println("log in");
         User user;
         try {
             user = userDAO.logIn(login, password);

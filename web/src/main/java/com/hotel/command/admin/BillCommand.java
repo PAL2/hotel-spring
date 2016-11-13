@@ -24,7 +24,7 @@ public class BillCommand implements ActionCommand {
         int roomId = Integer.parseInt(request.getParameter("room_id"));
         int bookingId = (int) request.getSession().getAttribute("booking_id");
         try {
-            page = ConfigurationManager.getProperty("path.page.admin");
+            page = ConfigurationManager.getProperty("path.page.newBooking");
             bookingService.chooseRoom(bookingId, roomId);
             List<Booking> bookings = bookingService.getAllNewBooking();
             request.setAttribute("newBooking", bookings);

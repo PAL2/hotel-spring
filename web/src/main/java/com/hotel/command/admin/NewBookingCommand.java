@@ -20,7 +20,7 @@ public class NewBookingCommand implements ActionCommand {
     public String execute(HttpServletRequest request) {
         String page;
         try {
-            page = ConfigurationManager.getProperty("path.page.admin");
+            page = ConfigurationManager.getProperty("path.page.newBooking");
             List<Booking> bookings = bookingService.getAllNewBooking();
             request.setAttribute("newBooking", bookings);
         } catch (ServiceException e) {

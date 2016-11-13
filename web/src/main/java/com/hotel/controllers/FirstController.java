@@ -1,17 +1,18 @@
 package com.hotel.controllers;
 
 import com.hotel.command.ConfigurationManager;
+import com.hotel.command.MessageManager;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.BookingService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 
 @org.springframework.stereotype.Controller
+@SessionAttributes("user")
 public class FirstController {
 
     @Autowired
@@ -30,48 +32,40 @@ public class FirstController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        return "redirect:/login";
+        return "redirect:login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String qqq(Model model) {
+    public String getLoginPage(Model model) {
         User user = new User();
         model.addAttribute("newUser", user);
-        System.out.println(user);
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String showLoginPage(@ModelAttribute("user") User user, @ModelAttribute("newUser") User user2, Model model)
-            /*@RequestParam (value = "login", required = true) String login,
-                                @RequestParam (value = "password", required = true) String password)*/ {
+    public String showLoginPage(@ModelAttribute("newUser") User user, Model model) {
         String page;
-        System.out.println(user2);
-        System.out.println(user);
-        final Logger LOG = Logger.getLogger(UserController.class);
         try {
             user = userService.logIn(user.getLogin(), user.getPassword());
-            System.out.println(user);
-            // request.getSession().setAttribute("user", user);
+            model.addAttribute("user", user);
             try {
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
-                    page = ConfigurationManager.getProperty("path.page.admin");
-                    //request.getSession().setAttribute("isAdmin", true);
+                    page = ConfigurationManager.getProperty("path.page.newBooking");
                     List<Booking> bookings = bookingService.getAllNewBooking();
-                    // request.setAttribute("newBooking", bookings);
+                    model.addAttribute("newBooking", bookings);
                 } else {
                     page = ConfigurationManager.getProperty("path.page.order");
                 }
             } catch (ServiceException e) {
                 page = ConfigurationManager.getProperty("path.page.errorDatabase");
-                //  request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+                model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
             }
         } catch (NullPointerException e) {
-            // request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
+            model.addAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
             page = ConfigurationManager.getProperty("path.page.login");
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            //  request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }
         return page;
     }

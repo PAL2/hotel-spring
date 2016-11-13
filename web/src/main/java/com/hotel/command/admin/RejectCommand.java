@@ -23,7 +23,7 @@ public class RejectCommand implements ActionCommand {
         int bookingId = Integer.parseInt(request.getParameter("booking_id"));
         String page;
         try {
-            page = ConfigurationManager.getProperty("path.page.admin");
+            page = ConfigurationManager.getProperty("path.page.newBooking");
             bookingService.rejectBooking(bookingId);
             List<Booking> bookings = bookingService.getAllNewBooking();
             request.setAttribute("newBooking", bookings);
