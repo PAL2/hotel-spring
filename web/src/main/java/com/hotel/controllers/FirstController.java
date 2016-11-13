@@ -1,13 +1,19 @@
 package com.hotel.controllers;
 
+import com.hotel.command.ConfigurationManager;
+import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.BookingService;
+import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * Created by Алексей on 11.11.2016.
@@ -19,36 +25,55 @@ public class FirstController {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        System.out.println("index");
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String login(Model model) throws ServiceException {
-        /*System.out.println("method GET");
-        System.out.println(new User().toString());*/
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String qqq(Model model) {
         User user = new User();
-        /*user.setUserRole("client");*/
-        System.out.println(model.toString());
-        model.addAttribute("user", user);
-        System.out.println(model.toString());
-        //return "redirect:user/login";
-        return "user/login";
+        model.addAttribute("newUser", user);
+        System.out.println(user);
+        return "login";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ModelAndView main2(Model model) {
-
-        System.out.println("POST");
-        System.out.println(new User().toString());
-        User user = new User();
-        user.setUserRole("client");
-        System.out.println(model.toString());
-        model.addAttribute("user", user);
-        System.out.println(model.toString());
-        return new ModelAndView("redirect:user/login", "user", new User());
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String showLoginPage(@ModelAttribute("user") User user, @ModelAttribute("newUser") User user2, Model model)
+            /*@RequestParam (value = "login", required = true) String login,
+                                @RequestParam (value = "password", required = true) String password)*/ {
+        String page;
+        System.out.println(user2);
+        System.out.println(user);
+        final Logger LOG = Logger.getLogger(UserController.class);
+        try {
+            user = userService.logIn(user.getLogin(), user.getPassword());
+            System.out.println(user);
+            // request.getSession().setAttribute("user", user);
+            try {
+                if (user.getUserRole().equalsIgnoreCase("admin")) {
+                    page = ConfigurationManager.getProperty("path.page.admin");
+                    //request.getSession().setAttribute("isAdmin", true);
+                    List<Booking> bookings = bookingService.getAllNewBooking();
+                    // request.setAttribute("newBooking", bookings);
+                } else {
+                    page = ConfigurationManager.getProperty("path.page.order");
+                }
+            } catch (ServiceException e) {
+                page = ConfigurationManager.getProperty("path.page.errorDatabase");
+                //  request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            }
+        } catch (NullPointerException e) {
+            // request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginError"));
+            page = ConfigurationManager.getProperty("path.page.login");
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            //  request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
     }
+
 }

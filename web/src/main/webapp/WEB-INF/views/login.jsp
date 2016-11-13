@@ -13,7 +13,7 @@
 <h3>${regSuccess}</h3>
 
 <%--<c:url var="saveUrl" value="/user/login"/>--%>
-<form:form modelAttribute="user" method="POST"><%-- action="${saveUrl}--%>
+<form:form modelAttribute="newUser" method="POST"><%-- action="${saveUrl}--%>
     Login:<br />
     <form:input path="login"/>
     <br/>Password:<br/>
