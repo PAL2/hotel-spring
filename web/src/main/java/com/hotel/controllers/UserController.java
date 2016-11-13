@@ -21,7 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 @org.springframework.stereotype.Controller
 @SessionAttributes("user")
-public class FirstController {
+public class UserController {
 
     @Autowired
     private BookingService bookingService;
