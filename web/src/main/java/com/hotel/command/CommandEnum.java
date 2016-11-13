@@ -1,17 +1,11 @@
 package com.hotel.command;
 
-import com.hotel.command.user.LoginCommand;
 import com.hotel.command.user.LogoutCommand;
 import com.hotel.command.user.RegCommand;
 import com.hotel.command.admin.*;
 import com.hotel.command.client.*;
 
 public enum CommandEnum {
-	LOGIN {
-		{
-			this.command = new LoginCommand();
-		}
-	},
 	LOGOUT {
 		{
 			this.command = new LogoutCommand();
