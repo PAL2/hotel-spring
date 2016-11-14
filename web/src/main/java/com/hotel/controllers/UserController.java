@@ -64,4 +64,11 @@ public class UserController {
         }
         return page;
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logOut(SessionStatus session) {
+        session.setComplete();
+        System.out.println("post");
+        return "redirect:login";
+    }
 }

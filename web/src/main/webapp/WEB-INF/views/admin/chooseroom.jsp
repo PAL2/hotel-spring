@@ -35,9 +35,8 @@
     </tbody>
 </table>
 <br>
-<form method="post" action="controller">
-    <input type="hidden" name="command" value="Logout"/> <input
-        type="submit" value="Log out"/>
+<form method="post" action=http://localhost:8080/hotel/logout>
+    <input type="submit" value="Log out"/>
 </form>
 </body>
 </html>

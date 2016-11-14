@@ -1,15 +1,9 @@
 package com.hotel.command;
 
 import com.hotel.command.client.*;
-import com.hotel.command.user.LogoutCommand;
 import com.hotel.command.user.RegCommand;
 
 public enum CommandEnum {
-    LOGOUT {
-        {
-            this.command = new LogoutCommand();
-        }
-    },
     ORDER {
         {
             this.command = new OrderCommand();
