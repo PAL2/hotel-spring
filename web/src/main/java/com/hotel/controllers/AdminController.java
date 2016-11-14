@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -72,6 +73,35 @@ public class AdminController {
         String page;
         try {
             page = null;
+            List<Booking> bookings = bookingService.getAll();
+            model.addAttribute("allBooking", bookings);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/allbookings", method = RequestMethod.GET)
+    public String allBookingGet(Model model) {
+        String page;
+        try {
+            page = null;
+            List<Booking> bookings = bookingService.getAll();
+            model.addAttribute("allBooking", bookings);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/allbookings", method = RequestMethod.POST, params = "id")
+    public String deleteBooking(Model model, @RequestParam(value = "id") int bookingId) {
+        String page;
+        try {
+            page = ConfigurationManager.getProperty("path.page.allBookings.delete");
+            bookingService.delete(bookingId);
             List<Booking> bookings = bookingService.getAll();
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {

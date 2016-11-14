@@ -46,11 +46,6 @@ public enum CommandEnum {
             this.command = new NewBookingCommand();
         }
     },
-    DELETEBOOKING {
-        {
-            this.command = new DeleteBookingCommand();
-        }
-    },
     MYBOOKING {
         {
             this.command = new MyBookingCommand();
