@@ -44,9 +44,7 @@
                 </form>
             </td>
             <td>
-                <form method="post" action="controller">
-                    <input type="hidden" name="command" value="reject"/> <input
-                        type="hidden" name="booking_id" value="${booking.bookingId}">
+                <form method="post" action=http://localhost:8080/hotel/admin/newbooking?id=${booking.bookingId}>
                     <input type="submit" value="Reject"/>
                 </form>
             </td>

@@ -36,11 +36,6 @@ public enum CommandEnum {
             this.command = new RegCommand();
         }
     },
-    REJECT {
-        {
-            this.command = new RejectCommand();
-        }
-    },
     NEWBOOKING {
         {
             this.command = new NewBookingCommand();

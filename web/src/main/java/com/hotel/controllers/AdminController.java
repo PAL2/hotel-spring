@@ -178,4 +178,20 @@ public class AdminController {
         }
         return page;
     }
+
+    @RequestMapping(value = "/newbooking", method = RequestMethod.POST, params = "id")
+    public String rejectBooking(Model model, @RequestParam(value = "id") int bookingId) {
+        String page;
+        try {
+            System.out.println("reject");
+            page = ConfigurationManager.getProperty("path.page.newBooking.reject");
+            bookingService.rejectBooking(bookingId);
+            List<Booking> bookings = bookingService.getAllNewBooking();
+            model.addAttribute("newBooking", bookings);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
 }
