@@ -37,9 +37,7 @@
             <td><c:out value="${booking.accountId}"/></td>
             <td><c:out value="${booking.status}"/></td>
             <td>
-                <form method="post" action="controller">
-                    <input type="hidden" name="command" value="chooseroom"/> <input
-                        type="hidden" name="booking_id" value="${booking.bookingId}">
+                <form method="post" action=http://localhost:8080/hotel/admin/chooseroom?id=${booking.bookingId}>
                     <input type="submit" value="Bill"/>
                 </form>
             </td>

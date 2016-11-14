@@ -16,11 +16,6 @@ public enum CommandEnum {
             this.command = new OrderCommand();
         }
     },
-    CHOOSEROOM {
-        {
-            this.command = new ChooseRoomCommand();
-        }
-    },
     BILL {
         {
             this.command = new BillCommand();

@@ -194,4 +194,19 @@ public class AdminController {
         }
         return page;
     }
+
+    @RequestMapping(value = "/chooseroom", method = RequestMethod.POST, params = "id")
+    public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId) {
+        String page;
+        try {
+            System.out.println("choose");
+            page = ConfigurationManager.getProperty("path.page.chooseRoom");
+            List<Room> rooms = roomService.getAvailableRooms(bookingId);
+            model.addAttribute("availableRooms", rooms);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
 }
