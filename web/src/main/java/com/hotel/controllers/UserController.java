@@ -81,4 +81,21 @@ public class UserController {
         String page = ConfigurationManager.getProperty("path.page.reg");
         return page;
     }
+
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    public String registration(@ModelAttribute("regUser") User user, ModelMap model, SessionStatus session) {
+        String page;
+        try {
+            model.addAttribute("regUser",user);
+            System.out.println(user);
+            userService.register(user.getFirstName(), user.getLastName(), user.getLogin(), user.getPassword());
+            session.setComplete();
+            //model.addAttribute("regSuccess", MessageManager.getProperty("message.regSuccess"));
+            page = ConfigurationManager.getProperty("path.page.login.redirect");
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
 }

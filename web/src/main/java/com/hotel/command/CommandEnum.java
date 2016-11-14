@@ -1,7 +1,6 @@
 package com.hotel.command;
 
 import com.hotel.command.client.*;
-import com.hotel.command.user.RegCommand;
 
 public enum CommandEnum {
     ORDER {
@@ -12,11 +11,6 @@ public enum CommandEnum {
     MYACCOUNTS {
         {
             this.command = new MyAccountsCommand();
-        }
-    },
-    REG {
-        {
-            this.command = new RegCommand();
         }
     },
     MYBOOKING {
