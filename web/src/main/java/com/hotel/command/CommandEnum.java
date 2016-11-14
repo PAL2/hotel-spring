@@ -1,6 +1,5 @@
 package com.hotel.command;
 
-import com.hotel.command.admin.*;
 import com.hotel.command.client.*;
 import com.hotel.command.user.LogoutCommand;
 import com.hotel.command.user.RegCommand;
@@ -16,11 +15,6 @@ public enum CommandEnum {
             this.command = new OrderCommand();
         }
     },
-    BILL {
-        {
-            this.command = new BillCommand();
-        }
-    },
     MYACCOUNTS {
         {
             this.command = new MyAccountsCommand();
@@ -29,11 +23,6 @@ public enum CommandEnum {
     REG {
         {
             this.command = new RegCommand();
-        }
-    },
-    NEWBOOKING {
-        {
-            this.command = new NewBookingCommand();
         }
     },
     MYBOOKING {

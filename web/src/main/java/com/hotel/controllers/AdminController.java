@@ -199,10 +199,26 @@ public class AdminController {
     public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId) {
         String page;
         try {
-            System.out.println("choose");
             page = ConfigurationManager.getProperty("path.page.chooseRoom");
             List<Room> rooms = roomService.getAvailableRooms(bookingId);
             model.addAttribute("availableRooms", rooms);
+            model.addAttribute("id", bookingId);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/chooseroom", method = RequestMethod.POST, params = {"id", "room"})
+    public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId,
+                             @RequestParam(value = "room") int roomId) {
+        String page;
+        try {
+            page = ConfigurationManager.getProperty("path.page.newBooking.bill");
+            bookingService.chooseRoom(bookingId, roomId);
+            List<Booking> bookings = bookingService.getAllNewBooking();
+            model.addAttribute("newBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
