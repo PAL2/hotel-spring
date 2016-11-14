@@ -12,14 +12,13 @@
 
 <h3>${regSuccess}</h3>
 
-<%--<c:url var="saveUrl" value="/user/login"/>--%>
-<form:form modelAttribute="newUser" method="POST"><%-- action="${saveUrl}--%>
+<form:form modelAttribute="newUser" method="POST">
     Login:<br />
     <form:input path="login"/>
     <br/>Password:<br/>
     <form:password path="password"/>
     <br/>
-    <a href=/WEB-INF/views/user/reg.jsp>Registration</a>
+    <a href=http://localhost:8080/hotel/reg>Registration</a>
     <h4>${errorLoginPassMessage}</h4>
     ${wrongAction}
     ${nullPage}

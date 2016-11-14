@@ -31,14 +31,16 @@ public class UserController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        return "redirect:login";
+        String page = ConfigurationManager.getProperty("path.page.login.redirect");
+        return page;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(Model model) {
+        String page = ConfigurationManager.getProperty("path.page.login");
         User user = new User();
         model.addAttribute("newUser", user);
-        return "login";
+        return page;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -67,8 +69,16 @@ public class UserController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logOut(SessionStatus session) {
+        String page = ConfigurationManager.getProperty("path.page.login.redirect");
         session.setComplete();
-        System.out.println("post");
-        return "redirect:login";
+        return page;
+    }
+
+    @RequestMapping(value = "/reg", method = RequestMethod.GET)
+    public String logOut(Model model) {
+        User user = new User();
+        model.addAttribute("regUser", user);
+        String page = ConfigurationManager.getProperty("path.page.reg");
+        return page;
     }
 }
