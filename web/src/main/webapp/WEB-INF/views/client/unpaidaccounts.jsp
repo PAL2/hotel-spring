@@ -41,9 +41,7 @@
                 <c:if test="${account.accountId==booking.accountId}">${account.summa}$</c:if>
             </c:forEach></td>
             <td>
-                <form method="post" action="controller">
-                    <input type="hidden" name="command" value="pay"/> <input
-                        type="hidden" name="booking_id" value="${booking.bookingId}">
+                <form method="post" action=http://localhost:8080/hotel/client/unpaidaccounts?id=${booking.bookingId}>
                     <input type="submit" value="Pay"/>
                 </form>
             </td>

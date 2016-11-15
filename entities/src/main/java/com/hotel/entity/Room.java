@@ -14,8 +14,8 @@ import java.util.List;
 @Entity
 @Immutable
 @Table(name = "room", schema = "booking")
-//@Cacheable
-//@Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
 public class Room extends AbstractEntity {
 
     @Id
@@ -36,7 +36,7 @@ public class Room extends AbstractEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     @Immutable
-    //@Cache(usage =CacheConcurrencyStrategy.READ_ONLY, region = "room")
+    @Cache(usage =CacheConcurrencyStrategy.READ_ONLY, region = "room")
     private List<Booking> bookingEntities;
 
     public Room() {

@@ -12,10 +12,7 @@ import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -107,6 +104,22 @@ public class ClientController {
         return page;
     }
 
+    @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.GET)
+    public String unpaidAccountsGet(Model model, @ModelAttribute("user") User user) {
+        String page;
+        try {
+            page = ConfigurationManager.getProperty("path.page.myAccounts");
+            List<Booking> bookings = bookingService.getAllBookingWithAccountByUser(user.getUserId());
+            model.addAttribute("bookingByUser", bookings);
+            List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
+            model.addAttribute("accountById", accounts);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
     @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.POST)
     public String unpaidAccounts(Model model, @ModelAttribute("user") User user) {
         String page;
@@ -132,6 +145,41 @@ public class ClientController {
             model.addAttribute("bookingByUser", bookings);
             List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
             model.addAttribute("accountById", accounts);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/myaccounts", method = RequestMethod.GET)
+    public String myAccountsGet(Model model, @ModelAttribute("user") User user) {
+        String page;
+        try {
+            page = null;
+            List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(user.getUserId());
+            model.addAttribute("bookingByUser", bookings);
+            List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
+            model.addAttribute("accountById", accounts);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
+
+    @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.POST, params = "id")
+    public String payAccount(Model model, @RequestParam(value = "id") int bookingId,
+                             @ModelAttribute("user") User user) {
+        String page;
+        try {
+            bookingService.payBooking(bookingId);
+            List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(user.getUserId());
+            model.addAttribute("bookingByUser", bookings);
+            List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
+            model.addAttribute("accountById", accounts);
+            //model.addAttribute("paySuccess", MessageManager.getProperty("message.paySuccess"));
+            page = ConfigurationManager.getProperty("path.page.myAccounts");
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
