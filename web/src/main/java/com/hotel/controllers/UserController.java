@@ -53,7 +53,7 @@ public class UserController {
                 if (user.getUserRole().equalsIgnoreCase("admin")) {
                     page = ConfigurationManager.getProperty("path.page.newBooking");
                 } else {
-                    page = ConfigurationManager.getProperty("path.page.order");
+                    page = ConfigurationManager.getProperty("path.page.order.redirect");
                 }
             } catch (ServiceException e) {
                 page = ConfigurationManager.getProperty("path.page.errorDatabase");

@@ -48,19 +48,13 @@
 	<table>
 		<tr>
 			<td>
-				<form method="post" action="controller">
-					<div>
-						<input type="hidden" name="command" value="mybooking" /> <input
-							type="submit" value="My bookings" />
-					</div>
+				<form method="post" action=http://localhost:8080/hotel/client/mybookings>
+					<input type="submit" value="My bookings"/>
 				</form>
 			</td>
 			<td>
-				<form method="post" action="controller">
-					<div>
-						<input type="hidden" name="command" value="unpaidaccount" /> <input
-							type="submit" value="Unpaid accounts" />
-					</div>
+				<form method="post" action=http://localhost:8080/hotel/client/unpaidaccounts>
+					<input type="submit" value="Unpaid accounts"/>
 				</form>
 			</td>
 			<td>

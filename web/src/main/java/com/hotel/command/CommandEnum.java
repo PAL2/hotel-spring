@@ -13,16 +13,6 @@ public enum CommandEnum {
             this.command = new MyAccountsCommand();
         }
     },
-    MYBOOKING {
-        {
-            this.command = new MyBookingCommand();
-        }
-    },
-    UNPAIDACCOUNT {
-        {
-            this.command = new UnpaidAccountCommand();
-        }
-    },
     PAY {
         {
             this.command = new PayCommand();
