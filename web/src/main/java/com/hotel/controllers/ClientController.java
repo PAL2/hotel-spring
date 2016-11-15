@@ -51,6 +51,18 @@ public class ClientController {
         return page;
     }
 
+    @RequestMapping(value = "/gotoorder", method = RequestMethod.GET)
+    public String getLoginPage2(Model model, @ModelAttribute("user") User user) {
+        String page = ConfigurationManager.getProperty("path.page.order");
+        Booking booking = new Booking();
+        model.addAttribute("booking", booking);
+        System.out.println(booking);
+        System.out.println(user);
+        System.out.println("GET");
+        return "redirect:order";
+    }
+
+
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String addOrder(Model model, @ModelAttribute("booking") Booking booking,
                            @ModelAttribute("user") User user) throws ServiceException {

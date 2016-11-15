@@ -56,11 +56,8 @@
 				</form>
 			</td>
 			<td>
-				<form method="post" action="controller">
-					<div>
-						<input type="hidden" name="command" value="goorder" /> <input
-							type="submit" value="Go to booking" />
-					</div>
+				<form method="get" action=http://localhost:8080/hotel/client/gotoorder>
+					<input type="submit" value="Go to booking"/>
 				</form>
 			</td>
 		</tr>

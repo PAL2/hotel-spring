@@ -22,7 +22,7 @@
         <th>Account Id</th>
         <th>Status</th>
         <th>Summa</th>
-        <th colspan="2">Action</th>
+        <th colspan="1">Action</th>
     </tr>
     </thead>
     <tbody align="center">
@@ -45,13 +45,6 @@
                     <input type="hidden" name="command" value="pay"/> <input
                         type="hidden" name="booking_id" value="${booking.bookingId}">
                     <input type="submit" value="Pay"/>
-                </form>
-            </td>
-            <td>
-                <form method="post" action="controller">
-                    <input type="hidden" name="command" value="refuse"/> <input
-                        type="hidden" name="booking_id" value="${booking.bookingId}">
-                    <input type="submit" value="Refuse"/>
                 </form>
             </td>
         </tr>
@@ -77,11 +70,8 @@
             </form>
         </td>
         <td>
-            <form method="post" action="controller">
-                <div>
-                    <input type="hidden" name="command" value="goorder"/> <input
-                        type="submit" value="Go to booking"/>
-                </div>
+            <form method="get" action=http://localhost:8080/hotel/client/gotoorder>
+                <input type="submit" value="Go to booking"/>
             </form>
         </td>
     </tr>
