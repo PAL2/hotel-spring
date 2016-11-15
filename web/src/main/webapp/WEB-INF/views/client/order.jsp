@@ -58,11 +58,8 @@
 				</form>
 			</td>
 			<td>
-				<form method="post" action="controller">
-					<div>
-						<input type="hidden" name="command" value="myaccounts" /> <input
-							type="submit" value="All accounts" />
-					</div>
+				<form method="post" action=http://localhost:8080/hotel/client/myaccounts>
+					<input type="submit" value="My accounts"/>
 				</form>
 			</td>
 		</tr>

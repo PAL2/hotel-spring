@@ -1,16 +1,14 @@
 package com.hotel.command;
 
-import com.hotel.command.client.*;
+import com.hotel.command.client.GoOrderCommand;
+import com.hotel.command.client.OrderCommand;
+import com.hotel.command.client.PayCommand;
+import com.hotel.command.client.RefuseCommand;
 
 public enum CommandEnum {
     ORDER {
         {
             this.command = new OrderCommand();
-        }
-    },
-    MYACCOUNTS {
-        {
-            this.command = new MyAccountsCommand();
         }
     },
     PAY {

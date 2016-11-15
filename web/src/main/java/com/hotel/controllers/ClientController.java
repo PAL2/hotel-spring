@@ -110,4 +110,20 @@ public class ClientController {
         }
         return page;
     }
+
+    @RequestMapping(value = "/myaccounts", method = RequestMethod.POST)
+    public String myAccounts(Model model, @ModelAttribute("user") User user) {
+        String page;
+        try {
+            page = null;
+            List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(user.getUserId());
+            model.addAttribute("bookingByUser", bookings);
+            List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
+            model.addAttribute("accountById", accounts);
+        } catch (ServiceException e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return page;
+    }
 }
