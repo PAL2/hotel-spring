@@ -14,7 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Алексей on 15.11.2016.
@@ -42,9 +46,20 @@ public class ClientController {
         String page = ConfigurationManager.getProperty("path.page.order");
         Booking booking = new Booking();
         model.addAttribute("booking", booking);
+        Map<Integer, Integer> place = new LinkedHashMap<Integer, Integer>();
+        place.put(1, 1);
+        place.put(2, 2);
+        place.put(3, 3);
+        place.put(4, 4);
+        model.addAttribute("numberPlaces", place);
         System.out.println(booking);
         System.out.println(user);
         System.out.println("GET");
+
+        Map<String, String> cat = new LinkedHashMap<>();
+        cat.put("standard", "Standard");
+        cat.put("lux", "Lux");
+        model.addAttribute("cat", cat);
         return page;
     }
 
@@ -56,35 +71,31 @@ public class ClientController {
         return page;
     }
 
-
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String addOrder(Model model, @ModelAttribute("booking") Booking booking,
+    public String addOrder(Model model,
+                           @RequestParam(value = "startDate") String startDateString,
+                           @RequestParam(value = "numberPlaces") int place,
+                           @RequestParam(value = "endDate") String endDateString,
+                           @RequestParam(value = "category") String category,
                            @ModelAttribute("user") User user) throws ServiceException {
         String page;
-        System.out.println("POST");
-        System.out.println(user);
-        System.out.println(booking);
-        model.addAttribute("booking", booking);
-        /*try {
-            int userId = user.getUserId();
+        try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String startDateString = request.getParameter("startDate");
-            String endDateString = request.getParameter("endDate");
             LocalDate startDate = LocalDate.parse(startDateString, formatter);
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             if (startDate.isAfter(LocalDate.now()) && startDate.isBefore(endDate)) {
-                bookingService.addBooking(startDate, endDate, userId, place, category);
-                page = ConfigurationManager.getProperty("path.page.order");
-                request.setAttribute("roomSuccess", MessageManager.getProperty("message.roomSuccess"));
+                bookingService.addBooking(startDate, endDate, user.getUserId(), place, category);
+                page = ConfigurationManager.getProperty("path.page.order.red");
+                model.addAttribute("roomSuccess", MessageManager.getProperty("message.roomSuccess"));
             } else {
-                page = ConfigurationManager.getProperty("path.page.order");
-                request.setAttribute("incorrectDate", MessageManager.getProperty("message.incorrectDate"));
+                page = ConfigurationManager.getProperty("path.page.order.red");
+                model.addAttribute("incorrectDate", MessageManager.getProperty("message.incorrectDate"));
             }
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
-        }*/
-        return "redirect:order";
+            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+        }
+        return "client/order";
     }
 
     @RequestMapping(value = "/mybookings", method = RequestMethod.POST)

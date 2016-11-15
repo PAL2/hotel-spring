@@ -9,7 +9,7 @@
 <title>Order</title>
 </head>
 <body>
-	<form action="controller" method="post">
+	<form:form method="post">
 		<fieldset>
 			<h3>${roomSuccess}</h3>
 			<div>
@@ -44,7 +44,7 @@
 					type="submit" value="Book" />
 			</div>
 		</fieldset>
-	</form>
+	</form:form>
 	<br>
 	<table>
 		<tr>
