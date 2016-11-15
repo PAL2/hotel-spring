@@ -49,14 +49,11 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/gotoorder", method = RequestMethod.GET)
-    public String getLoginPage2(Model model, @ModelAttribute("user") User user) {
-        String page = ConfigurationManager.getProperty("path.page.order");
+    public String goToOrder(Model model, @ModelAttribute("user") User user) {
+        String page = ConfigurationManager.getProperty("path.page.order.red");
         Booking booking = new Booking();
         model.addAttribute("booking", booking);
-        System.out.println(booking);
-        System.out.println(user);
-        System.out.println("GET");
-        return "redirect:order";
+        return page;
     }
 
 
@@ -87,7 +84,7 @@ public class ClientController {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             request.setAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
         }*/
-        return "order";
+        return "redirect:order";
     }
 
     @RequestMapping(value = "/mybookings", method = RequestMethod.POST)
