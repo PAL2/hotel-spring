@@ -38,8 +38,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             LOG.info(user);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return user;
     }
@@ -52,8 +52,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             LOG.info(users);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return users;
     }
@@ -64,8 +64,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             userDAO.register(firstName, lastName, login, password);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -75,8 +75,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             userDAO.save(user);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -91,8 +91,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             userDAO.delete(id);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 }

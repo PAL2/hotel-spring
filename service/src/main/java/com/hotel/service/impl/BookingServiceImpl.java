@@ -49,8 +49,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
     }
@@ -63,11 +63,10 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
-
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -88,8 +87,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(room);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -99,8 +98,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.delete(bookingId);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -112,8 +111,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
     }
@@ -124,8 +123,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.rejectBooking(bookingId);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -137,8 +136,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
     }
@@ -151,8 +150,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
     }
@@ -164,8 +163,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.addBooking(userId, place, category, startDate, endDate);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -175,8 +174,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.payBooking(bookingId);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -186,8 +185,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.refuseBooking(bookingId);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -199,8 +198,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             LOG.info(bookings);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return bookings;
     }
@@ -211,8 +210,8 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.save(booking);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 

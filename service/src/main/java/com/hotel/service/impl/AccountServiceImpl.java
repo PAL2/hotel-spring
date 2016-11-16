@@ -37,9 +37,9 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accounts = accountDAO.getAll();
             LOG.info(accounts);
             LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+        } catch  (DaoException e){
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
 
         }
         return accounts;
@@ -53,8 +53,8 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             LOG.info(accounts);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return accounts;
     }
@@ -65,8 +65,8 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accountDAO.save(account);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -80,8 +80,8 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accountDAO.delete(id);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 }

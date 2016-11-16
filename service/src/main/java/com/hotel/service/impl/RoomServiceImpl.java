@@ -43,8 +43,8 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             LOG.info(rooms);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return rooms;
     }
@@ -60,8 +60,8 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             LOG.info(rooms);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return rooms;
     }
@@ -75,8 +75,8 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             LOG.info(numberOfPages);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return numberOfPages;
     }
@@ -87,8 +87,8 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             roomDAO.save(room);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
@@ -103,8 +103,8 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
             roomDAO.delete(id);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL);
-            throw new ServiceException(e.getMessage());
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
 
