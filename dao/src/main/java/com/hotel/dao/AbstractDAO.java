@@ -37,7 +37,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             Session session = getCurrentSession();
             session.saveOrUpdate(entity);
         } catch (HibernateException e) {
-            LOG.error("Error in DAO");
+            LOG.error("Error in DAO " + e);
             throw new DaoException();
         }
     }
@@ -54,8 +54,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             T account = (T) session.get(pClass, id);
             session.delete(account);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Error in DAO");
+            LOG.error("Error in DAO " + e);
             throw new DaoException();
         }
 
@@ -68,9 +67,8 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             Session session = getCurrentSession();
             Criteria criteria = session.createCriteria(pClass);
             results = criteria.list();
-            LOG.info(results);
         } catch (HibernateException e) {
-            LOG.error("Error in DAO");
+            LOG.error("Error in DAO " + e);
             throw new DaoException();
         }
         return results;
@@ -83,8 +81,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             Session session = getCurrentSession();
             entity = (T) session.get(pClass, id);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Error in DAO");
+            LOG.error("Error in DAO " + e);
             throw new DaoException();
         }
         return entity;

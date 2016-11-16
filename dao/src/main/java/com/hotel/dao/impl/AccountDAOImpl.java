@@ -35,11 +35,9 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
             booking.setAccount(account);
             session.save(booking);
             session.save(account);
-            LOG.info(account);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to add account. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to add account. Error in DAO. " + e);
+            throw new DaoException("Unable to add account. Error in DAO. " + e);
         }
     }
 
@@ -51,11 +49,9 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
             Query query = session.createQuery("FROM Account WHERE booking.userId=:userId");
             query.setParameter("userId", userId);
             accounts = query.list();
-            LOG.info(accounts);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to create a list of accounts. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to create a list of accounts. Error in DAO. " + e);
+            throw new DaoException("Unable to create a list of accounts. Error in DAO. " + e);
         }
         return accounts;
     }

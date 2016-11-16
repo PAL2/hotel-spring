@@ -35,9 +35,8 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             query.setParameter("password", hash(password));
             user = (User) query.uniqueResult();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to login. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to login. Error in DAO. " + e);
+            throw new DaoException("Unable to login. Error in DAO. " + e);
         }
         return user;
     }
@@ -54,9 +53,8 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
             user.setPassword(hash(password));
             session.save(user);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Could not register. Error in DAO");
-            throw new DaoException();
+            LOG.error("Could not register. Error in DAO. " + e);
+            throw new DaoException("Could not register. Error in DAO. " + e);
         }
     }
 

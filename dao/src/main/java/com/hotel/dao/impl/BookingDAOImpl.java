@@ -17,7 +17,7 @@ import java.util.List;
 
 @Repository
 public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
-        private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
+    private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
 
     @Autowired
     private BookingDAOImpl(SessionFactory sessionFactory) {
@@ -41,11 +41,9 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             booking.setStatus("new");
             booking.setUser(user);
             session.save(booking);
-            LOG.info(booking);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to add a booking. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to add a booking. Error in DAO. " + e);
+            throw new DaoException("Unable to add a booking. Error in DAO. " + e);
         }
     }
 
@@ -57,11 +55,9 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             Criteria criteria = session.createCriteria(Booking.class);
             criteria.add(Restrictions.eq("status", "new"));
             bookings = criteria.list();
-            LOG.info(bookings);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list of bookings. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to create a list of bookings. Error in DAO. " + e);
+            throw new DaoException("Failed to create a list of bookings. Error in DAO. " + e);
         }
         return bookings;
     }
@@ -77,9 +73,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setParameter("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to assign the appropriate booking number. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to assign the appropriate booking number. Error in DAO. " + e);
+            throw new DaoException("Failed to assign the appropriate booking number. Error in DAO. " + e);
         }
     }
 
@@ -91,11 +86,9 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             Query query = session.createQuery("FROM Booking B WHERE B.userId=:userId");
             query.setParameter("userId", userId);
             bookings = query.list();
-            LOG.info(bookings);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list bookings. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to create a list bookings. Error in DAO. " + e);
+            throw new DaoException("Failed to create a list bookings. Error in DAO. " + e);
         }
         return bookings;
     }
@@ -109,9 +102,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setParameter("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to reject the book. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to reject the book. Error in DAO. " + e);
+            throw new DaoException("Unable to reject the book. Error in DAO. " + e);
         }
     }
 
@@ -122,11 +114,9 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             Session session = getCurrentSession();
             Query query = session.createQuery("FROM Booking B WHERE B.accountId!=0");
             bookings = query.list();
-            LOG.info(bookings);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list of bookings with the invoice. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to create a list of bookings with the invoice. Error in DAO. " + e);
+            throw new DaoException("Failed to create a list of bookings with the invoice. Error in DAO. " + e);
         }
         return bookings;
     }
@@ -141,11 +131,10 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setParameter("status", "billed");
             query.setParameter("userId", userId);
             bookings = query.list();
-            LOG.info(bookings);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list of bookings with the invoice for the customer. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to create a list of bookings with the invoice for the customer. Error in DAO. " + e);
+            throw new DaoException("Failed to create a list of bookings with the invoice for the customer. " +
+                    "Error in DAO. " + e);
         }
         return bookings;
     }
@@ -159,9 +148,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setInteger("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Unable to pay for a booking. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to pay for a booking. Error in DAO. " + e);
+            throw new DaoException("Unable to pay for a booking. Error in DAO. " + e);
         }
     }
 
@@ -174,9 +162,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setInteger("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("The client was unable to refuse the book. Error in DAO");
-            throw new DaoException();
+            LOG.error("The client was unable to refuse the book. Error in DAO. " + e);
+            throw new DaoException("The client was unable to refuse the book. Error in DAO. " + e);
         }
     }
 
@@ -191,11 +178,9 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             query.setString("refused", "refused");
             query.setInteger("userId", userId);
             bookings = query.list();
-            LOG.info(bookings);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            LOG.error("Failed to create a list of fully processed bookings. Error in DAO");
-            throw new DaoException();
+            LOG.error("Failed to create a list of fully processed bookings. Error in DAO. " + e);
+            throw new DaoException("Failed to create a list of fully processed bookings. Error in DAO. " + e);
         }
         return bookings;
     }
