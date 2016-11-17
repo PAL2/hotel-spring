@@ -9,6 +9,8 @@ import com.hotel.entity.User;
 public interface UserDAO extends DAO<User> {
     User logIn(String login, String password) throws DaoException;
 
+    User getUserByLogin(String login) throws DaoException;
+
     void register(String firstName, String lastName, String login, String password) throws DaoException;
 
     String hash(String input);

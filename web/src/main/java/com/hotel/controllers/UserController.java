@@ -37,6 +37,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(Model model) {
+        System.out.println("GET");
         String page = ConfigurationManager.getProperty("path.page.login");
         User user = new User();
         model.addAttribute("newUser", user);
@@ -46,6 +47,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String showLoginPage(@ModelAttribute("newUser") User user, ModelMap model, SessionStatus session) {
         String page;
+        System.out.println("POST");
         try {
             try {
                 user = userService.logIn(user.getLogin(), user.getPassword());

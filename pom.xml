@@ -36,6 +36,7 @@
         <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
         <tomcat.maven.plugin.version>1.1</tomcat.maven.plugin.version>
         <spring.version>4.3.4.RELEASE</spring.version>
+        <spring.security.version>4.0.3.RELEASE</spring.security.version>
         <pool.version>2.1.1</pool.version>
         <aspectj.version>1.8.9</aspectj.version>
         <tiles.version>1.0.6</tiles.version>
@@ -165,6 +166,31 @@
                 <groupId>org.apache.tiles</groupId>
                 <artifactId>tiles-core</artifactId>
                 <version>${tiles.core.version}</version>
+            </dependency>
+
+            <!-- Spring security -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-taglibs</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring.security.version}</version>
             </dependency>
 
             <!--

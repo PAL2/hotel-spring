@@ -9,5 +9,7 @@ import com.hotel.service.exceptions.ServiceException;
 public interface UserService extends Service<User> {
     User logIn(String login, String password) throws ServiceException;
 
+    User getUserByLogin(String login) throws ServiceException;
+
     void register(String firstName, String lastName, String login, String password) throws ServiceException;
 }

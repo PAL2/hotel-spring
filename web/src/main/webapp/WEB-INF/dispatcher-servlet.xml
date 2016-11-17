@@ -14,8 +14,9 @@
 
     <import resource="classpath*:dao-context.xml"/>
     <import resource="classpath*:service-context.xml"/>
+    <import resource="security-context.xml"/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:annotation-driven/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

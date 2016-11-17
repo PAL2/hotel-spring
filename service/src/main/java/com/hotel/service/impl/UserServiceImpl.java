@@ -45,6 +45,20 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public User getUserByLogin(String login) throws ServiceException {
+        User user;
+        try {
+            user = userDAO.getUserByLogin(login);
+            LOG.info(user);
+            LOG.info(TRANSACTION_SUCCESS);
+        } catch (DaoException e) {
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
+        }
+        return user;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<User> getAll() throws ServiceException {
         List<User> users;
         try {
