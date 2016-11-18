@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
                            http://www.springframework.org/schema/beans
@@ -14,7 +15,7 @@
 
     <import resource="classpath*:dao-context.xml"/>
     <import resource="classpath*:service-context.xml"/>
-    <import resource="security-context.xml"/>
+   <!-- <import resource="security-context.xml"/>-->
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:annotation-driven/>
@@ -25,6 +26,22 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="classpath:message"
+          p:defaultEncoding="UTF-8"
+    />
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+          p:defaultLocale="ru"
+          p:cookieName="LocaleCookie"
+          p:cookieMaxAge="3600"
+    />
+
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+              p:paramName="locale"
+        />
+    </mvc:interceptors>
     <!--<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
 
     <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">

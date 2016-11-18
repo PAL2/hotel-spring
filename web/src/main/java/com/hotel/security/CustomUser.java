@@ -12,15 +12,15 @@ import java.util.Collection;
  * Date: 02.03.2016
  * Time: 12:18
  */
-public class UserDetail extends org.springframework.security.core.userdetails.User {
+public class CustomUser extends org.springframework.security.core.userdetails.User {
     private User user;
 
-    public UserDetail(User user, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUser(User user, Collection<? extends GrantedAuthority> authorities) {
         super(user.getLogin(), user.getPassword(), authorities);
         this.user = user;
     }
 
-    public UserDetail(User user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUser(User user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(user.getLogin(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.user = user;
     }

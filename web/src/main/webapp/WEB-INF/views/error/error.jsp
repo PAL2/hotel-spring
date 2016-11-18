@@ -13,9 +13,9 @@
 	 Servlet name or type: ${pageContext.errorData.servletName}
 	<br/> 
 	Status code: ${pageContext.errorData.statusCode}
-	<br/>
+	<%--<br/>
 	 Exception: ${pageContext.errorData.Throwable}
-	 <br/>
-	<a href="/index.jsp">Main page</a>
+	 <br/>--%>
+	<a href="http://localhost:8080/hotel/login">Main page</a>
 </body>
 </html>

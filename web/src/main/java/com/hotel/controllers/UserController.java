@@ -88,7 +88,7 @@ public class UserController {
     public String registration(@ModelAttribute("regUser") User user, ModelMap model, SessionStatus session) {
         String page;
         try {
-            model.addAttribute("regUser",user);
+            model.addAttribute("regUser", user);
             System.out.println(user);
             userService.register(user.getFirstName(), user.getLastName(), user.getLogin(), user.getPassword());
             session.setComplete();
@@ -100,4 +100,20 @@ public class UserController {
         }
         return page;
     }
+
+    /*@RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutUser(HttpServletRequest request,
+                             HttpServletResponse response,
+                             RedirectAttributes redirectAttributes) {
+        System.out.println(redirectAttributes);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication);
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString().equalsIgnoreCase("anonymousUser")) {
+            redirectAttributes.addFlashAttribute("errorLoginOrPassword", MessageManager.getProperty("message.loginError"));
+        }
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/login";
+    }*/
 }

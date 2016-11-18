@@ -1,3 +1,4 @@
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -5,14 +6,14 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>New bookings</title>
+    <title><s:message code="page.admin.new.bookings"/></title>
 </head>
 <body>
-<h3>New bookings</h3>
+<h3><s:message code="page.admin.new.bookings"/></h3>
 <table border="1">
     <thead align="center">
     <tr>
-        <th>ID</th>
+        <th>№</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Place</th>
