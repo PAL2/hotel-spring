@@ -1,28 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>My unpaid accounts</title>
+    <title><s:message code="page.client.accounts.unpaid"/></title>
 </head>
 <body>
-<h3>My unpaid accounts</h3>
+<h3><s:message code="page.client.accounts.unpaid"/></h3>
 <table border="1">
     <thead align="center">
     <tr>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Place</th>
-        <th>Category</th>
-        <th>Room Id</th>
-        <th>Name</th>
-        <th>Last Name</th>
-        <th>Account Id</th>
-        <th>Status</th>
-        <th>Summa</th>
-        <th colspan="1">Action</th>
+        <th><s:message code="page.table.check-in"/></th>
+        <th><s:message code="page.table.check-out"/></th>
+        <th><s:message code="page.table.place"/></th>
+        <th><s:message code="page.table.category"/></th>
+        <th><s:message code="page.table.room.id"/></th>
+        <th><s:message code="page.table.name"/></th>
+        <th><s:message code="page.table.last.name"/></th>
+        <th><s:message code="page.table.account.id"/></th>
+        <th><s:message code="page.table.status"/></th>
+        <th><s:message code="page.table.summa"/></th>
+        <th colspan="1"><s:message code="page.table.action"/></th>
     </tr>
     </thead>
     <tbody align="center">
@@ -42,7 +43,8 @@
             </c:forEach></td>
             <td>
                 <form method="post" action=http://localhost:8080/hotel/client/unpaidaccounts?id=${booking.bookingId}>
-                    <input type="submit" value="Pay"/>
+                    <s:message var="pay" code="page.client.pay"/>
+                    <input type="submit" value="${pay}"/>
                 </form>
             </td>
         </tr>
@@ -54,29 +56,34 @@
     <tr>
         <td>
             <form method="post" action=http://localhost:8080/hotel/client/mybookings>
-                <input type="submit" value="My bookings"/>
+                <s:message var="myBookings" code="page.client.bookings"/>
+                <input type="submit" value="${myBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/client/unpaidaccounts>
-                <input type="submit" value="Unpaid accounts"/>
+                <s:message var="unpaidAccounts" code="page.client.accounts.unpaid"/>
+                <input type="submit" value="${unpaidAccounts}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/client/myaccounts>
-                <input type="submit" value="My accounts"/>
+                <s:message var="myAccounts" code="page.client.accounts"/>
+                <input type="submit" value="${myAccounts}"/>
             </form>
         </td>
         <td>
             <form method="get" action=http://localhost:8080/hotel/client/gotoorder>
-                <input type="submit" value="Go to booking"/>
+                <s:message var="goToBooking" code="page.client.to.booking"/>
+                <input type="submit" value="${goToBooking}"/>
             </form>
         </td>
     </tr>
 </table>
 <br>
 <form method="post" action=http://localhost:8080/hotel/logout>
-    <input type="submit" value="Log out"/>
+    <s:message var="logout" code="page.logout"/>
+    <input type="submit" value="${logout}"/>
 </form>
 </body>
 </html>

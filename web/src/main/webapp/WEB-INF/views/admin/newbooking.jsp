@@ -14,15 +14,15 @@
     <thead align="center">
     <tr>
         <th>№</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Place</th>
-        <th>Category</th>
-        <th>Room Id</th>
-        <th>User Id</th>
-        <th>Account Id</th>
-        <th>Status</th>
-        <th colspan="2">Action</th>
+        <th><s:message code="page.table.check-in"/></th>
+        <th><s:message code="page.table.check-out"/></th>
+        <th><s:message code="page.table.place"/></th>
+        <th><s:message code="page.table.category"/></th>
+        <th><s:message code="page.table.room.id"/></th>
+        <th><s:message code="page.table.user.id"/></th>
+        <th><s:message code="page.table.account.id"/></th>
+        <th><s:message code="page.table.status"/></th>
+        <th colspan="2"><s:message code="page.table.action"/></th>
     </tr>
     </thead>
     <tbody align="center">
@@ -39,12 +39,14 @@
             <td><c:out value="${booking.status}"/></td>
             <td>
                 <form method="post" action=http://localhost:8080/hotel/admin/chooseroom?id=${booking.bookingId}>
-                    <input type="submit" value="Bill"/>
+                    <s:message var="bill" code="page.admin.action.bill"/>
+                    <input type="submit" value="${bill}"/>
                 </form>
             </td>
             <td>
                 <form method="post" action=http://localhost:8080/hotel/admin/newbooking?id=${booking.bookingId}>
-                    <input type="submit" value="Reject"/>
+                    <s:message var="reject" code="page.admin.action.reject"/>
+                    <input type="submit" value="${reject}"/>
                 </form>
             </td>
         </tr>
@@ -56,29 +58,34 @@
     <tr>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allbookings>
-                <input type="submit" value="Show all bookings"/>
+                <s:message var="allBookings" code="page.admin.all.bookings"/>
+                <input type="submit" value="${allBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allaccounts>
-                <input type="submit" value="Show all accounts"/>
+                <s:message var="allAccounts" code="page.admin.all.accounts"/>
+                <input type="submit" value="${allAccounts}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allusers>
-                <input type="submit" value="Show all users"/>
+                <s:message var="allUsers" code="page.admin.all.users"/>
+                <input type="submit" value="${allUsers}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allrooms>
-                <input type="submit" value="Show all rooms"/>
+                <s:message var="allRooms" code="page.admin.all.rooms"/>
+                <input type="submit" value="${allRooms}"/>
             </form>
         </td>
     </tr>
 </table>
 <br>
 <form method="post" action=http://localhost:8080/hotel/logout>
-    <input type="submit" value="Log out"/>
+    <s:message var="logout" code="page.logout"/>
+    <input type="submit" value="${logout}"/>
 </form>
 </body>
 </html>

@@ -7,15 +7,17 @@
 --%>
 <%@ page isErrorPage="true" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <html>
 <head>
-    <title>Ошибка</title>
+    <title><s:message code="page.error"/></title>
 </head>
 <body>
 <br/>
 ${errorDatabase} <br/>
 <form method="post" action=http://localhost:8080/hotel/logout>
-    <input type="submit" value="Log out"/>
+    <s:message var="logout" code="page.logout"/>
+    <input type="submit" value="${logout}"/>
 </form>
 </body>
 </html>

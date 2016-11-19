@@ -1,20 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Show all users</title>
+    <title><s:message code="page.admin.all.users"/></title>
 </head>
 <body>
-<h3>All Users</h3>
+<h3><s:message code="page.admin.all.users"/></h3>
 <table border="1">
     <thead align="center">
     <tr>
-        <th>User ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>№</th>
+        <th><s:message code="page.table.name"/></th>
+        <th><s:message code="page.table.last.name"/></th>
     </tr>
     </thead>
     <tbody align="center">
@@ -31,29 +32,34 @@
     <tr>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/newbooking>
-                <input type="submit" value="Show new bookings"/>
+                <s:message var="newBookings" code="page.admin.new.bookings"/>
+                <input type="submit" value="${newBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allbookings>
-                <input type="submit" value="Show all bookings"/>
+                <s:message var="allBookings" code="page.admin.all.bookings"/>
+                <input type="submit" value="${allBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allaccounts>
-                <input type="submit" value="Show all accounts"/>
+                <s:message var="allAccounts" code="page.admin.all.accounts"/>
+                <input type="submit" value="${allAccounts}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allrooms>
-                <input type="submit" value="Show all rooms"/>
+                <s:message var="allRooms" code="page.admin.all.rooms"/>
+                <input type="submit" value="${allRooms}"/>
             </form>
         </td>
     </tr>
 </table>
 <br>
 <form method="post" action=http://localhost:8080/hotel/logout>
-    <input type="submit" value="Log out"/>
+    <s:message var="logout" code="page.logout"/>
+    <input type="submit" value="${logout}"/>
 </form>
 </body>
 </html>

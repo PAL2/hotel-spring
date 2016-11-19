@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Show all rooms</title>
+    <title><s:message code="page.admin.all.rooms"/></title>
 </head>
 <body>
-<h3>All rooms</h3>
+<h3><s:message code="page.admin.all.rooms"/></h3>
 <table border="1">
     <thead align="center">
     <tr>
-        <th>Room ID</th>
-        <th>Category</th>
-        <th>Place</th>
-        <th>Price</th>
+        <th>№</th>
+        <th><s:message code="page.table.category"/></th>
+        <th><s:message code="page.table.place"/></th>
+        <th><s:message code="page.table.price"/></th>
     </tr>
     </thead>
     <tbody align="center">
@@ -31,7 +32,7 @@
 
 <c:choose>
     <c:when test="${currentPage != 1}">
-        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage - 1}">Предыдущая</a></td>
+        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage - 1}"><s:message code="page.pagination.previous"/></a></td>
     </c:when>
     <c:otherwise>
         <td></td>
@@ -51,7 +52,7 @@
 
 <c:choose>
     <c:when test="${currentPage lt numberOfPages}">
-        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage + 1}">Следующая</a></td>
+        <td><a href="http://localhost:8080/hotel/admin/allrooms?currentPage=${currentPage + 1}"><s:message code="page.pagination.next"/></a></td>
     </c:when>
     <c:otherwise>
         <td></td>
@@ -63,29 +64,34 @@
     <tr>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/newbooking>
-                <input type="submit" value="Show new bookings"/>
+                <s:message var="newBookings" code="page.admin.new.bookings"/>
+                <input type="submit" value="${newBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allbookings>
-                <input type="submit" value="Show all bookings"/>
+                <s:message var="allBookings" code="page.admin.all.bookings"/>
+                <input type="submit" value="${allBookings}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allaccounts>
-                <input type="submit" value="Show all accounts"/>
+                <s:message var="allAccounts" code="page.admin.all.accounts"/>
+                <input type="submit" value="${allAccounts}"/>
             </form>
         </td>
         <td>
             <form method="post" action=http://localhost:8080/hotel/admin/allusers>
-                <input type="submit" value="Show all users"/>
+                <s:message var="allUsers" code="page.admin.all.users"/>
+                <input type="submit" value="${allUsers}"/>
             </form>
         </td>
     </tr>
 </table>
 <br>
 <form method="post" action=http://localhost:8080/hotel/logout>
-    <input type="submit" value="Log out"/>
+    <s:message var="logout" code="page.logout"/>
+    <input type="submit" value="${logout}"/>
 </form>
 </body>
 </html>
