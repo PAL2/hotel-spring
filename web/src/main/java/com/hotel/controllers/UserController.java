@@ -1,6 +1,6 @@
 package com.hotel.controllers;
 
-import com.hotel.command.ConfigurationManager;
+import com.hotel.manager.ConfigurationManager;
 import com.hotel.entity.User;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
@@ -30,18 +30,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         String page = ConfigurationManager.getProperty("path.page.login.redirect");
         return page;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginPage(Model model) {
+    public String getLoginPage() {
         System.out.println("GET");
         String page = ConfigurationManager.getProperty("path.page.login");
-        User user = new User();
-        model.addAttribute("newUser", user);
         return page;
     }
 
@@ -65,7 +63,6 @@ public class UserController {
             }
         } catch (NullPointerException e) {
             session.setComplete();
-            model.addAttribute("errorLoginPassMessage", messageSource.getMessage("message.loginError", null, locale));
             page = ConfigurationManager.getProperty("path.page.login");
         }
         return page;

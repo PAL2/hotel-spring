@@ -28,11 +28,11 @@
 
 <h3>${regSuccess}</h3>
 
-<form:form modelAttribute="newUser" method="POST">
-    <s:message code="page.login.login"/>:<br />
-    <form:input path="login"/>
+<form method="POST">
+    <s:message code="page.login.login"/>:<br/>
+    <input type="text" id="login" name="login"/>
     <br/><s:message code="page.login.password"/>:<br/>
-    <form:password path="password"/>
+    <input type="text" id="password" name="password"/>
     <br/>
     <a href=http://localhost:8080/hotel/reg><s:message code="page.login.reg"/></a>
     <h4>${errorLoginPassMessage}</h4>
@@ -40,7 +40,7 @@
     ${nullPage}
     <s:message var="button" code="page.login"/>
     <input type="submit" value="${button}"/>
-</form:form>
+</form>
 
 </body>
 </html>

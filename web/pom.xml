@@ -106,7 +106,7 @@
 
     </dependencies>
     <build>
-        <finalName>Hotel</finalName>
+        <finalName>hotel</finalName>
     </build>
 
     <properties>

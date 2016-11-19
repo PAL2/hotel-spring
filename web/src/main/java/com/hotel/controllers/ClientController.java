@@ -1,6 +1,6 @@
 package com.hotel.controllers;
 
-import com.hotel.command.ConfigurationManager;
+import com.hotel.manager.ConfigurationManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;

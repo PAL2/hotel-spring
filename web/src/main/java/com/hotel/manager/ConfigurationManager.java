@@ -1,4 +1,4 @@
-package com.hotel.command;
+package com.hotel.manager;
 
 import java.util.ResourceBundle;
 
