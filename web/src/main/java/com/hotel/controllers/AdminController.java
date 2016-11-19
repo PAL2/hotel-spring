@@ -1,7 +1,6 @@
 package com.hotel.controllers;
 
 import com.hotel.command.ConfigurationManager;
-import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
@@ -12,6 +11,7 @@ import com.hotel.service.RoomService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Алексей on 13.11.2016.
@@ -40,8 +41,11 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(value = "/newbooking", method = RequestMethod.GET)
-    public String newBookingGet(Model model) throws ServiceException {
+    public String newBookingGet(Model model, Locale locale) throws ServiceException {
         String page;
         try {
             page = null;
@@ -49,13 +53,13 @@ public class AdminController {
             model.addAttribute("newBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/newbooking", method = RequestMethod.POST)
-    public String newBookingPost(Model model) throws ServiceException {
+    public String newBookingPost(Model model, Locale locale) throws ServiceException {
         String page;
         try {
             List<Booking> bookings = bookingService.getAllNewBooking();
@@ -63,13 +67,13 @@ public class AdminController {
             page = null;
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allbookings", method = RequestMethod.POST)
-    public String allBooking(Model model) {
+    public String allBooking(Model model, Locale locale) {
         String page;
         try {
             page = null;
@@ -77,13 +81,13 @@ public class AdminController {
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allbookings", method = RequestMethod.GET)
-    public String allBookingGet(Model model) {
+    public String allBookingGet(Model model, Locale locale) {
         String page;
         try {
             page = null;
@@ -91,13 +95,13 @@ public class AdminController {
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allbookings", method = RequestMethod.POST, params = "id")
-    public String deleteBooking(Model model, @RequestParam(value = "id") int bookingId) {
+    public String deleteBooking(Model model, @RequestParam(value = "id") int bookingId, Locale locale) {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.allBookings.delete");
@@ -106,13 +110,13 @@ public class AdminController {
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allaccounts", method = RequestMethod.POST)
-    public String allAccounts(Model model) {
+    public String allAccounts(Model model, Locale locale) {
         String page;
         try {
             page = null;
@@ -124,13 +128,13 @@ public class AdminController {
             model.addAttribute("allUsers", users);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allusers", method = RequestMethod.POST)
-    public String allUsers(Model model) {
+    public String allUsers(Model model, Locale locale) {
         String page;
         try {
             page = null;
@@ -138,13 +142,13 @@ public class AdminController {
             model.addAttribute("allUsers", users);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allrooms", method = RequestMethod.POST)
-    public String allRooms(Model model) {
+    public String allRooms(Model model, Locale locale) {
         String page;
         int recordsPerPage = 10;
         int currentPage = 1;
@@ -156,13 +160,13 @@ public class AdminController {
             model.addAttribute("numberOfPages", numberOfPages);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/allrooms", method = RequestMethod.GET, params = "currentPage")
-    public String allRoomsPag(Model model, @ModelAttribute("currentPage") int currentPage) {
+    public String allRoomsPag(Model model, @ModelAttribute("currentPage") int currentPage, Locale locale) {
         String page;
         int recordsPerPage = 10;
         try {
@@ -174,13 +178,13 @@ public class AdminController {
             model.addAttribute("currentPage", currentPage);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/newbooking", method = RequestMethod.POST, params = "id")
-    public String rejectBooking(Model model, @RequestParam(value = "id") int bookingId) {
+    public String rejectBooking(Model model, @RequestParam(value = "id") int bookingId, Locale locale) {
         String page;
         try {
             System.out.println("reject");
@@ -190,13 +194,13 @@ public class AdminController {
             model.addAttribute("newBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/chooseroom", method = RequestMethod.POST, params = "id")
-    public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId) {
+    public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId, Locale locale) {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.chooseRoom");
@@ -205,14 +209,14 @@ public class AdminController {
             model.addAttribute("id", bookingId);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/chooseroom", method = RequestMethod.POST, params = {"id", "room"})
     public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId,
-                             @RequestParam(value = "room") int roomId) {
+                             @RequestParam(value = "room") int roomId, Locale locale) {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.newBooking.bill");
@@ -221,7 +225,7 @@ public class AdminController {
             model.addAttribute("newBooking", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }

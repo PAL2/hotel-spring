@@ -11,42 +11,20 @@
 </head>
 <body>
 <div class="header">
-    <div style="float: right;">
+    <div style="float: left;">
         <table>
             <tr>
                 <td style="padding: 5px;">
-                    <a href="?locale=ru">
-                        <img src="${pageContext.request.contextPath}/resources/img/locale_ru.png"
-                             height="20"
-                             width="20"
-                             style="display:block;"
-                        />
-                    </a>
+                    <a href="?locale=ru">Ru</a>
                 </td>
                 <td style="padding: 5px;">
-                    <a href="?locale=en">
-                        <img src="${pageContext.request.contextPath}/resources/img/locale_en.png"
-                             height="20"
-                             width="20"
-                             style="display:block;"
-                        />
-                    </a>
+                    <a href="?locale=en">En</a>
                 </td>
             </tr>
         </table>
     </div>
-    <%--<br/>
-    <a href="${pageContext.request.contextPath}/home">
-        <img src="${pageContext.request.contextPath}/assets/img/mini_logo.png"
-             alt="logo"
-             name="Insert_logo"
-             height="90"
-             id="Insert_logo"
-             style="display:block;"
-        />
-    </a>
-    <br/>--%>
 </div>
+<br>
 
 <h3>${regSuccess}</h3>
 

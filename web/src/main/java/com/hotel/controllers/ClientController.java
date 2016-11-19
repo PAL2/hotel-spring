@@ -1,24 +1,21 @@
 package com.hotel.controllers;
 
 import com.hotel.command.ConfigurationManager;
-import com.hotel.command.MessageManager;
 import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import com.hotel.service.AccountService;
 import com.hotel.service.BookingService;
-import com.hotel.service.RoomService;
-import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 /**
  * Created by Алексей on 15.11.2016.
@@ -36,30 +33,13 @@ public class ClientController {
     private BookingService bookingService;
 
     @Autowired
-    private RoomService roomService;
-
-    @Autowired
-    private UserService userService;
+    private MessageSource messageSource;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String getLoginPage(Model model, @ModelAttribute("user") User user) {
         String page = ConfigurationManager.getProperty("path.page.order");
         Booking booking = new Booking();
         model.addAttribute("booking", booking);
-        Map<Integer, Integer> place = new LinkedHashMap<Integer, Integer>();
-        place.put(1, 1);
-        place.put(2, 2);
-        place.put(3, 3);
-        place.put(4, 4);
-        model.addAttribute("numberPlaces", place);
-        System.out.println(booking);
-        System.out.println(user);
-        System.out.println("GET");
-
-        Map<String, String> cat = new LinkedHashMap<>();
-        cat.put("standard", "Standard");
-        cat.put("lux", "Lux");
-        model.addAttribute("cat", cat);
         return page;
     }
 
@@ -72,7 +52,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String addOrder(Model model,
+    public String addOrder(Model model, Locale locale,
                            @RequestParam(value = "startDate") String startDateString,
                            @RequestParam(value = "numberPlaces") int place,
                            @RequestParam(value = "endDate") String endDateString,
@@ -85,21 +65,21 @@ public class ClientController {
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             if (startDate.isAfter(LocalDate.now()) && startDate.isBefore(endDate)) {
                 bookingService.addBooking(startDate, endDate, user.getUserId(), place, category);
-                page = ConfigurationManager.getProperty("path.page.order.red");
-                model.addAttribute("roomSuccess", MessageManager.getProperty("message.roomSuccess"));
+                page = ConfigurationManager.getProperty("path.page.order");
+                model.addAttribute("roomSuccess", messageSource.getMessage("message.roomSuccess", null, locale));
             } else {
-                page = ConfigurationManager.getProperty("path.page.order.red");
-                model.addAttribute("incorrectDate", MessageManager.getProperty("message.incorrectDate"));
+                page = ConfigurationManager.getProperty("path.page.order");
+                model.addAttribute("incorrectDate", messageSource.getMessage("message.incorrectDate", null, locale));
             }
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
-        return "client/order";
+        return page;
     }
 
     @RequestMapping(value = "/mybookings", method = RequestMethod.POST)
-    public String myBookings(Model model, @ModelAttribute("user") User user) {
+    public String myBookings(Model model, @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             page = null;
@@ -107,13 +87,13 @@ public class ClientController {
             model.addAttribute("bookingByUser", bookings);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.GET)
-    public String unpaidAccountsGet(Model model, @ModelAttribute("user") User user) {
+    public String unpaidAccountsGet(Model model, @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             page = ConfigurationManager.getProperty("path.page.myAccounts");
@@ -123,13 +103,13 @@ public class ClientController {
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.POST)
-    public String unpaidAccounts(Model model, @ModelAttribute("user") User user) {
+    public String unpaidAccounts(Model model, @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             page = null;
@@ -139,13 +119,13 @@ public class ClientController {
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/myaccounts", method = RequestMethod.POST)
-    public String myAccounts(Model model, @ModelAttribute("user") User user) {
+    public String myAccounts(Model model, @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             page = null;
@@ -155,13 +135,13 @@ public class ClientController {
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/myaccounts", method = RequestMethod.GET)
-    public String myAccountsGet(Model model, @ModelAttribute("user") User user) {
+    public String myAccountsGet(Model model, @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             page = null;
@@ -171,14 +151,14 @@ public class ClientController {
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
     @RequestMapping(value = "/unpaidaccounts", method = RequestMethod.POST, params = "id")
     public String payAccount(Model model, @RequestParam(value = "id") int bookingId,
-                             @ModelAttribute("user") User user) {
+                             @ModelAttribute("user") User user, Locale locale) {
         String page;
         try {
             bookingService.payBooking(bookingId);
@@ -186,11 +166,11 @@ public class ClientController {
             model.addAttribute("bookingByUser", bookings);
             List<Account> accounts = accountService.getAllAccountByUser(user.getUserId());
             model.addAttribute("accountById", accounts);
-            //model.addAttribute("paySuccess", MessageManager.getProperty("message.paySuccess"));
+            model.addAttribute("paySuccess", messageSource.getMessage("message.paySuccess", null, locale));
             page = ConfigurationManager.getProperty("path.page.myAccounts");
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
-            model.addAttribute("errorDatabase", MessageManager.getProperty("message.errorDatabase"));
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
