@@ -10,6 +10,8 @@ import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,20 +20,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
-    private final String GET_ALL_ROOMS = " from Room";
-    private static RoomDAOImpl instance;
     private final Logger LOG = Logger.getLogger(RoomDAOImpl.class);
 
-    private RoomDAOImpl() {
-        super(Room.class);
-    }
-
-    public static synchronized RoomDAOImpl getInstance() {
-        if (instance == null) {
-            instance = new RoomDAOImpl();
-        }
-        return instance;
+    @Autowired
+    private RoomDAOImpl(SessionFactory sessionFactory) {
+        super(Room.class, sessionFactory);
     }
 
     @Override
@@ -48,6 +43,8 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
         return rooms;
     }
 
+
+    //TO DO
     @Override
     public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
@@ -70,11 +67,9 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
             rooms = resultSetToRoomsList(resultSet);
             resultSet.close();
             ps.close();
-            LOG.info(rooms);
         } catch (SQLException e) {
-            e.printStackTrace();
-            LOG.error("Unable to create a list of matching numbers. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to create a list of matching numbers. Error in DAO. " + e);
+            throw new DaoException("Unable to create a list of matching numbers. Error in DAO. " + e);
         }
         return rooms;
     }
@@ -83,17 +78,16 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     public List<Room> getAll(int recordsPerPage, int currentPage) throws DaoException {
         List<Room> rooms;
         try {
-            Session session = util.getSession();
-            Query query = session.createQuery(GET_ALL_ROOMS);
+            Session session = getCurrentSession();
+            Query query = session.createQuery("from Room");
             query.setFirstResult((currentPage - 1) * recordsPerPage);
             query.setMaxResults(recordsPerPage);
             query.setCacheable(true);
             query.setCacheMode(CacheMode.NORMAL);
             rooms = query.list();
-            LOG.info(rooms);
         } catch (HibernateException e) {
-            LOG.error("Unable to return list of clients. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to return list of clients. Error in DAO. " + e);
+            throw new DaoException("Unable to return list of clients. Error in DAO. " + e);
         }
         return rooms;
     }
@@ -102,15 +96,14 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     public Long getAmount() throws DaoException {
         Long amount;
         try {
-            Session session = util.getSession();
+            Session session = getCurrentSession();
             Criteria criteria = session.createCriteria(Room.class);
             criteria.setProjection(Projections.rowCount());
             criteria.setCacheable(true);
             amount = (Long) criteria.uniqueResult();
-            LOG.info(amount);
         } catch (HibernateException e) {
-            LOG.error("Unable to get number of records. Error in DAO");
-            throw new DaoException();
+            LOG.error("Unable to get number of records. Error in DAO. " + e);
+            throw new DaoException("Unable to get number of records. Error in DAO. " + e);
         }
         return amount;
     }

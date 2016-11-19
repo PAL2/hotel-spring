@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>project</display-name>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <error-page>
-    <error-code>404</error-code>
-    <location>/error.jsp</location>
-  </error-page>
-  <error-page>
-    <exception-type>java.lang.RuntimeException</exception-type>
-    <location>/error.jsp</location>
-  </error-page>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         id="WebApp_ID" version="3.1">
+    <display-name>project</display-name>
 
-  <filter>
-    <filter-name>CharsetFilter</filter-name>
-    <filter-class>com.hotel.filter.CharsetFilter</filter-class>
-    <init-param>
-      <param-name>requestEncoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-  </filter>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            WEB-INF/dispatcher-servlet.xml
+            <!--WEB-INF/security-context.xml-->
+        </param-value>
+    </context-param>
 
-  <filter>
-    <filter-name>ClosingSession</filter-name>
-    <filter-class>com.hotel.filter.ClosingSessionFilter</filter-class>
-  </filter>
+    <listener>
+        <listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
-  <filter-mapping>
-    <filter-name>ClosingSession</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/views/index.jsp</welcome-file>
+    </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
 
-  <filter-mapping>
-    <filter-name>CharsetFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <jsp-config>
-    <jsp-property-group>
-      <url-pattern>*.jsp</url-pattern>
-      <page-encoding>UTF-8</page-encoding>
-    </jsp-property-group>
-  </jsp-config>
 
-  <listener>
-    <listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
-  </listener>
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>com.hotel.filter.CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
+    <!--<filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+
 </web-app>

@@ -156,6 +156,7 @@ public class User extends AbstractEntity {
                 ", lastName='" + lastName + '\'' +
                 ", userRole='" + userRole + '\'' +
                 ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

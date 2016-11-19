@@ -16,12 +16,12 @@ public class BookingDAOImplTest {
 
     }
 
-    @Test
+    /*@Test
     public void testGetInstance() throws Exception {
         BookingDAOImpl instance1 = BookingDAOImpl.getInstance();
         BookingDAOImpl instance2 = BookingDAOImpl.getInstance();
         assertEquals(instance1.hashCode(), instance2.hashCode());
-    }
+    }*/
 
     @Test
     public void testAddBooking() throws Exception {
