@@ -15,7 +15,6 @@
 
     <import resource="classpath*:dao-context.xml"/>
     <import resource="classpath*:service-context.xml"/>
-   <!-- <import resource="security-context.xml"/>-->
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:annotation-driven/>
@@ -42,13 +41,15 @@
               p:paramName="locale"
         />
     </mvc:interceptors>
-    <!--<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
 
-    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>/WEB-INF/views/**/views.xml</value>
-            </list>
-        </property>
-    </bean>-->
+    <!--<bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles.xml"
+    />
+
+    <bean id="tilesViewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"
+    />-->
+
 </beans>
