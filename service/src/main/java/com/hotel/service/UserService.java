@@ -12,4 +12,6 @@ public interface UserService extends Service<User> {
     User getUserByLogin(String login) throws ServiceException;
 
     void register(String firstName, String lastName, String login, String password) throws ServiceException;
+
+    int getUserId(String login) throws ServiceException;
 }

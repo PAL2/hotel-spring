@@ -28,19 +28,29 @@
 
 <h3>${regSuccess}</h3>
 
-<form method="POST">
-    <s:message code="page.login.login"/>:<br/>
-    <input type="text" id="login" name="login"/>
-    <br/><s:message code="page.login.password"/>:<br/>
-    <input type="text" id="password" name="password"/>
-    <br/>
-    <a href=http://localhost:8080/hotel/reg><s:message code="page.login.reg"/></a>
-    <h4>${errorLoginPassMessage}</h4>
-    ${wrongAction}
-    ${nullPage}
+<form name='loginForm'
+      action="<c:url value='/j_spring_security_check' />" method='POST'>
+
+    <table>
+        <tr>
+            <td><s:message code="page.login"/>:</td>
+            <td><input type='text' name='username'></td>
+        </tr>
+        <tr>
+            <td><s:message code="page.login.password"/>:</td>
+            <td><input type='password' name='password'/></td>
+        </tr>
+    </table>
+
     <s:message var="button" code="page.login"/>
     <input type="submit" value="${button}"/>
+
+    <input type="hidden" name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+
 </form>
+<br>
+<a href=http://localhost:8080/hotel/reg><s:message code="page.login.reg"/></a>
 
 </body>
 </html>

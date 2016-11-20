@@ -13,9 +13,9 @@
     <thead align="center">
     <tr>
         <th>№</th>
-        <td><c:out value="${room.category}"/></td>
-        <td><c:out value="${room.place}"/></td>
-        <td><c:out value="${room.price}$"/></td>
+        <th><s:message code="page.table.category"/></th>
+        <th><s:message code="page.table.place"/></th>
+        <th><s:message code="page.table.price"/></th>
         <th><s:message code="page.table.action"/></th>
     </tr>
     </thead>
@@ -27,19 +27,15 @@
             <td><c:out value="${room.place}"/></td>
             <td><c:out value="${room.price}"/></td>
             <td>
-                <form method="post" action=http://localhost:8080/hotel/admin/chooseroom?id=${id}&room=${room.roomId}>
-                    <s:message var="bill" code="page.admin.action.bill"/>
-                    <input type="submit" value="${bill}"/>
-                </form>
+                <a href="${pageContext.request.contextPath}/admin/chooseroom?id=${id}&room=${room.roomId}">
+                    <s:message code="page.admin.action.bill"/></a>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br>
-<form method="post" action=http://localhost:8080/hotel/logout>
-    <s:message var="logout" code="page.logout"/>
-    <input type="submit" value="${logout}"/>
+<a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a>
 </form>
 </body>
 </html>

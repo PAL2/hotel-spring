@@ -9,57 +9,42 @@
     <title><s:message code="page.admin.all.users"/></title>
 </head>
 <body>
-<h3><s:message code="page.admin.all.users"/></h3>
-<table border="1">
-    <thead align="center">
-    <tr>
-        <th>№</th>
-        <th><s:message code="page.table.name"/></th>
-        <th><s:message code="page.table.last.name"/></th>
-    </tr>
-    </thead>
-    <tbody align="center">
-    <c:forEach items="${allUsers}" var="user">
-    <tr>
-        <td><c:out value="${user.userId}"/></td>
-        <td><c:out value="${user.firstName}"/></td>
-        <td><c:out value="${user.lastName}"/></td>
-        </c:forEach>
-    </tbody>
-</table>
-<br>
-<table>
-    <tr>
-        <td>
-            <form method="post" action=http://localhost:8080/hotel/admin/newbooking>
-                <s:message var="newBookings" code="page.admin.new.bookings"/>
-                <input type="submit" value="${newBookings}"/>
-            </form>
-        </td>
-        <td>
-            <form method="post" action=http://localhost:8080/hotel/admin/allbookings>
-                <s:message var="allBookings" code="page.admin.all.bookings"/>
-                <input type="submit" value="${allBookings}"/>
-            </form>
-        </td>
-        <td>
-            <form method="post" action=http://localhost:8080/hotel/admin/allaccounts>
-                <s:message var="allAccounts" code="page.admin.all.accounts"/>
-                <input type="submit" value="${allAccounts}"/>
-            </form>
-        </td>
-        <td>
-            <form method="post" action=http://localhost:8080/hotel/admin/allrooms>
-                <s:message var="allRooms" code="page.admin.all.rooms"/>
-                <input type="submit" value="${allRooms}"/>
-            </form>
-        </td>
-    </tr>
-</table>
-<br>
-<form method="post" action=http://localhost:8080/hotel/logout>
-    <s:message var="logout" code="page.logout"/>
-    <input type="submit" value="${logout}"/>
-</form>
+<h2><s:message code="page.admin.all.users"/></h2>
+<div style="width: 1100px;">
+    <div style="float: left; width: 180px;">
+        <br>
+        <li><a href="${pageContext.request.contextPath}/admin/newbooking"><s:message
+                code="page.admin.new.bookings"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/allbookings"><s:message
+                code="page.admin.all.bookings"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/allaccounts"><s:message
+                code="page.admin.all.accounts"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/allusers"><s:message
+                code="page.admin.all.users"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/allrooms"><s:message
+                code="page.admin.all.rooms"/></a></li>
+        <br>
+        <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
+    </div>
+    <div style="float: right; width: 920px">
+        <table border="1">
+            <thead align="center">
+            <tr>
+                <th>№</th>
+                <th><s:message code="page.table.name"/></th>
+                <th><s:message code="page.table.last.name"/></th>
+            </tr>
+            </thead>
+            <tbody align="center">
+            <c:forEach items="${allUsers}" var="user">
+            <tr>
+                <td><c:out value="${user.userId}"/></td>
+                <td><c:out value="${user.firstName}"/></td>
+                <td><c:out value="${user.lastName}"/></td>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
