@@ -21,6 +21,7 @@
 					<option value="4">4</option>
 				</select>
 			</div>
+			<br>
 			<div>
 				<s:message code="page.table.check-in"/>:
 				<br>
