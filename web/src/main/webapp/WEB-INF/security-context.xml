@@ -18,7 +18,7 @@
 
         <form-login
                 login-page="/login"
-                authentication-success-handler-ref="authenticationSuccessHandlerImpl"
+                authentication-success-handler-ref="customSuccessHandler"
                 authentication-failure-url="/Access_Denied"
                 username-parameter="username"
                 password-parameter="password" />
@@ -34,6 +34,5 @@
     </authentication-manager>
 
     <beans:bean id="authenticationService" class="com.hotel.security.AuthenticationService"/>
-    <beans:bean id="authenticationSuccessHandlerImpl" class="com.hotel.security.AuthenticationSuccessHandlerImpl"/>
     <beans:bean id="customSuccessHandler" class="com.hotel.security.CustomSuccessHandler"/>
 </beans:beans>
