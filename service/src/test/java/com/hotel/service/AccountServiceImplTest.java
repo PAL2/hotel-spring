@@ -4,24 +4,47 @@ import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.entity.User;
-import com.hotel.service.impl.AccountServiceImpl;
-import com.hotel.service.impl.BookingServiceImpl;
-import com.hotel.service.impl.RoomServiceImpl;
-import com.hotel.service.impl.UserServiceImpl;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 /**
  * Created by Алексей on 26.10.2016.
  */
+@ContextConfiguration("/test-services-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class AccountServiceImplTest {
-    private static AccountServiceImpl accountService;
-    private static BookingServiceImpl bookingService;
-    private static RoomServiceImpl roomService;
-    private static UserServiceImpl userService;
+
+    @Autowired
+    private AccountService accountService;
+
+    /*@Mock
+    private AccountDAO accountDAO;
+
+    @Before
+    public void setupMock() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void testMockCreation() {
+        assertNotNull(accountDAO);
+    }
+
+    @Test
+    public void testGetAll() throws DaoException {
+        List<Account> list = new LinkedList<>();
+        list.add(new Account(100));
+        list.add(new Account(200));
+        list.add(new Account(300));
+
+        when(accountDAO.getAll()).thenReturn(list);
+    }*/
+
     private Account expectedAccount;
     private Account expectedAccount2;
     private Account actualAccount;
@@ -29,18 +52,10 @@ public class AccountServiceImplTest {
     private Booking booking2;
     private Room room;
     private User user;
-    private Integer accountId;
-    private Integer bookingId;
-    private Integer roomId;
-    private Integer userId;
-
-    @BeforeClass
-    public static void initTest() {
-        /*accountService = AccountServiceImpl.getInstance();
-        bookingService = BookingServiceImpl.getInstance();
-        roomService = RoomServiceImpl.getInstance();
-        userService = UserServiceImpl.getInstance();*/
-    }
+    private int accountId;
+    private int bookingId;
+    private int roomId;
+    private int userId;
 
     @Before
     public void setUp() throws Exception {
@@ -71,6 +86,15 @@ public class AccountServiceImplTest {
 
     }
 
+    @Test
+    public void testGetAll() {
+        List<Account> list = new LinkedList<>();
+        list.add(expectedAccount);
+        list.add(expectedAccount2);
+        Assert.assertEquals("cd", 2, list.size());
+
+    }
+
     @After
     public void tearDown() throws Exception {
         expectedAccount = null;
@@ -78,32 +102,18 @@ public class AccountServiceImplTest {
         booking = null;
         room = null;
         user = null;
-        accountId = null;
-        bookingId = null;
-        roomId = null;
-        userId = null;
-    }
-
-    @AfterClass
-    public static void closeTest() throws Exception {
-        accountService = null;
-        bookingService = null;
-        roomService = null;
-        userService = null;
+        accountId = 0;
+        bookingId = 0;
+        roomId = 0;
+        userId = 0;
     }
 
     private void save() throws Exception {
-        userService.save(user);
-        bookingService.save(booking);
-        //  roomService.save(room);
         accountService.save(expectedAccount);
     }
 
     private void delete() throws Exception {
         accountService.delete(accountId);
-        bookingService.delete(bookingId);
-        //  roomService.delete(roomId);
-        userService.delete(userId);
     }
 
 }
