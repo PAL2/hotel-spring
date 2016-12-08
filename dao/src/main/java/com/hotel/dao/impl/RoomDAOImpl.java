@@ -48,6 +48,8 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     @Override
     public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         Connection conn = DBUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
         List<Room> rooms;
         Date startDate = (Date) booking.getStartDate();
         Date endDate = (Date) booking.getEndDate();
@@ -56,20 +58,27 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
                     + "LEFT JOIN booking AS b ON (b.room_id=r.room_id) LEFT JOIN (SELECT room_id FROM booking AS b "
                     + "WHERE (b.start_date BETWEEN ? AND ? OR b.end_date BETWEEN ? AND ?)) AS v "
                     + "ON (v.room_id=b.room_id) WHERE (r.category=?) AND (r.place=?) AND (b.room_id IS NULL))";
-            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query);
+            ps = (PreparedStatement) conn.prepareStatement(query);
             ps.setDate(1, startDate);
             ps.setDate(2, endDate);
             ps.setDate(3, startDate);
             ps.setDate(4, endDate);
             ps.setString(5, booking.getCategory());
             ps.setInt(6, booking.getPlace());
-            ResultSet resultSet = ps.executeQuery();
+            resultSet = ps.executeQuery();
             rooms = resultSetToRoomsList(resultSet);
-            resultSet.close();
-            ps.close();
         } catch (SQLException e) {
             LOG.error("Unable to create a list of matching numbers. Error in DAO. " + e);
             throw new DaoException("Unable to create a list of matching numbers. Error in DAO. " + e);
+        } finally {
+            try {
+                conn.close();
+                resultSet.close();
+                ps.close();
+            } catch (SQLException e) {
+                LOG.error("Unable to close resources. " + e);
+                throw new DaoException("Unable to close resources. Error in DAO. " + e);
+            }
         }
         return rooms;
     }
