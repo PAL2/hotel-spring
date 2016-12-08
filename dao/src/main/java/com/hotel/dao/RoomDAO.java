@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface RoomDAO extends DAO<Room> {
     List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException;
-    List<Room> getAvailableRooms(Booking booking) throws DaoException, SQLException;
+    List<Room> getAvailableRooms(Booking booking) throws DaoException;
     List<Room> getAll(int recordsPerPage, int currentPage) throws DaoException;
     Long getAmount() throws DaoException;
 }
