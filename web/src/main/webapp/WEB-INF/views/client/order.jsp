@@ -57,13 +57,15 @@
                     <option value="lux"><s:message code="page.client.category.lux"/></option>
                 </select>
                 </div>
-                <h4>${incorrectDate}</h4>
+                <h3>${incorrectDate}</h3>
                 <div>
                     <input type="hidden" name="command" value="order"/>
                     <s:message var="book" code="page.client.book"/>
                     <input type="submit" value="${book}"/>
                 </div>
             </fieldset>
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
         </form:form>
     </div>
 </div>

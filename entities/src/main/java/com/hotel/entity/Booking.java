@@ -1,7 +1,7 @@
 package com.hotel.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by Алексей on 16.10.2016.
@@ -17,13 +17,11 @@ public class Booking extends AbstractEntity {
 
     @Basic
     @Column(name = "start_date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date startDate;
+    private LocalDate startDate;
 
     @Basic
     @Column(name = "end_date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date endDate;
+    private LocalDate endDate;
 
     @Basic
     @Column(name = "place", nullable = false)
@@ -64,9 +62,8 @@ public class Booking extends AbstractEntity {
     public Booking() {
     }
 
-    public Booking(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
-                   Integer accountId, String status, Room room,
-                   User user, Account account) {
+    public Booking(LocalDate startDate, LocalDate endDate, int place, String category, Integer roomId, int userId,
+                   Integer accountId, String status, Room room, User user, Account account) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.place = place;
@@ -89,19 +86,19 @@ public class Booking extends AbstractEntity {
         this.bookingId = bookingId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

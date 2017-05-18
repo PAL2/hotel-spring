@@ -11,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,8 +26,6 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     @Override
     public void addBooking(int userId, int place, String category, LocalDate startDate, LocalDate endDate)
             throws DaoException {
-        Date sqlStartDate = Date.valueOf(startDate);
-        Date sqlEndDate = Date.valueOf(endDate);
         try {
             Session session = getCurrentSession();
             User user = (User) session.get(User.class, userId);
@@ -36,8 +33,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
             booking.setUserId(userId);
             booking.setPlace(place);
             booking.setCategory(category);
-            booking.setStartDate(sqlStartDate);
-            booking.setEndDate(sqlEndDate);
+            booking.setStartDate(startDate);
+            booking.setEndDate(endDate);
             booking.setStatus("new");
             booking.setUser(user);
             session.save(booking);

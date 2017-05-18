@@ -64,7 +64,7 @@ public class ClientController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate startDate = LocalDate.parse(startDateString, formatter);
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
-            if (startDate.isAfter(LocalDate.now()) && startDate.isBefore(endDate)) {
+            if (startDate.isAfter(LocalDate.now().minusDays(1)) && startDate.isBefore(endDate)) {
                 bookingService.addBooking(startDate, endDate, getUserIdByPrincipal(), place, category);
                 page = ConfigurationManager.getProperty("path.page.order");
                 model.addAttribute("roomSuccess", messageSource.getMessage("message.roomSuccess", null, locale));

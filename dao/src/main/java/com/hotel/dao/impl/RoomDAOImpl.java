@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,18 +50,16 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         List<Room> rooms;
-        Date startDate = (Date) booking.getStartDate();
-        Date endDate = (Date) booking.getEndDate();
         try {
             String query = "(SELECT r.room_id, r.category, r.place, r.price FROM room AS r "
                     + "LEFT JOIN booking AS b ON (b.room_id=r.room_id) LEFT JOIN (SELECT room_id FROM booking AS b "
                     + "WHERE (b.start_date BETWEEN ? AND ? OR b.end_date BETWEEN ? AND ?)) AS v "
                     + "ON (v.room_id=b.room_id) WHERE (r.category=?) AND (r.place=?) AND (b.room_id IS NULL))";
             ps = (PreparedStatement) conn.prepareStatement(query);
-            ps.setDate(1, startDate);
-            ps.setDate(2, endDate);
-            ps.setDate(3, startDate);
-            ps.setDate(4, endDate);
+            ps.setObject(1, booking.getStartDate());
+            ps.setObject(2, booking.getEndDate());
+            ps.setObject(3, booking.getStartDate());
+            ps.setObject(4, booking.getEndDate());
             ps.setString(5, booking.getCategory());
             ps.setInt(6, booking.getPlace());
             resultSet = ps.executeQuery();

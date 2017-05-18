@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -77,12 +77,9 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.chooseRoom(bookingId, roomId);
             booking = bookingDAO.get(bookingId);
             room = roomDAO.get(booking.getRoomId());
-            Date startDate = booking.getStartDate();
-            Date endDate = booking.getEndDate();
-            long st = startDate.getTime();
-            long en = endDate.getTime();
-            int summa = (int) ((en - st) / 24 / 60 / 60 / 1000) * room.getPrice();
-            accountDAO.addAccount(summa, booking);
+            final Duration duration = Duration.between(booking.getEndDate(), booking.getStartDate());
+            int total = (int) duration.toDays() * room.getPrice();
+            accountDAO.addAccount(total, booking);
             LOG.info(booking);
             LOG.info(room);
             LOG.info(TRANSACTION_SUCCESS);
