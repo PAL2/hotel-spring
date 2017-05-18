@@ -4,13 +4,17 @@ import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.entity.User;
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Алексей on 26.10.2016.
@@ -57,7 +61,7 @@ public class AccountServiceImplTest {
     private int roomId;
     private int userId;
 
-    @Before
+   /* @Before
     public void setUp() throws Exception {
         // room = new Room("TEST", 33, 1000);
         expectedAccount = new Account(5000);
@@ -75,7 +79,7 @@ public class AccountServiceImplTest {
         booking.setUser(user);
         booking2.setUser(user);
         save();
-    }
+    }*/
 
     @Ignore
     @Test
@@ -91,11 +95,11 @@ public class AccountServiceImplTest {
         List<Account> list = new LinkedList<>();
         list.add(expectedAccount);
         list.add(expectedAccount2);
-        Assert.assertEquals("cd", 2, list.size());
+        assertEquals(2, list.size());
 
     }
 
-    @After
+   /* @After
     public void tearDown() throws Exception {
         expectedAccount = null;
         actualAccount = null;
@@ -114,6 +118,6 @@ public class AccountServiceImplTest {
 
     private void delete() throws Exception {
         accountService.delete(accountId);
-    }
+    */
 
 }
