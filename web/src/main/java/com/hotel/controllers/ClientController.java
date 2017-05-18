@@ -43,14 +43,12 @@ public class ClientController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        String page = ConfigurationManager.getProperty("path.page.order.red");
-        return page;
+        return ConfigurationManager.getProperty("path.page.order.red");
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String getLoginPage() {
-        String page = ConfigurationManager.getProperty("path.page.order");
-        return page;
+        return ConfigurationManager.getProperty("path.page.order");
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
@@ -81,9 +79,8 @@ public class ClientController {
 
     @RequestMapping(value = "/mybookings", method = RequestMethod.GET)
     public String myBookings(Model model, Locale locale) {
-        String page;
+        String page = null;
         try {
-            page = null;
             List<Booking> bookings = bookingService.getAllBookingByUser(getUserIdByPrincipal());
             model.addAttribute("bookingByUser", bookings);
         } catch (ServiceException e) {
@@ -111,10 +108,9 @@ public class ClientController {
 
     @RequestMapping(value = "/myaccounts", method = RequestMethod.GET)
     public String myAccountsGet(Model model, Locale locale) {
-        String page;
+        String page = null;
         try {
             int userId = getUserIdByPrincipal();
-            page = null;
             List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(userId);
             model.addAttribute("bookingByUser", bookings);
             List<Account> accounts = accountService.getAllAccountByUser(userId);
@@ -146,11 +142,10 @@ public class ClientController {
     }
 
     private int getUserIdByPrincipal() throws ServiceException {
-        String login = null;
         int userId = 0;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            login = ((UserDetails) principal).getUsername();
+            String login = ((UserDetails) principal).getUsername();
             userId = userService.getUserId(login);
         }
         return userId;

@@ -12,8 +12,6 @@ import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,15 +46,13 @@ public class AdminController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        String page = ConfigurationManager.getProperty("path.page.newBooking.reject");
-        return page;
+        return ConfigurationManager.getProperty("path.page.newBooking.reject");
     }
 
     @RequestMapping(value = "/newbooking", method = RequestMethod.GET)
     public String newBookingGet(Model model, Locale locale) throws ServiceException {
-        String page;
+        String page = null;
         try {
-            page = null;
             List<Booking> bookings = bookingService.getAllNewBooking();
             model.addAttribute("newBooking", bookings);
         } catch (ServiceException e) {
@@ -68,9 +64,8 @@ public class AdminController {
 
     @RequestMapping(value = "/allbookings", method = RequestMethod.GET)
     public String allBookingGet(Model model, Locale locale) {
-        String page;
+        String page = null;
         try {
-            page = null;
             List<Booking> bookings = bookingService.getAll();
             model.addAttribute("allBooking", bookings);
         } catch (ServiceException e) {
@@ -97,9 +92,8 @@ public class AdminController {
 
     @RequestMapping(value = "/allaccounts", method = RequestMethod.GET)
     public String allAccountsGet(Model model/*, Locale locale*/) {
-        String page;
+        String page = null;
         try {
-            page = null;
             List<Booking> bookings = bookingService.getAllBookingWithAccount();
             model.addAttribute("allBookings", bookings);
             List<Account> accounts = accountService.getAll();
@@ -115,9 +109,8 @@ public class AdminController {
 
     @RequestMapping(value = "/allusers", method = RequestMethod.GET)
     public String allUsersGet(Model model/*, Locale locale*/) {
-        String page;
+        String page = null;
         try {
-            page = null;
             List<User> users = userService.getAll();
             model.addAttribute("allUsers", users);
         } catch (ServiceException e) {
@@ -129,11 +122,10 @@ public class AdminController {
 
     @RequestMapping(value = "/allrooms", method = RequestMethod.GET)
     public String allRooms(Model model, Locale locale) {
-        String page;
+        String page = null;
         int recordsPerPage = 10;
         int currentPage = 1;
         try {
-            page = null;
             int numberOfPages = roomService.getNumberOfPages(recordsPerPage);
             List<Room> rooms = roomService.getAll(recordsPerPage, currentPage);
             model.addAttribute("allRooms", rooms);
@@ -147,10 +139,9 @@ public class AdminController {
 
     @RequestMapping(value = "/allrooms", method = RequestMethod.GET, params = "currentPage")
     public String allRoomsPag(Model model, @ModelAttribute("currentPage") int currentPage, Locale locale) {
-        String page;
+        String page = null;
         int recordsPerPage = 10;
         try {
-            page = null;
             int numberOfPages = roomService.getNumberOfPages(recordsPerPage);
             List<Room> rooms = roomService.getAll(recordsPerPage, currentPage);
             model.addAttribute("allRooms", rooms);
@@ -197,7 +188,6 @@ public class AdminController {
     public String chooseRoom(Model model, @RequestParam(value = "id") int bookingId,
                              @RequestParam(value = "room") int roomId, Locale locale) {
         String page;
-        System.out.println(bookingId);
         try {
             page = ConfigurationManager.getProperty("path.page.newBooking.bill");
             bookingService.chooseRoom(bookingId, roomId);

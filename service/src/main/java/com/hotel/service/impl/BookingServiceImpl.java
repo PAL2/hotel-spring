@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -77,7 +78,9 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             bookingDAO.chooseRoom(bookingId, roomId);
             booking = bookingDAO.get(bookingId);
             room = roomDAO.get(booking.getRoomId());
-            final Duration duration = Duration.between(booking.getEndDate(), booking.getStartDate());
+            LocalDateTime endDate = booking.getEndDate().atStartOfDay();
+            LocalDateTime startDate = booking.getStartDate().atStartOfDay();
+            Duration duration = Duration.between(startDate, endDate);
             int total = (int) duration.toDays() * room.getPrice();
             accountDAO.addAccount(total, booking);
             LOG.info(booking);

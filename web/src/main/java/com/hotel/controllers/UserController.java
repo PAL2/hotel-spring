@@ -35,22 +35,19 @@ public class UserController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        String page = ConfigurationManager.getProperty("path.page.login.redirect");
-        return page;
+        return ConfigurationManager.getProperty("path.page.login.redirect");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage() {
-        String page = ConfigurationManager.getProperty("path.page.login");
-        return page;
+        return ConfigurationManager.getProperty("path.page.login");
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String logOut(Model model) {
         User user = new User();
         model.addAttribute("regUser", user);
-        String page = ConfigurationManager.getProperty("path.page.reg");
-        return page;
+        return ConfigurationManager.getProperty("path.page.reg");
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
@@ -59,10 +56,9 @@ public class UserController {
         String page;
         try {
             model.addAttribute("regUser", user);
-            System.out.println(user);
             userService.register(user.getFirstName(), user.getLastName(), user.getLogin(), user.getPassword());
             session.setComplete();
-           // model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
+            // model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
             page = ConfigurationManager.getProperty("path.page.login.redirect");
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
