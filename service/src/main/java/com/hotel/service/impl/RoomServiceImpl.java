@@ -92,11 +92,6 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
         }
     }
 
-    @Override
-    public void update(Room entity) throws ServiceException {
-
-    }
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) throws ServiceException {
         try {

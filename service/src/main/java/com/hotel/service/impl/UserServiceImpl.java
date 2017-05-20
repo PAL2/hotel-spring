@@ -94,11 +94,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         }
     }
 
-    @Override
-    public void update(User entity) throws ServiceException {
-
-    }
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) throws ServiceException {
         try {

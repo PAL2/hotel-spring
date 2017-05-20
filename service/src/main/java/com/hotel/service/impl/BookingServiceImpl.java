@@ -214,9 +214,4 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
             throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
-
-    @Override
-    public void update(Booking entity) throws ServiceException {
-
-    }
 }

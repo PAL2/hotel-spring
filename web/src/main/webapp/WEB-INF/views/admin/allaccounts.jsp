@@ -59,7 +59,7 @@
                     <td><c:out value="${booking.accountId}"/></td>
                     <td><c:out value="${booking.status}"/></td>
                     <td><c:forEach items="${allAccounts}" var="account">
-                        <c:if test="${account.accountId==booking.accountId}">${account.summa}$</c:if>
+                        <c:if test="${account.accountId==booking.accountId}">${account.sum}$</c:if>
                     </c:forEach></td>
                 </tr>
             </c:forEach>

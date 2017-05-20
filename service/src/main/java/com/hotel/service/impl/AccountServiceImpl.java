@@ -70,10 +70,6 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         }
     }
 
-    @Override
-    public void update(Account entity) throws ServiceException {
-    }
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int id) throws ServiceException {
         try {

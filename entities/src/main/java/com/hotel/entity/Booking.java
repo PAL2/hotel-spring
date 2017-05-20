@@ -32,7 +32,7 @@ public class Booking extends AbstractEntity {
     private String category;
 
     @Basic
-    @Column(name = "room_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "room_id", insertable = false, updatable = false)
     private Integer roomId;
 
     @Basic
@@ -40,7 +40,7 @@ public class Booking extends AbstractEntity {
     private int userId;
 
     @Basic
-    @Column(name = "account_id", nullable = true, insertable = false, updatable = false)
+    @Column(name = "account_id", insertable = false, updatable = false)
     private Integer accountId;
 
     @Basic
@@ -52,7 +52,7 @@ public class Booking extends AbstractEntity {
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY)

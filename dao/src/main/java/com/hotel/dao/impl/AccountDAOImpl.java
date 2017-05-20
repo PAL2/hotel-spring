@@ -25,11 +25,11 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     }
 
     @Override
-    public void addAccount(int summa, Booking booking) throws DaoException {
+    public void addAccount(int sum, Booking booking) throws DaoException {
         Account account = new Account();
         try {
             Session session = getCurrentSession();
-            account.setSumma(summa);
+            account.setSum(sum);
             booking.setStatus("billed");
             account.setBooking(booking);
             booking.setAccount(account);

@@ -16,7 +16,7 @@ public class Account extends AbstractEntity {
 
     @Basic
     @Column(name = "summa", nullable = false)
-    private int summa;
+    private int sum;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "account")
     private Booking booking;
@@ -24,12 +24,12 @@ public class Account extends AbstractEntity {
     public Account() {
     }
 
-    public Account(int summa) {
-        this.summa = summa;
+    public Account(int sum) {
+        this.sum = sum;
     }
 
-    public Account(int summa, Booking booking) {
-        this.summa = summa;
+    public Account(int sum, Booking booking) {
+        this.sum = sum;
         this.booking = booking;
     }
 
@@ -41,12 +41,12 @@ public class Account extends AbstractEntity {
         this.accountId = accountId;
     }
 
-    public int getSumma() {
-        return summa;
+    public int getSum() {
+        return sum;
     }
 
-    public void setSumma(int summa) {
-        this.summa = summa;
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 
     public Booking getBooking() {
@@ -65,7 +65,7 @@ public class Account extends AbstractEntity {
         Account that = (Account) o;
 
         if (accountId != that.accountId) return false;
-        if (summa != that.summa) return false;
+        if (sum != that.sum) return false;
 
         return true;
     }
@@ -73,7 +73,7 @@ public class Account extends AbstractEntity {
     @Override
     public int hashCode() {
         Integer result = accountId;
-        result = 31 * result + summa;
+        result = 31 * result + sum;
         return result;
     }
 
@@ -81,7 +81,7 @@ public class Account extends AbstractEntity {
     public String toString() {
         return "Account{" +
                 "accountId=" + accountId +
-                ", summa=" + summa +
+                ", summa=" + sum +
                 '}';
     }
 }

@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by Алексей on 19.11.2016.
@@ -39,16 +41,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
      * This method extracts the roles of currently logged-in user and returns
      * appropriate URL according to his/her role.
      */
-    protected String determineTargetUrl(Authentication authentication) {
-        String url = "";
+    private String determineTargetUrl(Authentication authentication) {
+        String url;
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        List<String> roles = new ArrayList<>();
-
-        for (GrantedAuthority a : authorities) {
-            roles.add(a.getAuthority());
-        }
+        List<String> roles = authorities.stream().map((Function<GrantedAuthority, String>) GrantedAuthority::getAuthority).collect(Collectors.toList());
 
         if (isAdmin(roles)) {
             url = "/admin/";
