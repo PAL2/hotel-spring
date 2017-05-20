@@ -1,19 +1,16 @@
 package com.hotel.dao.impl;
 
-import com.hotel.connect.DBUtil;
 import com.hotel.dao.AbstractDAO;
 import com.hotel.dao.RoomDAO;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
-import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,27 +39,23 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
         return rooms;
     }
 
-
-    //TO DO
     @Override
     public List<Room> getAvailableRooms(Booking booking) throws DaoException {
         List<Room> rooms;
-        String query = "(SELECT r.room_id, r.category, r.place, r.price FROM room AS r "
-                + "LEFT JOIN booking AS b ON (b.room_id=r.room_id) LEFT JOIN (SELECT room_id FROM booking AS b "
-                + "WHERE (b.start_date BETWEEN ? AND ? OR b.end_date BETWEEN ? AND ?)) AS v "
-                + "ON (v.room_id=b.room_id) WHERE (r.category=?) AND (r.place=?) AND (b.room_id IS NULL))";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(query)) {
-            ps.setObject(1, booking.getStartDate());
-            ps.setObject(2, booking.getEndDate());
-            ps.setObject(3, booking.getStartDate());
-            ps.setObject(4, booking.getEndDate());
-            ps.setString(5, booking.getCategory());
-            ps.setInt(6, booking.getPlace());
-            try (ResultSet resultSet = ps.executeQuery()) {
-                rooms = resultSetToRoomsList(resultSet);
-            }
-        } catch (SQLException e) {
+        String sqlQuery = "(SELECT r.room_id, r.category, r.place, r.price FROM room AS r "
+                + "LEFT JOIN booking AS b ON (b.room_id=r.room_id) LEFT JOIN (SELECT room_id FROM booking AS b WHERE "
+                + "(b.start_date BETWEEN :startDate AND :endDate OR b.end_date BETWEEN :startDate AND :endDate)) AS v "
+                + "ON (v.room_id=b.room_id) WHERE (r.category=:category) AND (r.place=:place) AND (b.room_id IS NULL))";
+        try {
+            Session session = getCurrentSession();
+            SQLQuery query = session.createSQLQuery(sqlQuery);
+            query.addEntity(Room.class);
+            query.setParameter("startDate", booking.getStartDate());
+            query.setParameter("endDate", booking.getEndDate());
+            query.setParameter("category", booking.getCategory());
+            query.setParameter("place", booking.getPlace());
+            rooms = query.list();
+        } catch (HibernateException e) {
             LOG.error("Unable to create a list of matching numbers. Error in DAO. " + e);
             throw new DaoException("Unable to create a list of matching numbers. Error in DAO. " + e);
         }
