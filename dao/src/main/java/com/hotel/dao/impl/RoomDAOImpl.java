@@ -11,9 +11,6 @@ import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -23,20 +20,6 @@ public class RoomDAOImpl extends AbstractDAO<Room> implements RoomDAO {
     @Autowired
     private RoomDAOImpl(SessionFactory sessionFactory) {
         super(Room.class, sessionFactory);
-    }
-
-    @Override
-    public List<Room> resultSetToRoomsList(ResultSet resultSet) throws SQLException {
-        List<Room> rooms = new ArrayList<>();
-        while (resultSet.next()) {
-            Room room = new Room();
-            room.setRoomId(resultSet.getInt(1));
-            room.setCategory(resultSet.getString(2));
-            room.setPlace(resultSet.getInt(3));
-            room.setPrice(resultSet.getInt(4));
-            rooms.add(room);
-        }
-        return rooms;
     }
 
     @Override
