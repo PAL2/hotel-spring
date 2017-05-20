@@ -43,11 +43,6 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
-    public void update(T entity) throws DaoException {
-
-    }
-
-    @Override
     public void delete(int id) throws DaoException {
         try {
             Session session = getCurrentSession();

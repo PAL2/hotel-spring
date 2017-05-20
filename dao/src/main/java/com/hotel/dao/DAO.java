@@ -12,8 +12,6 @@ public interface DAO<T extends AbstractEntity> {
 
     void save(T entity) throws DaoException;
 
-    void update(T entity) throws DaoException;
-
     void delete(int id) throws DaoException;
 
     List<T> getAll() throws DaoException;
