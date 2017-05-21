@@ -5,6 +5,7 @@ import com.hotel.entity.Account;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -82,8 +82,10 @@ public class AccountDAOImplTest {
     @Test
     public void delete() throws Exception {
         accountDAO.save(accountExpected);
-        accountDAO.delete(accountDAO.getLastGeneratedValue().intValue());
-        assertNull(accountDAO.get(accountDAO.getLastGeneratedValue().intValue()));
+        int lastGeneratedValue = accountDAO.getLastGeneratedValue().intValue();
+        assertNotNull(accountDAO.get(lastGeneratedValue));
+        accountDAO.delete(lastGeneratedValue);
+        assertNull(accountDAO.get(lastGeneratedValue));
     }
 
     @Test
@@ -91,5 +93,11 @@ public class AccountDAOImplTest {
         accountDAO.save(accountExpected);
         accountDAO.save(new Account());
         assertEquals(2, accountDAO.getAll().size());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        accountExpected = null;
+        accountActual = null;
     }
 }
