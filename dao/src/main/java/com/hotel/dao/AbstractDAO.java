@@ -53,7 +53,6 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             LOG.error("Error in DAO " + e);
             throw new DaoException();
         }
-
     }
 
     @Override

@@ -19,9 +19,12 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     private final Logger LOG = Logger.getLogger(BookingDAOImpl.class);
 
     @Autowired
-    private BookingDAOImpl(SessionFactory sessionFactory) {
+    BookingDAOImpl(SessionFactory sessionFactory) {
         super(Booking.class, sessionFactory);
     }
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void addBooking(int userId, int place, String category, LocalDate startDate, LocalDate endDate)
@@ -29,13 +32,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         try {
             Session session = getCurrentSession();
             User user = (User) session.get(User.class, userId);
-            Booking booking = new Booking();
-            booking.setUserId(userId);
-            booking.setPlace(place);
-            booking.setCategory(category);
-            booking.setStartDate(startDate);
-            booking.setEndDate(endDate);
-            booking.setStatus("new");
+            Booking booking = new Booking(startDate, endDate, place, category, userId, "new");
             booking.setUser(user);
             session.save(booking);
         } catch (HibernateException e) {
@@ -62,12 +59,12 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     @Override
     public void chooseRoom(int bookingId, int roomId) throws DaoException {
         try {
-            Session session = getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery("UPDATE Booking B SET B.roomId=:roomId, B.status='billed' " +
                     "WHERE B.bookingId=:bookingId");
-            query.setParameter("roomId", roomId);
-            query.setParameter("bookingId", bookingId);
-            int i = query.executeUpdate();
+            query = query.setParameter("roomId", roomId);
+            query = query.setParameter("bookingId", bookingId);
+            query.executeUpdate();
         } catch (HibernateException e) {
             LOG.error("Failed to assign the appropriate booking number. Error in DAO. " + e);
             throw new DaoException("Failed to assign the appropriate booking number. Error in DAO. " + e);
@@ -92,11 +89,10 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     @Override
     public void rejectBooking(int bookingId) throws DaoException {
         try {
-            Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status=:status WHERE B.bookingId=:bookingId");
-            query.setParameter("status", "rejected");
-            query.setParameter("bookingId", bookingId);
-            query.executeUpdate();
+            Session session = sessionFactory.getCurrentSession();
+            Query query = session.createQuery("UPDATE Booking B SET B.status='rejected' WHERE B.bookingId=:bookingId");
+            Query queryReject = query.setParameter("bookingId", bookingId);
+            queryReject.executeUpdate();
         } catch (HibernateException e) {
             LOG.error("Unable to reject the book. Error in DAO. " + e);
             throw new DaoException("Unable to reject the book. Error in DAO. " + e);
@@ -123,8 +119,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         try {
             Session session = getCurrentSession();
             Query query = session.createQuery("FROM Booking B " +
-                    "WHERE B.accountId!=0 AND B.status=:status AND B.userId=:userId");
-            query.setParameter("status", "billed");
+                    "WHERE B.accountId!=0 AND B.status='billed' AND B.userId=:userId");
             query.setParameter("userId", userId);
             bookings = query.list();
         } catch (HibernateException e) {
@@ -139,8 +134,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void payBooking(int bookingId) throws DaoException {
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status=:status WHERE B.bookingId=:bookingId");
-            query.setString("status", "paid");
+            Query query = session.createQuery("UPDATE Booking B SET B.status='paid' WHERE B.bookingId=:bookingId");
             query.setInteger("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
@@ -153,8 +147,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void refuseBooking(int bookingId) throws DaoException {
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status=:status WHERE B.bookingId=:bookingId");
-            query.setString("status", "refused");
+            Query query = session.createQuery("UPDATE Booking B SET B.status='refused' WHERE B.bookingId=:bookingId");
             query.setInteger("bookingId", bookingId);
             query.executeUpdate();
         } catch (HibernateException e) {
@@ -169,9 +162,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         try {
             Session session = getCurrentSession();
             Query query = session.createQuery("FROM Booking B " +
-                    "WHERE B.accountId!=0 AND (B.status=:paid OR B.status=:refused) AND B.userId=:userId");
-            query.setString("paid", "paid");
-            query.setString("refused", "refused");
+                    "WHERE B.accountId!=0 AND (B.status='paid' OR B.status='refused') AND B.userId=:userId");
             query.setInteger("userId", userId);
             bookings = query.list();
         } catch (HibernateException e) {

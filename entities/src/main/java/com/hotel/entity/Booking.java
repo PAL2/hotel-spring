@@ -61,6 +61,15 @@ public class Booking extends AbstractEntity {
     public Booking() {
     }
 
+    public Booking(LocalDate startDate, LocalDate endDate, int place, String category, int userId, String status) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.place = place;
+        this.category = category;
+        this.userId = userId;
+        this.status = status;
+    }
+
     public Booking(LocalDate startDate, LocalDate endDate, int place, String category, Integer roomId, int userId,
                    Integer accountId, String status, Room room, User user, Account account) {
         this.startDate = startDate;
@@ -75,7 +84,6 @@ public class Booking extends AbstractEntity {
         this.user = user;
         this.account = account;
     }
-
 
     public Integer getBookingId() {
         return bookingId;
