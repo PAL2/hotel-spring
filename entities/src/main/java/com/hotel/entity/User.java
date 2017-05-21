@@ -7,7 +7,6 @@ import java.util.List;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
-@Table(name = "user", schema = "booking")
 public class User extends AbstractEntity {
 
     @Id
@@ -156,7 +155,6 @@ public class User extends AbstractEntity {
                 ", lastName='" + lastName + '\'' +
                 ", userRole='" + userRole + '\'' +
                 ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

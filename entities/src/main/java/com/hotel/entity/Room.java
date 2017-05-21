@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Entity
 @Immutable
-@Table(name = "room", schema = "booking")
 @Cacheable
 @Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
 public class Room extends AbstractEntity {
