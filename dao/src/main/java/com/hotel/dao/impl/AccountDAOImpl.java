@@ -20,9 +20,12 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     private final Logger LOG = Logger.getLogger(AccountDAOImpl.class);
 
     @Autowired
-    private AccountDAOImpl(SessionFactory sessionFactory) {
+    AccountDAOImpl(SessionFactory sessionFactory) {
         super(Account.class, sessionFactory);
     }
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void addAccount(int sum, Booking booking) throws DaoException {
@@ -45,9 +48,9 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
     public List<Account> getAllAccountByUser(int userId) throws DaoException {
         List<Account> accounts;
         try {
-            Session session = getCurrentSession();
+            Session session = sessionFactory.getCurrentSession();
             Query query = session.createQuery("FROM Account WHERE booking.userId=:userId");
-            query.setParameter("userId", userId);
+            query = query.setParameter("userId", userId);
             accounts = query.list();
         } catch (HibernateException e) {
             LOG.error("Unable to create a list of accounts. Error in DAO. " + e);
