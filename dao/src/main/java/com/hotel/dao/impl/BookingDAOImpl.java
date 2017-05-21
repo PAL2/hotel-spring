@@ -63,12 +63,11 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void chooseRoom(int bookingId, int roomId) throws DaoException {
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.roomId=:roomId, B.status=:status " +
+            Query query = session.createQuery("UPDATE Booking B SET B.roomId=:roomId, B.status='billed' " +
                     "WHERE B.bookingId=:bookingId");
             query.setParameter("roomId", roomId);
-            query.setParameter("status", "billed");
             query.setParameter("bookingId", bookingId);
-            query.executeUpdate();
+            int i = query.executeUpdate();
         } catch (HibernateException e) {
             LOG.error("Failed to assign the appropriate booking number. Error in DAO. " + e);
             throw new DaoException("Failed to assign the appropriate booking number. Error in DAO. " + e);
