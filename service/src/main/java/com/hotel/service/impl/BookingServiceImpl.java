@@ -203,15 +203,4 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         }
         return bookings;
     }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(Booking booking) throws ServiceException {
-        try {
-            bookingDAO.save(booking);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-    }
 }

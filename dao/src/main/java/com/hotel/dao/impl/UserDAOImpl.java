@@ -26,22 +26,6 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     }
 
     @Override
-    public User logIn(String login, String password) throws DaoException {
-        User user;
-        try {
-            Session session = getCurrentSession();
-            Query query = session.createQuery("FROM User WHERE login= :login AND password = :password");
-            query.setParameter("login", login);
-            query.setParameter("password", hash(password));
-            user = (User) query.uniqueResult();
-        } catch (HibernateException e) {
-            LOG.error("Unable to login. Error in DAO. " + e);
-            throw new DaoException("Unable to login. Error in DAO. " + e);
-        }
-        return user;
-    }
-
-    @Override
     public User getUserByLogin(String login) throws DaoException {
         User user;
         try {

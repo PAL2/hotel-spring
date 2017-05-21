@@ -7,7 +7,6 @@ import com.hotel.service.exceptions.ServiceException;
  * Created by Алексей on 01.11.2016.
  */
 public interface UserService extends Service<User> {
-    User logIn(String login, String password) throws ServiceException;
 
     User getUserByLogin(String login) throws ServiceException;
 

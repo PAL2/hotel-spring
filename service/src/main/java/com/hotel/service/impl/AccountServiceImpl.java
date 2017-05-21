@@ -37,7 +37,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             accounts = accountDAO.getAll();
             LOG.info(accounts);
             LOG.info(TRANSACTION_SUCCESS);
-        } catch  (DaoException e){
+        } catch (DaoException e) {
             LOG.error(TRANSACTION_FAIL, e);
             throw new ServiceException(TRANSACTION_FAIL, e);
 
@@ -57,17 +57,6 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
             throw new ServiceException(TRANSACTION_FAIL, e);
         }
         return accounts;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(Account account) throws ServiceException {
-        try {
-            accountDAO.save(account);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

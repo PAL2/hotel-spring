@@ -31,20 +31,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public User logIn(String login, String password) throws ServiceException {
-        User user;
-        try {
-            user = userDAO.logIn(login, password);
-            LOG.info(user);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return user;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User getUserByLogin(String login) throws ServiceException {
         User user;
         try {
@@ -76,17 +62,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public void register(String firstName, String lastName, String login, String password) throws ServiceException {
         try {
             userDAO.register(firstName, lastName, login, password);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(User user) throws ServiceException {
-        try {
-            userDAO.save(user);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             LOG.error(TRANSACTION_FAIL, e);
