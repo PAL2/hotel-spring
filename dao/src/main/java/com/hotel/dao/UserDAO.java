@@ -13,7 +13,5 @@ public interface UserDAO extends DAO<User> {
 
     void register(String firstName, String lastName, String login, String password) throws DaoException;
 
-    int getUserId(String login) throws DaoException;
-
     String hash(String input);
 }

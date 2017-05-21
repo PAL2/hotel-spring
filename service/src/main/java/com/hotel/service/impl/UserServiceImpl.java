@@ -104,18 +104,4 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public int getUserId(String login) throws ServiceException {
-        int userId;
-        try {
-            userId = userDAO.getUserId(login);
-            LOG.info(userId);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return userId;
-    }
 }

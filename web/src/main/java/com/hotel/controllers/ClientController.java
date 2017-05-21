@@ -146,7 +146,7 @@ public class ClientController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String login = ((UserDetails) principal).getUsername();
-            userId = userService.getUserId(login);
+            userId = userService.getUserByLogin(login).getUserId();
         }
         return userId;
     }

@@ -89,20 +89,4 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         }
         return md5Hashed;
     }
-
-    @Override
-    public int getUserId(String login) throws DaoException {
-        User user;
-        try {
-            Session session = getCurrentSession();
-            Query query = session.createQuery("FROM User WHERE login= :login");
-            query.setParameter("login", login);
-            user = (User) query.uniqueResult();
-        } catch (HibernateException e) {
-            LOG.error("Unable to login. Error in DAO. " + e);
-            throw new DaoException("Unable to login. Error in DAO. " + e);
-        }
-        return user.getUserId();
-    }
-
 }
