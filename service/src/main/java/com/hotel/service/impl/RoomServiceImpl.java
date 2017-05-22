@@ -92,6 +92,17 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void save(Room room) throws ServiceException {
+        try {
+            roomDAO.save(room);
+            LOG.info(TRANSACTION_SUCCESS);
+        } catch (DaoException e) {
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
+        }
+    }
+
     @Override
     public List<Room> getAll() throws ServiceException {
         return null;

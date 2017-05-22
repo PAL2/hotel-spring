@@ -44,12 +44,7 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     public void register(String firstName, String lastName, String login, String password) throws DaoException {
         try {
             Session session = getCurrentSession();
-            User user = new User();
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setUserRole("client");
-            user.setLogin(login);
-            user.setPassword(hash(password));
+            User user = new User(firstName, lastName, "client", login, hash(password));
             session.save(user);
         } catch (HibernateException e) {
             LOG.error("Could not register. Error in DAO. " + e);

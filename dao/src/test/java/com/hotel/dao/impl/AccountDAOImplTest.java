@@ -32,17 +32,17 @@ import static org.mockito.Mockito.when;
 
 @Transactional
 public class AccountDAOImplTest {
-    Account accountExpected, accountActual;
-    int lastGeneratedValue;
+    private Account accountExpected, accountActual;
+    private int lastGeneratedValue;
 
     @Autowired
-    AccountDAO accountDAO;
+    private AccountDAO accountDAO;
 
     @Mock
     private SessionFactory sessionFactory;
 
     @InjectMocks
-    AccountDAO accountDAOImpl = new AccountDAOImpl(sessionFactory);
+    private AccountDAO accountDAOImpl = new AccountDAOImpl(sessionFactory);
 
     @Mock
     private Session session;

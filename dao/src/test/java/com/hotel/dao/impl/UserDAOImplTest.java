@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 public class UserDAOImplTest {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Test
     public void getUserByLogin() throws Exception {

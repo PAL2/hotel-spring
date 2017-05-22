@@ -33,22 +33,22 @@ import static org.mockito.Mockito.when;
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @Transactional
 public class BookingDAOImplTest {
-    Booking bookingExpected, bookingActual;
+    private Booking bookingExpected, bookingActual;
 
     @Autowired
-    BookingDAO bookingDAO;
+    private BookingDAO bookingDAO;
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    AccountDAO accountDAO;
+    private AccountDAO accountDAO;
 
     @Mock
     private SessionFactory sessionFactory;
 
     @InjectMocks
-    BookingDAO bookingDAOImpl = new BookingDAOImpl(sessionFactory);
+    private BookingDAO bookingDAOImpl = new BookingDAOImpl(sessionFactory);
 
     @Mock
     private Session session;

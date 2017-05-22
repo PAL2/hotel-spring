@@ -10,7 +10,11 @@ import java.util.List;
  */
 public interface Service<T extends AbstractEntity> {
 
+    void save(T entity) throws ServiceException;
+
     void delete(int id) throws ServiceException;
 
     List<T> getAll() throws ServiceException;
+
+    T get(int id) throws ServiceException;
 }

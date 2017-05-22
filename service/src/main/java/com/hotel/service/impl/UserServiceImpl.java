@@ -79,4 +79,15 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             throw new ServiceException(TRANSACTION_FAIL, e);
         }
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void save(User user) throws ServiceException {
+        try {
+            userDAO.save(user);
+            LOG.info(TRANSACTION_SUCCESS);
+        } catch (DaoException e) {
+            LOG.error(TRANSACTION_FAIL, e);
+            throw new ServiceException(TRANSACTION_FAIL, e);
+        }
+    }
 }
