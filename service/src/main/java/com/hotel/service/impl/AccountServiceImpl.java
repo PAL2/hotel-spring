@@ -86,7 +86,6 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         int lastGeneratedValue;
         try {
             lastGeneratedValue = accountDAO.getLastGeneratedValue().intValue();
-            LOG.info(lastGeneratedValue);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             LOG.error(TRANSACTION_FAIL, e);
