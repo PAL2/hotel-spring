@@ -72,7 +72,6 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
         try {
             Long numberOfRecords = roomDAO.getAmount();
             numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
-            LOG.info(numberOfPages);
             LOG.info(TRANSACTION_SUCCESS);
         } catch (DaoException e) {
             LOG.error(TRANSACTION_FAIL, e);
