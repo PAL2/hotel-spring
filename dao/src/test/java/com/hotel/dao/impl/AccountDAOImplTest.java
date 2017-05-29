@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 @Transactional
 public class AccountDAOImplTest {
     private Account accountExpected, accountActual;
-    private int lastGeneratedValue;
+    private int accountId;
 
     @Autowired
     private AccountDAO accountDAO;
@@ -60,7 +60,7 @@ public class AccountDAOImplTest {
     @Test
     public void addAccount() throws Exception {
         accountDAO.save(accountExpected);
-        accountActual = accountDAO.get(accountDAO.getLastGeneratedValue().intValue());
+        accountActual = accountDAO.get(accountExpected.getAccountId());
         assertEquals(accountExpected, accountActual);
     }
 
@@ -83,10 +83,10 @@ public class AccountDAOImplTest {
     @Test
     public void delete() throws Exception {
         accountDAO.save(accountExpected);
-        lastGeneratedValue = accountDAO.getLastGeneratedValue().intValue();
-        assertNotNull(accountDAO.get(lastGeneratedValue));
-        accountDAO.delete(lastGeneratedValue);
-        assertNull(accountDAO.get(lastGeneratedValue));
+        accountId = accountExpected.getAccountId();
+        assertNotNull(accountDAO.get(accountId));
+        accountDAO.delete(accountId);
+        assertNull(accountDAO.get(accountId));
     }
 
     @Test

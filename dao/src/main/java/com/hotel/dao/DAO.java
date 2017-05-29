@@ -3,7 +3,6 @@ package com.hotel.dao;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.AbstractEntity;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -18,6 +17,4 @@ public interface DAO<T extends AbstractEntity> {
     List<T> getAll() throws DaoException;
 
     T get(int id) throws DaoException;
-
-    BigInteger getLastGeneratedValue() throws DaoException;
 }

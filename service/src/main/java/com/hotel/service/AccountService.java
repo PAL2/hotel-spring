@@ -10,6 +10,4 @@ import java.util.List;
  */
 public interface AccountService extends Service<Account> {
     List<Account> getAllAccountByUser(int userId) throws ServiceException;
-    int getLastGeneratedValue() throws ServiceException;
-
-}
+    }

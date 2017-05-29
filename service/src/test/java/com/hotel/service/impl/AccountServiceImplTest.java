@@ -71,17 +71,17 @@ public class AccountServiceImplTest {
     @Test
     public void delete() throws Exception {
         accountService.save(accountExpected);
-        accountActual = accountService.get(accountService.getLastGeneratedValue());
+        accountActual = accountService.get(accountExpected.getAccountId());
         assertNotNull(accountActual);
         accountService.delete(accountExpected.getAccountId());
-        accountActual = accountService.get(accountService.getLastGeneratedValue());
+        accountActual = accountService.get(accountExpected.getAccountId());
         assertNull(accountActual);
     }
 
     @Test
     public void save() throws Exception {
         accountService.save(accountExpected);
-        accountActual = accountService.get(accountService.getLastGeneratedValue());
+        accountActual = accountService.get(accountExpected.getAccountId());
         assertEquals(accountExpected.getSum(), accountActual.getSum());
         assertEquals(accountExpected.getAccountId(), accountActual.getAccountId());
         accountService.delete(accountExpected.getAccountId());
@@ -90,7 +90,7 @@ public class AccountServiceImplTest {
     @Test
     public void get() throws Exception {
         accountService.save(accountExpected);
-        accountActual = accountService.get(accountService.getLastGeneratedValue());
+        accountActual = accountService.get(accountExpected.getAccountId());
         assertEquals(300, accountActual.getSum());
         accountService.delete(accountExpected.getAccountId());
     }

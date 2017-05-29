@@ -75,7 +75,7 @@ public class BookingDAOImplTest {
     @Test
     public void addBooking() throws Exception {
         bookingDAO.save(bookingExpected);
-        bookingActual = bookingDAO.get(bookingDAO.getLastGeneratedValue().intValue());
+        bookingActual = bookingDAO.get(bookingExpected.getBookingId());
         assertEquals(bookingExpected, bookingActual);
     }
 
@@ -105,21 +105,21 @@ public class BookingDAOImplTest {
     public void getAllBookingByUser() throws Exception {
         User user = new User("firstName", "lastName", "client", "login", "password");
         userDAO.save(user);
-        int u = userDAO.getLastGeneratedValue().intValue();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, 1, "new", null, user, null);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, 1, "new", null, user, null);
+        int userId = user.getUserId();
+        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, 1, "new", null, user, null);
+        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, 1, "new", null, user, null);
         bookingDAO.save(bookingExpected);
         bookingDAO.save(bookingActual);
-        assertEquals(2, bookingDAO.getAllBookingByUser(u).size());
+        assertEquals(2, bookingDAO.getAllBookingByUser(userId).size());
     }
 
     @Test
     public void getAllBookingWithAccount() throws Exception {
         Account account = new Account(400, null);
         accountDAO.save(account);
-        int i = accountDAO.getLastGeneratedValue().intValue();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, i, "new", null, null, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, i, "new", null, null, account);
+        int accountId = account.getAccountId();
+        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, accountId, "new", null, null, account);
+        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, accountId, "new", null, null, account);
         bookingDAO.save(bookingExpected);
         bookingDAO.save(bookingActual);
         assertEquals(2, bookingDAO.getAllBookingWithAccount().size());
@@ -129,39 +129,39 @@ public class BookingDAOImplTest {
     public void getAllBookingWithAccountByUser() throws Exception {
         User user = new User("firstName", "lastName", "client", "login", "password");
         userDAO.save(user);
-        int u = userDAO.getLastGeneratedValue().intValue();
+        int userId = user.getUserId();
         Account account = new Account(400, null);
         accountDAO.save(account);
-        int i = accountDAO.getLastGeneratedValue().intValue();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, i, "billed", null, user, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, i, "billed", null, user, account);
+        int accountId = account.getAccountId();
+        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
+        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
         bookingDAO.save(bookingExpected);
         bookingDAO.save(bookingActual);
-        assertEquals(2, bookingDAO.getAllBookingWithAccountByUser(u).size());
+        assertEquals(2, bookingDAO.getAllBookingWithAccountByUser(userId).size());
     }
 
     @Test
     public void getAllBookingWithFinishedAccount() throws Exception {
         User user = new User("firstName", "lastName", "client", "login", "password");
         userDAO.save(user);
-        int u = userDAO.getLastGeneratedValue().intValue();
+        int userId = user.getUserId();
         Account account = new Account(400, null);
         accountDAO.save(account);
-        int i = accountDAO.getLastGeneratedValue().intValue();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, i, "paid", null, user, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, u, i, "refused", null, user, account);
+        int accountId = account.getAccountId();
+        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "paid", null, user, account);
+        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "refused", null, user, account);
         bookingDAO.save(bookingExpected);
         bookingDAO.save(bookingActual);
-        assertEquals(2, bookingDAO.getAllBookingWithFinishedAccount(u).size());
+        assertEquals(2, bookingDAO.getAllBookingWithFinishedAccount(userId).size());
     }
 
     @Test
     public void delete() throws Exception {
         bookingDAO.save(bookingExpected);
-        int lastGeneratedValue = bookingDAO.getLastGeneratedValue().intValue();
-        assertNotNull(bookingDAO.get(lastGeneratedValue));
-        bookingDAO.delete(lastGeneratedValue);
-        assertNull(bookingDAO.get(lastGeneratedValue));
+        int bookingId = bookingExpected.getBookingId();
+        assertNotNull(bookingDAO.get(bookingId));
+        bookingDAO.delete(bookingId);
+        assertNull(bookingDAO.get(bookingId));
     }
 
     @Test

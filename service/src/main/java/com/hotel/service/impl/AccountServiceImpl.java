@@ -82,19 +82,6 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public int getLastGeneratedValue() throws ServiceException {
-        int lastGeneratedValue;
-        try {
-            lastGeneratedValue = accountDAO.getLastGeneratedValue().intValue();
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return lastGeneratedValue;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public Account get(int id) throws ServiceException {
         Account account;
         try {

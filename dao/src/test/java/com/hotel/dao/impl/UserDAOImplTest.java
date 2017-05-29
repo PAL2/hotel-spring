@@ -33,8 +33,8 @@ public class UserDAOImplTest {
     @Test
     public void register() throws Exception {
         userDAO.register("firstName", "lastName", "login", "password");
-        User userActual = userDAO.get(userDAO.getLastGeneratedValue().intValue());
-        assertEquals("firstName", userActual.getFirstName());
+        User userActual = userDAO.getUserByLogin("login");
+        assertEquals("lastName", userActual.getLastName());
     }
 
     @Test
@@ -48,10 +48,10 @@ public class UserDAOImplTest {
     public void delete() throws Exception {
         User userExpected = new User("firstName", "lastName", "client", "login", "password");
         userDAO.save(userExpected);
-        int lastGeneratedValue = userDAO.getLastGeneratedValue().intValue();
-        assertNotNull(userDAO.get(lastGeneratedValue));
-        userDAO.delete(lastGeneratedValue);
-        assertNull(userDAO.get(lastGeneratedValue));
+        int userId = userExpected.getUserId();
+        assertNotNull(userDAO.get(userId));
+        userDAO.delete(userId);
+        assertNull(userDAO.get(userId));
     }
 
     @Test

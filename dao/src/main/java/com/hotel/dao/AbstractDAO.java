@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -78,17 +77,5 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             throw new DaoException();
         }
         return entity;
-    }
-
-    public BigInteger getLastGeneratedValue() throws DaoException {
-        BigInteger lastId;
-        try {
-            Session session = getCurrentSession();
-            lastId = (BigInteger) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult();
-        } catch (HibernateException e) {
-            LOG.error("Error in DAO " + e);
-            throw new DaoException();
-        }
-        return lastId;
     }
 }
