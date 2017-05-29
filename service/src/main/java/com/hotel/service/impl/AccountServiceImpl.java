@@ -30,7 +30,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         this.accountDAO = accountDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Account> getAll() throws ServiceException {
         List<Account> accounts;
         try {
@@ -45,7 +45,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         return accounts;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Account> getAllAccountByUser(int userId) throws ServiceException {
         List<Account> accounts;
         try {
@@ -81,7 +81,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         }
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public int getLastGeneratedValue() throws ServiceException {
         int lastGeneratedValue;
         try {
@@ -94,7 +94,7 @@ public class AccountServiceImpl extends AbstractService<Account> implements Acco
         return lastGeneratedValue;
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public Account get(int id) throws ServiceException {
         Account account;
         try {

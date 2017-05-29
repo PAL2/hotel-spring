@@ -42,7 +42,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         this.bookingDAO = bookingDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithAccount() throws ServiceException {
         List<Booking> bookings;
         try {
@@ -56,7 +56,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         return bookings;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAll() throws ServiceException {
         List<Booking> bookings;
         try {
@@ -103,7 +103,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllNewBooking() throws ServiceException {
         List<Booking> bookings;
         try {
@@ -128,7 +128,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithFinishedAccount(int userId) throws ServiceException {
         List<Booking> bookings;
         try {
@@ -142,7 +142,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         return bookings;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingByUser(int userId) throws ServiceException {
         List<Booking> bookings;
         try {
@@ -190,7 +190,7 @@ public class BookingServiceImpl extends AbstractService<Booking> implements Book
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException {
         List<Booking> bookings;
         try {

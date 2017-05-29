@@ -35,7 +35,7 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
         this.roomDAO = roomDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Room> getAll(int recordsPerPage, int currentPage) throws ServiceException {
         List<Room> rooms;
         try {
@@ -49,7 +49,7 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
         return rooms;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Room> getAvailableRooms(int bookingId) throws ServiceException {
         Booking booking;
         List<Room> rooms;
@@ -104,6 +104,7 @@ public class RoomServiceImpl extends AbstractService<Room> implements RoomServic
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Room> getAll() throws ServiceException {
         return null;
     }

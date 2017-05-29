@@ -30,7 +30,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         this.userDAO = userDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public User getUserByLogin(String login) throws ServiceException {
         User user;
         try {
@@ -44,7 +44,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         return user;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<User> getAll() throws ServiceException {
         List<User> users;
         try {
