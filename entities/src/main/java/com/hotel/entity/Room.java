@@ -1,11 +1,10 @@
 package com.hotel.entity;
 
-import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
 @Entity
 @Immutable
 @Cacheable
-@Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
 public class Room extends AbstractEntity {
 
     @Id
@@ -35,7 +34,7 @@ public class Room extends AbstractEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     @Immutable
-    @Cache(usage =CacheConcurrencyStrategy.READ_ONLY, region = "room")
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "room")
     private List<Booking> bookingEntities;
 
     public Room() {
