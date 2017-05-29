@@ -3,7 +3,6 @@ package com.hotel.dao;
 import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.AbstractEntity;
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,8 +59,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
         List<T> results;
         try {
             Session session = getCurrentSession();
-            Criteria criteria = session.createCriteria(pClass);
-            results = criteria.list();
+            results = session.createCriteria(pClass).list();
         } catch (HibernateException e) {
             LOG.error("Error in DAO " + e);
             throw new DaoException();
