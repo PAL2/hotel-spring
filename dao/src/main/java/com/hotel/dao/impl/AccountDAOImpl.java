@@ -7,7 +7,6 @@ import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,8 @@ public class AccountDAOImpl extends AbstractDAO<Account> implements AccountDAO {
         List<Account> accounts;
         try {
             Session session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery("FROM Account WHERE booking.userId=:userId");
-            query = query.setParameter("userId", userId);
-            accounts = query.list();
+            accounts = session.createQuery("FROM Account WHERE booking.userId=:userId")
+                    .setParameter("userId", userId).list();
         } catch (HibernateException e) {
             LOG.error("Unable to create a list of accounts. Error in DAO. " + e);
             throw new DaoException("Unable to create a list of accounts. Error in DAO. " + e);

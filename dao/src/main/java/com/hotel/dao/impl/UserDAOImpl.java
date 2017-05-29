@@ -6,7 +6,6 @@ import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.User;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,8 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         User user;
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("FROM User WHERE login= :login");
-            query.setParameter("login", login);
-            user = (User) query.uniqueResult();
+            user = (User) session.createQuery("FROM User WHERE login= :login")
+                    .setParameter("login", login).uniqueResult();
         } catch (HibernateException e) {
             LOG.error("Unable to login. Error in DAO. " + e);
             throw new DaoException("Unable to login. Error in DAO. " + e);

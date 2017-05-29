@@ -6,7 +6,10 @@ import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import org.apache.log4j.Logger;
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -46,9 +49,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         List<Booking> bookings;
         try {
             Session session = getCurrentSession();
-            Criteria criteria = session.createCriteria(Booking.class);
-            criteria.add(Restrictions.eq("status", "new"));
-            bookings = criteria.list();
+            bookings = session.createCriteria(Booking.class).add(Restrictions.eq("status", "new")).list();
         } catch (HibernateException e) {
             LOG.error("Failed to create a list of bookings. Error in DAO. " + e);
             throw new DaoException("Failed to create a list of bookings. Error in DAO. " + e);
@@ -76,9 +77,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         List<Booking> bookings;
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("FROM Booking B WHERE B.userId=:userId");
-            query.setParameter("userId", userId);
-            bookings = query.list();
+            bookings = session.createQuery("FROM Booking B WHERE B.userId=:userId")
+                    .setParameter("userId", userId).list();
         } catch (HibernateException e) {
             LOG.error("Failed to create a list bookings. Error in DAO. " + e);
             throw new DaoException("Failed to create a list bookings. Error in DAO. " + e);
@@ -90,9 +90,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void rejectBooking(int bookingId) throws DaoException {
         try {
             Session session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status='rejected' WHERE B.bookingId=:bookingId");
-            Query queryReject = query.setParameter("bookingId", bookingId);
-            queryReject.executeUpdate();
+            session.createQuery("UPDATE Booking B SET B.status='rejected' WHERE B.bookingId=:bookingId")
+                    .setParameter("bookingId", bookingId).executeUpdate();
         } catch (HibernateException e) {
             LOG.error("Unable to reject the book. Error in DAO. " + e);
             throw new DaoException("Unable to reject the book. Error in DAO. " + e);
@@ -104,8 +103,7 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         List<Booking> bookings;
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("FROM Booking B WHERE B.accountId!=0");
-            bookings = query.list();
+            bookings = session.createQuery("FROM Booking B WHERE B.accountId!=0").list();
         } catch (HibernateException e) {
             LOG.error("Failed to create a list of bookings with the invoice. Error in DAO. " + e);
             throw new DaoException("Failed to create a list of bookings with the invoice. Error in DAO. " + e);
@@ -118,10 +116,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         List<Booking> bookings;
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("FROM Booking B " +
-                    "WHERE B.accountId!=0 AND B.status='billed' AND B.userId=:userId");
-            query.setParameter("userId", userId);
-            bookings = query.list();
+            bookings = session.createQuery("FROM Booking B WHERE B.accountId!=0 AND B.status='billed'" +
+                    "AND B.userId=:userId").setParameter("userId", userId).list();
         } catch (HibernateException e) {
             LOG.error("Failed to create a list of bookings with the invoice for the customer. Error in DAO. " + e);
             throw new DaoException("Failed to create a list of bookings with the invoice for the customer. " +
@@ -134,9 +130,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void payBooking(int bookingId) throws DaoException {
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status='paid' WHERE B.bookingId=:bookingId");
-            query.setInteger("bookingId", bookingId);
-            query.executeUpdate();
+            session.createQuery("UPDATE Booking B SET B.status='paid' WHERE B.bookingId=:bookingId")
+                    .setInteger("bookingId", bookingId).executeUpdate();
         } catch (HibernateException e) {
             LOG.error("Unable to pay for a booking. Error in DAO. " + e);
             throw new DaoException("Unable to pay for a booking. Error in DAO. " + e);
@@ -147,9 +142,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
     public void refuseBooking(int bookingId) throws DaoException {
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Booking B SET B.status='refused' WHERE B.bookingId=:bookingId");
-            query.setInteger("bookingId", bookingId);
-            query.executeUpdate();
+            session.createQuery("UPDATE Booking B SET B.status='refused' WHERE B.bookingId=:bookingId")
+                    .setInteger("bookingId", bookingId).executeUpdate();
         } catch (HibernateException e) {
             LOG.error("The client was unable to refuse the book. Error in DAO. " + e);
             throw new DaoException("The client was unable to refuse the book. Error in DAO. " + e);
@@ -161,10 +155,8 @@ public class BookingDAOImpl extends AbstractDAO<Booking> implements BookingDAO {
         List<Booking> bookings;
         try {
             Session session = getCurrentSession();
-            Query query = session.createQuery("FROM Booking B " +
-                    "WHERE B.accountId!=0 AND (B.status='paid' OR B.status='refused') AND B.userId=:userId");
-            query.setInteger("userId", userId);
-            bookings = query.list();
+            bookings = session.createQuery("FROM Booking B WHERE B.accountId!=0 AND " +
+                    "(B.status='paid' OR B.status='refused') AND B.userId=:userId").setInteger("userId", userId).list();
         } catch (HibernateException e) {
             LOG.error("Failed to create a list of fully processed bookings. Error in DAO. " + e);
             throw new DaoException("Failed to create a list of fully processed bookings. Error in DAO. " + e);
