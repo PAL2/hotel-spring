@@ -37,6 +37,7 @@
         <tomcat.maven.plugin.version>1.1</tomcat.maven.plugin.version>
         <spring.version>4.3.4.RELEASE</spring.version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
+        <spring.jmx.version>2.0.8</spring.jmx.version>
         <pool.version>2.1.1</pool.version>
         <aspectj.version>1.8.9</aspectj.version>
         <tiles.version>3.0.5</tiles.version>
@@ -242,6 +243,13 @@
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
                 <version>${javax.persistence.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-jmx -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jmx</artifactId>
+                <version>${spring.jmx.version}</version>
+            </dependency>
+
 
 
         </dependencies>
