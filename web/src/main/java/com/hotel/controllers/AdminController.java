@@ -16,6 +16,7 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedOperationParameters;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,7 @@ import java.util.Locale;
  * Created by Алексей on 13.11.2016.
  */
 
-@org.springframework.stereotype.Controller
+@Controller
 @RequestMapping("/admin")
 @ManagedResource(objectName = "bean:name=adminController")
 public class AdminController {
