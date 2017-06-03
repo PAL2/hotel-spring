@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:s="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <head>
+        <title><s:message code="page.error"/></title>
+    </head>
+    Request from ${pageContext.errorData.requestURI} is failed
+    <br/>
+    Servlet name or type: ${pageContext.errorData.servletName}
+    <br/>
+    Status code: ${pageContext.errorData.statusCode}
+    <br/>
+    Exception: ${pageContext.errorData.Throwable}
+    <br/>--%>
+    <a href="http://localhost:8080/hotel/login"><s:message code="page.main"/></a>
+</div>
