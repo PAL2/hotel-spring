@@ -23,7 +23,7 @@
             <form:input path="lastName"/>
         </div>
         <div>
-            <label for="login"><s:message code="page.login"/>:</label><br>
+            <label for="login"><s:message code="page.login.login"/>:</label><br>
             <form:input path="login"/>
         </div>
         <div>
