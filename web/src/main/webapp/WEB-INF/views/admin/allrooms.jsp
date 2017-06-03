@@ -11,7 +11,7 @@
 <body>
 <h2><s:message code="page.admin.all.rooms"/></h2>
 <div style="width: 1100px;">
-    <div style="float: left; width: 180px;">
+    <div style="float: left; width: 200px;">
         <br>
         <li><a href="${pageContext.request.contextPath}/admin/newbooking"><s:message
                 code="page.admin.new.bookings"/></a></li>
@@ -26,7 +26,7 @@
         <br>
         <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
     </div>
-    <div style="float: right; width: 920px">
+    <div style="float: right; width: 900px">
         <table border="1">
             <thead align="center">
             <tr>

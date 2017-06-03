@@ -11,7 +11,7 @@
 <body>
 <h2><s:message code="page.client.accounts.unpaid"/></h2>
 <div style="width: 1100px;">
-    <div style="float: left; width: 180px;">
+    <div style="float: left; width: 220px;">
         <br>
         <li><a href="${pageContext.request.contextPath}/client/mybookings"><s:message
                 code="page.client.bookings"/></a></li>
@@ -24,43 +24,50 @@
         <br>
         <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
     </div>
-    <div style="float: right; width: 920px">
-        <table border="1">
-            <thead align="center">
-            <tr>
-                <th><s:message code="page.table.check-in"/></th>
-                <th><s:message code="page.table.check-out"/></th>
-                <th><s:message code="page.table.place"/></th>
-                <th><s:message code="page.table.category"/></th>
-                <th><s:message code="page.table.room.id"/></th>
-                <th><s:message code="page.table.account.id"/></th>
-                <th><s:message code="page.table.status"/></th>
-                <th><s:message code="page.table.summa"/></th>
-                <th colspan="1"><s:message code="page.table.action"/></th>
-            </tr>
-            </thead>
-            <tbody align="center">
-            <c:forEach items="${bookingByUser}" var="booking">
-                <tr>
-                    <td><c:out value="${booking.startDate}"/></td>
-                    <td><c:out value="${booking.endDate}"/></td>
-                    <td><c:out value="${booking.place}"/></td>
-                    <td><c:out value="${booking.category}"/></td>
-                    <td><c:out value="${booking.roomId}"/></td>
-                    <td><c:out value="${booking.accountId}"/></td>
-                    <td><c:out value="${booking.status}"/></td>
-                    <td><c:forEach items="${accountById}" var="account">
-                        <c:if test="${account.accountId==booking.accountId}">${account.sum}$</c:if>
-                    </c:forEach></td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/client/unpaidaccounts?id=${booking.bookingId}"><s:message
-                                code="page.client.pay"/></a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+    <c:choose>
+        <c:when test="${not empty bookingByUser}">
+            <div style="float: right; width: 880px">
+                <table border="1">
+                    <thead align="center">
+                    <tr>
+                        <th><s:message code="page.table.check-in"/></th>
+                        <th><s:message code="page.table.check-out"/></th>
+                        <th><s:message code="page.table.place"/></th>
+                        <th><s:message code="page.table.category"/></th>
+                        <th><s:message code="page.table.room.id"/></th>
+                        <th><s:message code="page.table.account.id"/></th>
+                        <th><s:message code="page.table.status"/></th>
+                        <th><s:message code="page.table.summa"/></th>
+                        <th colspan="1"><s:message code="page.table.action"/></th>
+                    </tr>
+                    </thead>
+                    <tbody align="center">
+                    <c:forEach items="${bookingByUser}" var="booking">
+                        <tr>
+                            <td><c:out value="${booking.startDate}"/></td>
+                            <td><c:out value="${booking.endDate}"/></td>
+                            <td><c:out value="${booking.place}"/></td>
+                            <td><c:out value="${booking.category}"/></td>
+                            <td><c:out value="${booking.roomId}"/></td>
+                            <td><c:out value="${booking.accountId}"/></td>
+                            <td><c:out value="${booking.status}"/></td>
+                            <td><c:forEach items="${accountById}" var="account">
+                                <c:if test="${account.accountId==booking.accountId}">${account.sum}$</c:if>
+                            </c:forEach></td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/client/unpaidaccounts?id=${booking.bookingId}"><s:message
+                                        code="page.client.pay"/></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <h3>Нет неоплаченный счетов</h3>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

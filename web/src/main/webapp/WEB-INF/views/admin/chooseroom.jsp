@@ -9,31 +9,33 @@
     <title>Choose a room</title>
 </head>
 <body>
-<table border="1">
-    <thead align="center">
-    <tr>
-        <th>№</th>
-        <th><s:message code="page.table.category"/></th>
-        <th><s:message code="page.table.place"/></th>
-        <th><s:message code="page.table.price"/></th>
-        <th><s:message code="page.table.action"/></th>
-    </tr>
-    </thead>
-    <tbody align="center">
-    <c:forEach items="${availableRooms}" var="room">
+<c:if test="${not empty availableRooms}">
+    <table border="1">
+        <thead align="center">
         <tr>
-            <td><c:out value="${room.roomId}"/></td>
-            <td><c:out value="${room.category}"/></td>
-            <td><c:out value="${room.place}"/></td>
-            <td><c:out value="${room.price}"/></td>
-            <td>
-                <a href="${pageContext.request.contextPath}/admin/chooseroom?id=${id}&room=${room.roomId}">
-                    <s:message code="page.admin.action.bill"/></a>
-            </td>
+            <th>№</th>
+            <th><s:message code="page.table.category"/></th>
+            <th><s:message code="page.table.place"/></th>
+            <th><s:message code="page.table.price"/></th>
+            <th><s:message code="page.table.action"/></th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody align="center">
+        <c:forEach items="${availableRooms}" var="room">
+            <tr>
+                <td><c:out value="${room.roomId}"/></td>
+                <td><c:out value="${room.category}"/></td>
+                <td><c:out value="${room.place}"/></td>
+                <td><c:out value="${room.price}"/></td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/admin/chooseroom?id=${id}&room=${room.roomId}">
+                        <s:message code="page.admin.action.bill"/></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
 <br>
 <a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a>
 </form>
