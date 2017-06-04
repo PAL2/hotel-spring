@@ -9,23 +9,8 @@
         <title><s:message code="page.admin.all.users"/></title>
     </head>
     <h2><s:message code="page.admin.all.users"/></h2>
-    <div style="width: 1100px;">
-        <div style="float: left; width: 200px;">
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/admin/newbooking"><s:message
-                    code="page.admin.new.bookings"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/allbookings"><s:message
-                    code="page.admin.all.bookings"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/allaccounts"><s:message
-                    code="page.admin.all.accounts"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/allusers"><s:message
-                    code="page.admin.all.users"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/allrooms"><s:message
-                    code="page.admin.all.rooms"/></a></li>
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
-        </div>
-        <div style="float: right; width: 900px">
+    <div>
+        <div>
             <table border="1">
                 <thead align="center">
                 <tr>

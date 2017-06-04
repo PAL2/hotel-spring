@@ -9,23 +9,10 @@
         <title><s:message code="page.client.bookings"/></title>
     </head>
     <h2><s:message code="page.client.bookings"/></h2>
-    <div style="width: 1100px;">
-        <div style="float: left; width: 220px;">
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/client/mybookings"><s:message
-                    code="page.client.bookings"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/unpaidaccounts"><s:message
-                    code="page.client.accounts.unpaid"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/myaccounts"><s:message
-                    code="page.client.accounts"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/order"><s:message
-                    code="page.client.to.booking"/></a></li>
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
-        </div>
+    <div>
         <c:choose>
             <c:when test="${not empty bookingByUser}">
-                <div style="float: right; width: 880px">
+                <div>
                     <table border="1">
                         <thead align="center">
                         <tr>
@@ -57,7 +44,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <h3>Нет бронирований номеров</h3>
+                <h3><s:message code="page.client.no.bookings"/></h3>
             </c:otherwise>
         </c:choose>
     </div>

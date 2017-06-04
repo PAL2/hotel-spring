@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2 .1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="default" template="/WEB-INF/views/layouts/default_layout.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/header.jspx"/>
+        <put-attribute name="greeting" value="/WEB-INF/views/greeting.jspx"/>
+    </definition>
+
+    <definition name="login" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/login.jspx"/>
+    </definition>
+
+    <definition name="error" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/error/error.jspx"/>
+    </definition>
+
+    <definition name="errordatabase" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/error/errordatabase.jspx"/>
+    </definition>
+
+    <definition name="accessDenied" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/error/accessDenied.jspx"/>
+    </definition>
+
+    <definition name="index" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
+    </definition>
+
+    <definition name="reg" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/reg.jspx"/>
+    </definition>
+
+    <definition name="admin" template="/WEB-INF/views/layouts/admin_layout.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/header.jspx"/>
+        <put-attribute name="greeting" value="/WEB-INF/views/greeting.jspx"/>
+        <put-attribute name="menu_admin" value="/WEB-INF/views/menu/menu_admin.jspx"/>
+    </definition>
+
+    <definition name="admin/newbooking" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/newbooking.jspx"/>
+    </definition>
+
+    <definition name="admin/allaccounts" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/allaccounts.jspx"/>
+    </definition>
+
+    <definition name="admin/allrooms" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/allrooms.jspx"/>
+    </definition>
+
+    <definition name="admin/allbookings" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/allbookings.jspx"/>
+    </definition>
+
+    <definition name="admin/chooseroom" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/chooseroom.jspx"/>
+    </definition>
+
+    <definition name="admin/allusers" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/allusers.jspx"/>
+    </definition>
+
+    <definition name="client" template="/WEB-INF/views/layouts/client_layout.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/header.jspx"/>
+        <put-attribute name="greeting" value="/WEB-INF/views/greeting.jspx"/>
+        <put-attribute name="menu_client" value="/WEB-INF/views/menu/menu_client.jspx"/>
+    </definition>
+
+    <definition name="client/myaccounts" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/myaccounts.jspx"/>
+    </definition>
+
+    <definition name="client/mybookings" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/mybookings.jspx"/>
+    </definition>
+
+    <definition name="client/order" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/order.jspx"/>
+    </definition>
+
+    <definition name="client/unpaidaccounts" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/unpaidaccounts.jspx"/>
+    </definition>
+
+</tiles-definitions>

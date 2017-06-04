@@ -7,21 +7,6 @@
     <head>
         <title>Log in</title>
     </head>
-    <div class="header">
-        <div style="float: left;">
-            <table>
-                <tr>
-                    <td style="padding: 5px;">
-                        <a href="?locale=ru">Ru</a>
-                    </td>
-                    <td style="padding: 5px;">
-                        <a href="?locale=en">En</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <br/>
 
     <h3>${regSuccess}</h3>
     <s:url value="/j_spring_security_check" var="authUrl"/>
@@ -46,6 +31,6 @@
 
     </form>
     <br/>
-    <a href="http://localhost:8080/hotel/reg"><s:message code="page.login.reg"/></a>
+    <a href="${pageContext.request.contextPath}/reg"><s:message code="page.login.reg"/></a>
 
 </div>

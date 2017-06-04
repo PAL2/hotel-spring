@@ -1,0 +1,17 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:tiles="http://tiles.apache.org/tags-tiles"
+>
+<jsp:output doctype-root-element="HTML"
+            doctype-system="about:legacy-compat"/>
+<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+<jsp:directive.page pageEncoding="UTF-8"/>
+<div style="width: 1000px; margin: 0 auto 0px;">
+    <div>
+        <tiles:insertAttribute name="header" ignore="true"/>
+    </div>
+    <br/>
+    <div>
+        <tiles:insertAttribute name="body"/>
+    </div>
+</div>
+</html>

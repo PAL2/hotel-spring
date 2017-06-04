@@ -236,6 +236,23 @@ public class AdminController {
     @ManagedOperation
     @ManagedOperationParameters({
             @ManagedOperationParameter(name = "model", description = "Model"),
+            @ManagedOperationParameter(name = "locale", description = "Locale")
+    })
+    @RequestMapping(value = "/chooseroom", method = RequestMethod.GET)
+    public String chooseRoom(Model model, Locale locale) {
+        String page;
+        try {
+            page = ConfigurationManager.getProperty("path.page.chooseRoom");
+        } catch (Exception e) {
+            page = ConfigurationManager.getProperty("path.page.errorDatabase");
+            model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
+        }
+        return page;
+    }
+
+    @ManagedOperation
+    @ManagedOperationParameters({
+            @ManagedOperationParameter(name = "model", description = "Model"),
             @ManagedOperationParameter(name = "bookingId", description = "Booking Id"),
             @ManagedOperationParameter(name = "roomId", description = "Room Id"),
             @ManagedOperationParameter(name = "locale", description = "Locale")

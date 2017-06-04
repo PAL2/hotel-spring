@@ -9,22 +9,7 @@
         <title><s:message code="page.client.order"/></title>
     </head>
     <h2><s:message code="page.client.order"/></h2>
-    <div style="width: 1000px;">
-        <div style="float: left; width: 220px;">
-            <br/>
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/client/mybookings"><s:message
-                    code="page.client.bookings"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/unpaidaccounts"><s:message
-                    code="page.client.accounts.unpaid"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/myaccounts"><s:message
-                    code="page.client.accounts"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/client/order"><s:message
-                    code="page.client.to.booking"/></a></li>
-            <br/>
-            <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>
-        </div>
-        <div style="float: right; width: 780px">
+    <div style="width: 215px;">
             <form:form method="post">
                 <fieldset>
                     <h3>${roomSuccess}</h3>
@@ -65,6 +50,5 @@
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
             </form:form>
-        </div>
     </div>
 </div>

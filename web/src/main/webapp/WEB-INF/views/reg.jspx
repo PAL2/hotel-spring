@@ -8,7 +8,8 @@
     <head>
         <title><s:message code="page.login.reg"/></title>
     </head>
-    <form:form modelAttribute="regUser" method="POST">
+    <br/>
+    <form:form modelAttribute="regUser" method="POST" cssStyle="width: 250px">
         <fieldset>
             <div>
                 <label for="firstName"><s:message code="page.table.name"/>:</label>
