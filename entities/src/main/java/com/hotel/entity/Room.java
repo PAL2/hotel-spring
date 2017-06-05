@@ -20,15 +20,12 @@ public class Room extends AbstractEntity {
     @Column(name = "room_id", nullable = false, unique = true)
     private Integer roomId;
 
-    @Basic
     @Column(name = "category", nullable = false, length = 50)
     private String category;
 
-    @Basic
     @Column(name = "place", nullable = false)
     private int place;
 
-    @Basic
     @Column(name = "price", nullable = false)
     private int price;
 

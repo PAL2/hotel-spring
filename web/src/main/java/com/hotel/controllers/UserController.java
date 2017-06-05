@@ -12,13 +12,14 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Locale;
 
 /**
@@ -52,15 +53,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("regUser") User user,
-                               ModelMap model, SessionStatus session, Locale locale) {
+    public String registration(@ModelAttribute("regUser") @Valid User user, BindingResult bindingResult,
+                               ModelMap model, Locale locale) {
+        if (bindingResult.hasErrors()) {
+            return ConfigurationManager.getProperty("path.page.reg");
+        }
         String page;
         try {
-            model.addAttribute("regUser", user);
             userService.register(user.getFirstName(), user.getLastName(), user.getLogin(), user.getPassword());
-            session.setComplete();
-            // model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
-            page = ConfigurationManager.getProperty("path.page.login.redirect");
+            model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
+            page = ConfigurationManager.getProperty("path.page.login");
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));

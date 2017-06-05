@@ -14,35 +14,27 @@ public class Booking extends AbstractEntity {
     @Column(name = "booking_id", nullable = false, unique = true)
     private Integer bookingId;
 
-    @Basic
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Basic
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Basic
     @Column(name = "place", nullable = false)
     private int place;
 
-    @Basic
     @Column(name = "category", nullable = false, length = 50)
     private String category;
 
-    @Basic
     @Column(name = "room_id", insertable = false, updatable = false)
     private Integer roomId;
 
-    @Basic
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private int userId;
 
-    @Basic
     @Column(name = "account_id", insertable = false, updatable = false)
     private Integer accountId;
 
-    @Basic
     @Column(name = "status", nullable = false, length = 50)
     private String status;
 

@@ -1,6 +1,9 @@
 package com.hotel.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -14,23 +17,26 @@ public class User extends AbstractEntity {
     @Column(name = "user_id", nullable = false)
     private int userId;
 
-    @Basic
+    @NotEmpty(message = "{validation.firstName.NotEmpty.message}")
+    @Size(min = 2, max = 30, message = "{validation.firstName.Size.message}")
     @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 
-    @Basic
+    @NotEmpty(message = "{validation.lastName.NotEmpty.message}")
+    @Size(min = 2, max = 30, message = "{validation.lastName.Size.message}")
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @Basic
     @Column(name = "user_role", nullable = false, length = 50)
     private String userRole;
 
-    @Basic
+    @NotEmpty(message = "{validation.login.NotEmpty.message}")
+    @Size(min = 2, max = 30, message = "{validation.login.Size.message}")
     @Column(name = "login", nullable = false, length = 20)
     private String login;
 
-    @Basic
+    @NotEmpty(message = "{validation.password.NotEmpty.message}")
+    @Size(min = 2, max = 40, message = "{validation.password.Size.message}")
     @Column(name = "password", nullable = false, length = 355)
     private String password;
 

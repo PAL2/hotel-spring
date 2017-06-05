@@ -31,6 +31,7 @@
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <junit.version>4.12</junit.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
+        <hibernate.validation.service>5.4.1.Final</hibernate.validation.service>
         <ehcache.version>2.6.9</ehcache.version>
         <slf4j.version>1.7.21</slf4j.version>
         <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
@@ -44,6 +45,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <mockito.version>2.7.22</mockito.version>
         <javax.persistence.version>1.0.0.Final</javax.persistence.version>
+        <javax.validation.version>1.1.0.Final</javax.validation.version>
     </properties>
 
     <dependencyManagement>
@@ -243,14 +245,26 @@
                 <artifactId>hibernate-jpa-2.1-api</artifactId>
                 <version>${javax.persistence.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.validation.service}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.springframework/spring-jmx -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jmx</artifactId>
                 <version>${spring.jmx.version}</version>
             </dependency>
-
-
 
         </dependencies>
     </dependencyManagement>

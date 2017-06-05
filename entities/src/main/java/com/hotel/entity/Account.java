@@ -13,7 +13,6 @@ public class Account extends AbstractEntity {
     @Column(name = "account_id", nullable = false, unique = true)
     private Integer accountId;
 
-    @Basic
     @Column(name = "summa", nullable = false)
     private int sum;
 

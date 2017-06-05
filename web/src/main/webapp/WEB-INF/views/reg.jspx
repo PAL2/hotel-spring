@@ -9,29 +9,37 @@
         <title><s:message code="page.login.reg"/></title>
     </head>
     <br/>
-    <form:form modelAttribute="regUser" method="POST" cssStyle="width: 250px">
+    <form:form modelAttribute="regUser" method="POST" cssStyle="width: 200px">
         <fieldset>
             <div>
                 <label for="firstName"><s:message code="page.table.name"/>:</label>
                 <br/>
                 <form:input path="firstName"/>
+                <form:errors path="firstName" cssStyle="color: red"/>
             </div>
             <div>
+                <br/>
                 <label for="lastName"><s:message code="page.table.last.name"/>:</label>
                 <br/>
                 <form:input path="lastName"/>
+                <form:errors path="lastName"/>
             </div>
             <div>
+                <br/>
                 <label for="login"><s:message code="page.login.login"/>:</label>
                 <br/>
                 <form:input path="login"/>
+                <form:errors path="login"/>
             </div>
             <div>
+                <br/>
                 <label for="password"><s:message code="page.login.password"/>:</label>
                 <br/>
-                <form:password path="password"/>
+                <form:input path="password"/>
+                <form:errors path="password"/>
             </div>
-            <div>
+            <br/>
+            <div style="text-align: center">
                 <s:message var="reg" code="page.login.reg"/>
                 <input type="submit" value="${reg}"/>
             </div>
