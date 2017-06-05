@@ -79,7 +79,7 @@ public class Account extends AbstractEntity {
     public String toString() {
         return "Account{" +
                 "accountId=" + accountId +
-                ", summa=" + sum +
+                ", sum=" + sum +
                 '}';
     }
 }
