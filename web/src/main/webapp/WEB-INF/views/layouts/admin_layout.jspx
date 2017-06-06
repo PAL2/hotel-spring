@@ -5,21 +5,24 @@
             doctype-system="about:legacy-compat"/>
 <jsp:directive.page contentType="text/html;charset=UTF-8"/>
 <jsp:directive.page pageEncoding="UTF-8"/>
-<div style="width: 1000px; margin: 0 auto 0px">
+<head>
+    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<div class="body">
     <div>
-        <div style="float: left">
+        <div class="header">
             <tiles:insertAttribute name="header" ignore="true"/>
         </div>
-        <div style="float: right; margin-right: 100px;">
+        <div class="greeting">
             <tiles:insertAttribute name="greeting" ignore="true"/>
         </div>
     </div>
     <br/>
     <div>
-        <div style="float: left; max-width: 195px;">
+        <div class="menu">
             <tiles:insertAttribute name="menu_admin" ignore="true"/>
         </div>
-        <div style="margin-left: 200px; width: 800px;">
+        <div class="bodyLayout">
             <tiles:insertAttribute name="body"/>
         </div>
     </div>

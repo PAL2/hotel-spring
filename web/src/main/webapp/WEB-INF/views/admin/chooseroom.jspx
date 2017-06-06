@@ -15,7 +15,7 @@
                 <div>
                     <table border="1">
                         <thead align="center">
-                        <tr>
+                        <tr bgcolor="#CCCCCC">
                             <th>№</th>
                             <th><s:message code="page.table.category"/></th>
                             <th><s:message code="page.table.place"/></th>

@@ -4,7 +4,7 @@
      version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <ul style="list-style: none">
+    <ul>
         <li><a href="${pageContext.request.contextPath}/admin/newbooking"><s:message
                 code="page.admin.new.bookings"/></a></li>
         <li><a href="${pageContext.request.contextPath}/admin/allbookings"><s:message

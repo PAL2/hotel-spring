@@ -15,5 +15,5 @@
     <br/>
     Exception: ${pageContext.errorData.throwable}
     <br/>--%>
-    <a href="http://localhost:8080/hotel/login"><s:message code="page.main"/></a>
+    <a href="${pageContext.request.contextPath}/login"><s:message code="page.main"/></a>
 </div>

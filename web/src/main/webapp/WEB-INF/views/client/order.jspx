@@ -9,7 +9,7 @@
         <title><s:message code="page.client.order"/></title>
     </head>
     <h2><s:message code="page.client.order"/></h2>
-    <div style="width: 215px;">
+    <div class="order">
             <form:form method="post">
                 <fieldset>
                     <h3>${roomSuccess}</h3>
