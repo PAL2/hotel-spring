@@ -5,7 +5,6 @@ import com.hotel.dao.exceptions.DaoException;
 import com.hotel.entity.AbstractEntity;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -33,7 +32,4 @@ public abstract class AbstractService<T extends AbstractEntity> implements Servi
         }
         return entity;
     }
-
-
-
 }

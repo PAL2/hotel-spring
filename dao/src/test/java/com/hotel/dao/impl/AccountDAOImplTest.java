@@ -33,7 +33,6 @@ import static org.mockito.Mockito.when;
 @Transactional
 public class AccountDAOImplTest {
     private Account accountExpected, accountActual;
-    private int accountId;
 
     @Autowired
     private AccountDAO accountDAO;
@@ -83,7 +82,7 @@ public class AccountDAOImplTest {
     @Test
     public void delete() throws Exception {
         accountDAO.save(accountExpected);
-        accountId = accountExpected.getAccountId();
+        int accountId = accountExpected.getAccountId();
         assertNotNull(accountDAO.get(accountId));
         accountDAO.delete(accountId);
         assertNull(accountDAO.get(accountId));
