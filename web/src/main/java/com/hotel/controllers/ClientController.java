@@ -78,7 +78,7 @@ public class ClientController {
         return page;
     }
 
-    @RequestMapping(value = "/mybookings", method = RequestMethod.GET)
+    @RequestMapping(value = "/bookings", method = RequestMethod.GET)
     public String myBookings(Model model, Locale locale) {
         String page = null;
         try {
@@ -98,7 +98,7 @@ public class ClientController {
             int userId = getUserIdByPrincipal();
             List<Booking> bookings = bookingService.getAllBookingWithAccountByUser(userId);
             model.addAttribute("bookingByUser", bookings);
-            List<Account> accounts = accountService.getAllAccountByUser(userId);
+            List<Account> accounts = accountService.findAccountByUser(userId);
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
@@ -107,14 +107,14 @@ public class ClientController {
         return page;
     }
 
-    @RequestMapping(value = "/myaccounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     public String myAccountsGet(Model model, Locale locale) {
         String page = null;
         try {
             int userId = getUserIdByPrincipal();
             List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(userId);
             model.addAttribute("bookingByUser", bookings);
-            List<Account> accounts = accountService.getAllAccountByUser(userId);
+            List<Account> accounts = accountService.findAccountByUser(userId);
             model.addAttribute("accountById", accounts);
         } catch (ServiceException e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
@@ -131,7 +131,7 @@ public class ClientController {
             bookingService.payBooking(bookingId);
             List<Booking> bookings = bookingService.getAllBookingWithFinishedAccount(userId);
             model.addAttribute("bookingByUser", bookings);
-            List<Account> accounts = accountService.getAllAccountByUser(userId);
+            List<Account> accounts = accountService.findAccountByUser(userId);
             model.addAttribute("accountById", accounts);
             /*model.addAttribute("paySuccess", messageSource.getMessage("message.paySuccess", null, locale));*/
             page = ConfigurationManager.getProperty("path.page.myAccounts");
@@ -147,7 +147,7 @@ public class ClientController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String login = ((UserDetails) principal).getUsername();
-            userId = userService.getUserByLogin(login).getUserId();
+            userId = userService.findByLogin(login).getUserId();
         }
         return userId;
     }

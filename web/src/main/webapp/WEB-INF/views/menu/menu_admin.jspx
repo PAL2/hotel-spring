@@ -7,13 +7,13 @@
     <ul>
         <li><a href="${pageContext.request.contextPath}/admin/newbooking"><s:message
                 code="page.admin.new.bookings"/></a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/allbookings"><s:message
+        <li><a href="${pageContext.request.contextPath}/admin/bookings"><s:message
                 code="page.admin.all.bookings"/></a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/allaccounts"><s:message
+        <li><a href="${pageContext.request.contextPath}/admin/accounts"><s:message
                 code="page.admin.all.accounts"/></a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/allusers"><s:message
+        <li><a href="${pageContext.request.contextPath}/admin/users"><s:message
                 code="page.admin.all.users"/></a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/allrooms"><s:message
+        <li><a href="${pageContext.request.contextPath}/admin/rooms/1"><s:message
                 code="page.admin.all.rooms"/></a></li>
         <br/>
         <li><a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a></li>

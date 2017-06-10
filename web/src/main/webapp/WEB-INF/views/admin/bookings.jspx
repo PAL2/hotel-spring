@@ -39,7 +39,7 @@
                         <td><c:out value="${booking.accountId}"/></td>
                         <td><c:out value="${booking.status}"/></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/allbookings?id=${booking.bookingId}">
+                            <a href="${pageContext.request.contextPath}/admin/bookings?id=${booking.bookingId}">
                                 <s:message code="page.admin.action.delete"/></a>
                         </td>
                     </tr>

@@ -1,13 +1,12 @@
 package com.hotel.service.impl;
 
-import com.hotel.dao.AccountDAO;
-import com.hotel.dao.exceptions.DaoException;
+import com.google.common.collect.Lists;
+import com.hotel.dao.AccountRepository;
 import com.hotel.entity.Account;
-import com.hotel.service.AbstractService;
 import com.hotel.service.AccountService;
 import com.hotel.service.exceptions.ServiceException;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,79 +18,28 @@ import java.util.List;
  */
 
 @Service
+@Repository
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class AccountServiceImpl extends AbstractService<Account> implements AccountService {
-    private final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
-
-    private AccountDAO accountDAO;
+public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    public AccountServiceImpl(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
-    }
+    private AccountRepository accountRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Account> getAll() throws ServiceException {
-        List<Account> accounts;
+    public List<Account> findAll() throws ServiceException {
         try {
-            accounts = accountDAO.getAll();
-            LOG.info(accounts);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-
-        }
-        return accounts;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Account> getAllAccountByUser(int userId) throws ServiceException {
-        List<Account> accounts;
-        try {
-            accounts = accountDAO.getAllAccountByUser(userId);
-            LOG.info(accounts);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return accounts;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(int id) throws ServiceException {
-        try {
-            accountDAO.delete(id);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(Account account) throws ServiceException {
-        try {
-            accountDAO.save(account);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return Lists.newArrayList(accountRepository.findAll());
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public Account get(int id) throws ServiceException {
-        Account account;
+    public List<Account> findAccountByUser(int userId) throws ServiceException {
         try {
-            account = accountDAO.get(id);
-            LOG.info(account);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return accountRepository.findAccountByUser(userId);
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
-        return account;
     }
 }

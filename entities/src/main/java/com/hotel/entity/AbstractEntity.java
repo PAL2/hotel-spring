@@ -1,5 +1,7 @@
 package com.hotel.entity;
 
-public abstract class AbstractEntity {
+import java.io.Serializable;
+
+public abstract class AbstractEntity implements Serializable {
 
 }

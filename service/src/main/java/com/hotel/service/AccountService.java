@@ -8,6 +8,9 @@ import java.util.List;
 /**
  * Created by Алексей on 01.11.2016.
  */
-public interface AccountService extends Service<Account> {
-    List<Account> getAllAccountByUser(int userId) throws ServiceException;
-    }
+public interface AccountService {
+
+    List<Account> findAccountByUser(int userId) throws ServiceException;
+
+    List<Account> findAll() throws ServiceException;
+}

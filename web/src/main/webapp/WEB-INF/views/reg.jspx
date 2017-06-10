@@ -10,6 +10,7 @@
     </head>
     <br/>
     <form:form modelAttribute="regUser" method="POST" cssClass="reg">
+        <h3>${userExist}</h3>
         <fieldset>
             <div>
                 <label for="firstName"><s:message code="page.table.name"/>:</label>
@@ -35,7 +36,7 @@
                 <br/>
                 <label for="password"><s:message code="page.login.password"/>:</label>
                 <br/>
-                <form:input path="password"/>
+                <form:password path="password"/>
                 <form:errors path="password" cssClass="error"/>
             </div>
             <br/>

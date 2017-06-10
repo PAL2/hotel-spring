@@ -15,7 +15,7 @@ public class User extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    private int userId;
+    private Integer userId;
 
     @NotEmpty(message = "{validation.firstName.NotEmpty.message}")
     @Size(min = 2, max = 30, message = "{validation.firstName.Size.message}")
@@ -69,11 +69,11 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -130,21 +130,20 @@ public class User extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User that = (User) o;
+        User user = (User) o;
 
-        if (userId != that.userId) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (userRole != null ? !userRole.equals(that.userRole) : that.userRole != null) return false;
-        if (login != null ? !login.equals(that.login) : that.login != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (userRole != null ? !userRole.equals(user.userRole) : user.userRole != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        return password != null ? password.equals(user.password) : user.password == null;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userId;
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);

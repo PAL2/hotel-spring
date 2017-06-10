@@ -60,7 +60,12 @@ public class UserController {
         }
         String page;
         try {
-            userService.register(user.getFirstName(), user.getLastName(), user.getLogin(), user.getPassword());
+            boolean success = userService.register(user.getFirstName(), user.getLastName(), user.getLogin(),
+                    user.getPassword());
+            if (!success) {
+                model.addAttribute("userExist", messageSource.getMessage("message.login.exist", null, locale));
+                return ConfigurationManager.getProperty("path.page.reg");
+            }
             model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
             page = ConfigurationManager.getProperty("path.page.login");
         } catch (ServiceException e) {

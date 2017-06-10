@@ -3,15 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
                            http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <context:component-scan base-package="com.hotel.controllers"/>
+    <context:component-scan base-package="com.hotel"/>
 
     <import resource="classpath*:dao-context.xml"/>
     <import resource="classpath*:service-context.xml"/>
@@ -68,5 +70,8 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
+
+    <jpa:repositories base-package="com.hotel" entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
 
 </beans>

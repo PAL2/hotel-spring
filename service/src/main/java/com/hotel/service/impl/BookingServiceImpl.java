@@ -1,16 +1,19 @@
 package com.hotel.service.impl;
 
-import com.hotel.dao.AccountDAO;
-import com.hotel.dao.BookingDAO;
-import com.hotel.dao.RoomDAO;
-import com.hotel.dao.exceptions.DaoException;
+import com.google.common.collect.Lists;
+import com.hotel.dao.AccountRepository;
+import com.hotel.dao.BookingRepository;
+import com.hotel.dao.RoomRepository;
+import com.hotel.dao.UserRepository;
+import com.hotel.entity.Account;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
-import com.hotel.service.AbstractService;
+import com.hotel.entity.User;
 import com.hotel.service.BookingService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,193 +28,143 @@ import java.util.List;
  */
 
 @Service
+@Repository
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class BookingServiceImpl extends AbstractService<Booking> implements BookingService {
+public class BookingServiceImpl implements BookingService {
     private final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
-    private BookingDAO bookingDAO;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Autowired
-    private AccountDAO accountDAO;
+    private AccountRepository accountRepository;
 
     @Autowired
-    private RoomDAO roomDAO;
+    private RoomRepository roomRepository;
 
     @Autowired
-    public BookingServiceImpl(BookingDAO bookingDAO) {
-        this.bookingDAO = bookingDAO;
-    }
+    private UserRepository userRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithAccount() throws ServiceException {
-        List<Booking> bookings;
         try {
-            bookings = bookingDAO.getAllBookingWithAccount();
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return Lists.newArrayList(bookingRepository.findByAccountIdNot(0));
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
-        return bookings;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAll() throws ServiceException {
-        List<Booking> bookings;
-        try {
-            bookings = bookingDAO.getAll();
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return bookings;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void chooseRoom(int bookingId, int roomId) throws ServiceException {
-        Booking booking;
-        Room room;
         try {
-            bookingDAO.chooseRoom(bookingId, roomId);
-            booking = bookingDAO.get(bookingId);
-            room = roomDAO.get(booking.getRoomId());
+            bookingRepository.chooseRoom(bookingId, roomId);
+            Booking booking = bookingRepository.findOne(bookingId);
+            Room room = roomRepository.findOne(booking.getRoomId());
             LocalDateTime endDate = booking.getEndDate().atStartOfDay();
             LocalDateTime startDate = booking.getStartDate().atStartOfDay();
             Duration duration = Duration.between(startDate, endDate);
-            int total = (int) duration.toDays() * room.getPrice();
-            accountDAO.addAccount(total, booking);
+            int sum = (int) duration.toDays() * room.getPrice();
+            Account account = new Account();
+            account.setSum(sum);
+            booking.setStatus("billed");
+            account.setBooking(booking);
+            booking.setAccount(account);
+            bookingRepository.save(booking);
+            accountRepository.save(account);
             LOG.info(booking);
             LOG.info(room);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            LOG.info("");
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int bookingId) throws ServiceException {
         try {
-            bookingDAO.delete(bookingId);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            bookingRepository.delete(bookingId);
+            LOG.info("Deleted booking №" + bookingId);
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllNewBooking() throws ServiceException {
-        List<Booking> bookings;
         try {
-            bookings = bookingDAO.getAllNewBooking();
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return Lists.newArrayList(bookingRepository.findByStatus("new"));
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
-        return bookings;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void rejectBooking(int bookingId) throws ServiceException {
         try {
-            bookingDAO.rejectBooking(bookingId);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            LOG.info("Booking № " + bookingId + " rejected");
+            bookingRepository.rejectBooking(bookingId);
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithFinishedAccount(int userId) throws ServiceException {
-        List<Booking> bookings;
         try {
-            bookings = bookingDAO.getAllBookingWithFinishedAccount(userId);
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused");
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
-        return bookings;
+    }
+
+    @Override
+    public List<Booking> findAll() throws ServiceException {
+        try {
+            return Lists.newArrayList(bookingRepository.findAll());
+        } catch (Exception e) {
+            throw new ServiceException("", e);
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingByUser(int userId) throws ServiceException {
-        List<Booking> bookings;
         try {
-            bookings = bookingDAO.getAllBookingByUser(userId);
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return Lists.newArrayList(bookingRepository.findByUserId(userId));
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
-        return bookings;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addBooking(LocalDate startDate, LocalDate endDate, int userId, int place, String category)
             throws ServiceException {
         try {
-            bookingDAO.addBooking(userId, place, category, startDate, endDate);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            User user = userRepository.findOne(userId);
+            Booking booking = new Booking(startDate, endDate, place, category, userId, "new");
+            booking.setUser(user);
+            bookingRepository.save(booking);
+            LOG.info("New booking ordered: " + booking);
+        } catch (Exception e){
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void payBooking(int bookingId) throws ServiceException {
+    public void payBooking(int bookingId) throws ServiceException{
         try {
-            bookingDAO.payBooking(bookingId);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void refuseBooking(int bookingId) throws ServiceException {
-        try {
-            bookingDAO.refuseBooking(bookingId);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            bookingRepository.payBooking(bookingId);
+            LOG.info("Booking № " + bookingId + " payed");
+        } catch (Exception e){
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException {
-        List<Booking> bookings;
+    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException{
         try {
-            bookings = bookingDAO.getAllBookingWithAccountByUser(userId);
-            LOG.info(bookings);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return bookings;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(Booking booking) throws ServiceException {
-        try {
-            bookingDAO.save(booking);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
+        } catch (Exception e){
+            throw new ServiceException("", e);
         }
     }
 }

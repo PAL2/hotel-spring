@@ -30,7 +30,7 @@ public class Booking extends AbstractEntity {
     private Integer roomId;
 
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
-    private int userId;
+    private Integer userId;
 
     @Column(name = "account_id", insertable = false, updatable = false)
     private Integer accountId;

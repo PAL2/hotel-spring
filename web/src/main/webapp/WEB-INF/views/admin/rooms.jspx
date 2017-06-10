@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:s="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <head>
+        <title><s:message code="page.admin.all.rooms"/></title>
+    </head>
+    <h2><s:message code="page.admin.all.rooms"/></h2>
+    <c:url var="firstUrl" value="/admin/rooms/1"/>
+    <c:url var="lastUrl" value="/admin/rooms/${pages.totalPages}"/>
+    <c:url var="prevUrl" value="/admin/rooms/${currentIndex - 1}"/>
+    <c:url var="nextUrl" value="/admin/rooms/${currentIndex + 1}"/>
+
+    <div>
+        <table border="1">
+            <thead align="center">
+            <tr bgcolor="#CCCCCC">
+                <th>№</th>
+                <th><s:message code="page.table.category"/></th>
+                <th><s:message code="page.table.place"/></th>
+                <th><s:message code="page.table.price"/></th>
+            </tr>
+            </thead>
+            <tbody align="center">
+            <c:forEach items="${rooms}" var="room">
+                <tr/>
+                <td><c:out value="${room.roomId}"/></td>
+                <td><c:out value="${room.category}"/></td>
+                <td><c:out value="${room.place}"/></td>
+                <td><c:out value="${room.price}$"/></td>
+            </c:forEach>
+            </tbody>
+        </table>
+        <c:choose>
+            <c:when test="${currentIndex == 1}">
+                <a href="#">&lt;&lt;</a>
+                <a href="#">&lt;</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${firstUrl}">&lt;&lt;</a>
+                <a href="${prevUrl}">&lt;</a>
+            </c:otherwise>
+        </c:choose>
+        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+            <c:url var="pageUrl" value="/admin/rooms/${i}"/>
+            <c:choose>
+                <c:when test="${i == currentIndex}">
+                    <a href="${pageUrl}"><c:out value="${i}"/></a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageUrl}"><c:out value="${i}"/></a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:choose>
+            <c:when test="${currentIndex == pages.totalPages}">
+                <a href="#">&gt;</a>
+                <a href="#">&gt;&gt;</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${nextUrl}">&gt;</a>
+                <a href="${lastUrl}">&gt;&gt;</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>

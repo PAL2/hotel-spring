@@ -1,17 +1,20 @@
 package com.hotel.service.impl;
 
-import com.hotel.dao.UserDAO;
-import com.hotel.dao.exceptions.DaoException;
+import com.google.common.collect.Lists;
+import com.hotel.dao.UserRepository;
 import com.hotel.entity.User;
-import com.hotel.service.AbstractService;
 import com.hotel.service.UserService;
 import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -19,75 +22,60 @@ import java.util.List;
  */
 
 @Service
+@Repository
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class UserServiceImpl extends AbstractService<User> implements UserService {
+public class UserServiceImpl implements UserService {
     private final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
-    private UserDAO userDAO;
-
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    private UserRepository userRepository;
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    public User findByLogin(String login) throws ServiceException {
+        try {
+            return userRepository.findByLogin(login);
+        } catch (Exception e) {
+            throw new ServiceException("", e);
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public User getUserByLogin(String login) throws ServiceException {
-        User user;
+    public List<User> findAll() throws ServiceException {
         try {
-            user = userDAO.getUserByLogin(login);
-            LOG.info(user);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return user;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<User> getAll() throws ServiceException {
-        List<User> users;
-        try {
-            users = userDAO.getAll();
-            LOG.info(users);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
-        }
-        return users;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void register(String firstName, String lastName, String login, String password) throws ServiceException {
-        try {
-            userDAO.register(firstName, lastName, login, password);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            return Lists.newArrayList(userRepository.findAll());
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(int id) throws ServiceException {
+    public boolean register(String firstName, String lastName, String login, String password) throws ServiceException {
+        boolean successRegistration = false;
         try {
-            userDAO.delete(id);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+            User user = new User(firstName, lastName, "client", login, hash(password));
+            if (userRepository.findByLogin(login) == null) {
+                userRepository.save(user);
+                LOG.info("New user: " + user);
+                successRegistration = true;
+            }
+        } catch (Exception e) {
+            throw new ServiceException("", e);
         }
+        return successRegistration;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(User user) throws ServiceException {
-        try {
-            userDAO.save(user);
-            LOG.info(TRANSACTION_SUCCESS);
-        } catch (DaoException e) {
-            LOG.error(TRANSACTION_FAIL, e);
-            throw new ServiceException(TRANSACTION_FAIL, e);
+    public String hash(String input) {
+        String md5Hashed = null;
+        if (null == input) {
+            return null;
         }
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(input.getBytes(), 0, input.length());
+            md5Hashed = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5Hashed;
     }
 }

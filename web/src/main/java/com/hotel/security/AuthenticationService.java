@@ -30,7 +30,7 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userService.getUserByLogin(login);
+            user = userService.findByLogin(login);
             if (user == null) {
                 throw new UsernameNotFoundException("Login " + login + " doesn't exist!");
             }

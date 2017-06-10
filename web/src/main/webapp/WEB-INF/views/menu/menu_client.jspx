@@ -5,11 +5,11 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <ul>
-        <li><a href="${pageContext.request.contextPath}/client/mybookings"><s:message
+        <li><a href="${pageContext.request.contextPath}/client/bookings"><s:message
                 code="page.client.bookings"/></a></li>
         <li><a href="${pageContext.request.contextPath}/client/unpaidaccounts"><s:message
                 code="page.client.accounts.unpaid"/></a></li>
-        <li><a href="${pageContext.request.contextPath}/client/myaccounts"><s:message
+        <li><a href="${pageContext.request.contextPath}/client/accounts"><s:message
                 code="page.client.accounts"/></a></li>
         <li><a href="${pageContext.request.contextPath}/client/order"><s:message
                 code="page.client.to.booking"/></a></li>

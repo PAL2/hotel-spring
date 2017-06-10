@@ -18,7 +18,7 @@
         <put-attribute name="body" value="/WEB-INF/views/error/error.jspx"/>
     </definition>
 
-    <definition name="errordatabase" extends="default">
+    <definition name="error/errordatabase" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/error/errordatabase.jspx"/>
     </definition>
 
@@ -44,24 +44,24 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/newbooking.jspx"/>
     </definition>
 
-    <definition name="admin/allaccounts" extends="admin">
-        <put-attribute name="body" value="/WEB-INF/views/admin/allaccounts.jspx"/>
+    <definition name="admin/accounts" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/accounts.jspx"/>
     </definition>
 
-    <definition name="admin/allrooms" extends="admin">
-        <put-attribute name="body" value="/WEB-INF/views/admin/allrooms.jspx"/>
+    <definition name="admin/rooms" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/rooms.jspx"/>
     </definition>
 
-    <definition name="admin/allbookings" extends="admin">
-        <put-attribute name="body" value="/WEB-INF/views/admin/allbookings.jspx"/>
+    <definition name="admin/bookings" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/bookings.jspx"/>
     </definition>
 
     <definition name="admin/chooseroom" extends="admin">
         <put-attribute name="body" value="/WEB-INF/views/admin/chooseroom.jspx"/>
     </definition>
 
-    <definition name="admin/allusers" extends="admin">
-        <put-attribute name="body" value="/WEB-INF/views/admin/allusers.jspx"/>
+    <definition name="admin/users" extends="admin">
+        <put-attribute name="body" value="/WEB-INF/views/admin/users.jspx"/>
     </definition>
 
     <definition name="client" template="/WEB-INF/views/layouts/client_layout.jspx">
@@ -70,12 +70,12 @@
         <put-attribute name="menu_client" value="/WEB-INF/views/menu/menu_client.jspx"/>
     </definition>
 
-    <definition name="client/myaccounts" extends="client">
-        <put-attribute name="body" value="/WEB-INF/views/client/myaccounts.jspx"/>
+    <definition name="client/accounts" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/accounts.jspx"/>
     </definition>
 
-    <definition name="client/mybookings" extends="client">
-        <put-attribute name="body" value="/WEB-INF/views/client/mybookings.jspx"/>
+    <definition name="client/bookings" extends="client">
+        <put-attribute name="body" value="/WEB-INF/views/client/bookings.jspx"/>
     </definition>
 
     <definition name="client/order" extends="client">
