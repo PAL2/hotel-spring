@@ -4,6 +4,7 @@ import com.hotel.dao.AccountRepository;
 import com.hotel.entity.Account;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(value = SpringJUnit4ClassRunner.class)
 
 @Transactional
+@Ignore
 public class AccountRepositoryTest {
     private Account accountExpected, accountActual;
 

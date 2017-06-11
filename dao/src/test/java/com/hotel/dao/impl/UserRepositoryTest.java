@@ -2,6 +2,7 @@ package com.hotel.dao.impl;
 
 import com.hotel.dao.UserRepository;
 import com.hotel.entity.User;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration("/test-dao-context.xml")
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class UserRepositoryTest {
 
     @Autowired

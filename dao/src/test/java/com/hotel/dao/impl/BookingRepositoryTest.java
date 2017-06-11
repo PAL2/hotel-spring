@@ -8,6 +8,7 @@ import com.hotel.entity.Booking;
 import com.hotel.entity.User;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration("/test-dao-context.xml")
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class BookingRepositoryTest {
     private Booking bookingExpected, bookingActual;
 
