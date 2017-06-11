@@ -21,7 +21,7 @@
     </listener>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.jspx</welcome-file>
     </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
@@ -63,7 +63,7 @@
 
     <jsp-config>
         <jsp-property-group>
-            <url-pattern>*.jsp</url-pattern>
+            <url-pattern>*.jspx</url-pattern>
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
     </jsp-config>
