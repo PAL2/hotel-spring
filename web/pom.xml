@@ -56,11 +56,6 @@
             <artifactId>spring-aop</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-core</artifactId>
-        </dependency>
-
         <!-- Spring security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
