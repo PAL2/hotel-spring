@@ -315,7 +315,7 @@
                 <artifactId>tomcat-maven-plugin</artifactId>
                 <version>${tomcat.maven.plugin.version}</version>
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url>
+                    <url>http://localhost:8081/manager/text</url>
                     <username>tomcat</username>
                     <password>tomcat</password>
                     <path>/${project.build.finalName}</path>
