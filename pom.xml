@@ -301,36 +301,49 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <groupId>com.jelastic</groupId>
+                <artifactId>jelastic-maven-plugin</artifactId>
+                <version>1.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat-maven-plugin</artifactId>
-                <version>${tomcat.maven.plugin.version}</version>
-                <configuration>
-                    <url>http://polegoshko.mycloud.by/manager/text</url>
-                    <username>tomcat</username>
-                    <password>tomcat</password>
-                    <path>/${project.build.finalName}</path>
-                    <warFile>target/${project.build.finalName}.war</warFile>
+                    <api_hoster>app.mycloud.by</api_hoster>
+                    <context>hotel</context>
+                    <email>pal16@tut.by</email>
+                    <environment>polegoshko</environment>
+                    <password>Qw$091288</password>
                 </configuration>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>redeploy</goal>
-                        </goals>
                         <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>none</phase>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-oss-public</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

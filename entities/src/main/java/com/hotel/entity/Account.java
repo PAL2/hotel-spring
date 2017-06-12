@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Table(name = "account")
 public class Account extends AbstractEntity {
 
     @Id

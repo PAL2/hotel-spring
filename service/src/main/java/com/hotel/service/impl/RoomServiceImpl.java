@@ -42,7 +42,7 @@ public class RoomServiceImpl implements RoomService {
         }
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public Page<Room> findAll(Integer pageNumber) throws ServiceException {
         try {
             PageRequest request = new PageRequest(pageNumber - 1, 10);

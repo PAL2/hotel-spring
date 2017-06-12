@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Table(name = "room")
 @Immutable
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")

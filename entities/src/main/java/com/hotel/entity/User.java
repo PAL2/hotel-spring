@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Table(name = "user")
 public class User extends AbstractEntity {
 
     @Id

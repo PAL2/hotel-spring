@@ -25,7 +25,6 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Override
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = null;

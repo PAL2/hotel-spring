@@ -117,7 +117,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> findAll() throws ServiceException {
         try {
             return Lists.newArrayList(bookingRepository.findAll());

@@ -14,6 +14,6 @@
     Status code: ${pageContext.errorData.statusCode}
     <br/>
     Exception: ${pageContext.errorData.throwable}
-    <br/>--%>
+    <br/>
     <a href="${pageContext.request.contextPath}/login"><s:message code="page.main"/></a>
 </div>

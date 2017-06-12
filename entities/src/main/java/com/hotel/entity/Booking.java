@@ -7,6 +7,7 @@ import java.time.LocalDate;
  * Created by Алексей on 16.10.2016.
  */
 @Entity
+@Table(name = "booking")
 public class Booking extends AbstractEntity {
 
     @Id
