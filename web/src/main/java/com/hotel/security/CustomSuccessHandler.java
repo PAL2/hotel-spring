@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Created by Алексей on 19.11.2016.
@@ -45,7 +44,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        List<String> roles = authorities.stream().map((Function<GrantedAuthority, String>) GrantedAuthority::getAuthority).collect(Collectors.toList());
+        List<String> roles = new ArrayList<String>();
+
+        for (GrantedAuthority a : authorities) {
+            roles.add(a.getAuthority());
+        }
 
         if (isAdmin(roles)) {
             url = "/admin/";
