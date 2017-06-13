@@ -2,6 +2,6 @@ package com.hotel.entity;
 
 import java.io.Serializable;
 
-public abstract class AbstractEntity implements Serializable {
+abstract class AbstractEntity implements Serializable {
 
 }

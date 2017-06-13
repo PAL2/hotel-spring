@@ -6,7 +6,7 @@ package com.hotel.service.impl;
 
 //@ContextConfiguration("/test-service-context.xml")
 //@RunWith(value = SpringJUnit4ClassRunner.class)
-public class AccountServiceImplTest {
+class AccountServiceImplTest {
     /*private Account accountExpected, accountActual;
 
     @Autowired
