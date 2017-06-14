@@ -56,16 +56,11 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.chooseRoom(bookingId, roomId);
         Booking booking = bookingRepository.findOne(bookingId);
         Room room = roomRepository.findOne(booking.getRoomId());
-        java.util.Date date = new java.util.Date(booking.getEndDate().getTime());
-        Instant instant = date.toInstant();
-        LocalDateTime endDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-        date = new java.util.Date(booking.getStartDate().getTime());
-        instant = date.toInstant();
-        LocalDateTime startDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime endDate = dateToLocalDateTime(booking.getEndDate());
+        LocalDateTime startDate = dateToLocalDateTime(booking.getStartDate());
         Duration duration = Duration.between(startDate, endDate);
         int sum = (int) duration.toDays() * room.getPrice();
-        Account account = new Account();
-        account.setSum(sum);
+        Account account = new Account(sum);
         booking.setStatus("billed");
         account.setBooking(booking);
         booking.setAccount(account);
@@ -73,7 +68,6 @@ public class BookingServiceImpl implements BookingService {
         accountRepository.save(account);
         LOG.info(booking);
         LOG.info(room);
-        LOG.info("");
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -126,5 +120,12 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Booking> getAllBookingWithAccountByUser(int userId) {
         return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
+    }
+
+    private LocalDateTime dateToLocalDateTime(Date input) {
+        java.util.Date date = new java.util.Date(input.getTime());
+        Instant instant = date.toInstant();
+        LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return localDateTime;
     }
 }
