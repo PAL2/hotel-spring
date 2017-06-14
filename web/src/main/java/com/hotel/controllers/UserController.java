@@ -84,7 +84,7 @@ public class UserController {
         return "redirect:/login?logout";
     }
 
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
     public String accessDeniedPage() {
         return "accessDenied";
     }

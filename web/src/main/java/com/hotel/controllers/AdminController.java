@@ -154,7 +154,7 @@ public class AdminController {
             @ManagedOperationParameter(name = "locale", description = "Locale")
     })
     @RequestMapping(value = "/rooms/{pageNumber}", method = RequestMethod.GET)
-    public String allRooms(Model model, Locale locale, @PathVariable Integer pageNumber) {
+    public String allRooms(Model model, Locale locale, @PathVariable int pageNumber) {
         String page;
         try {
             Page<Room> pages = roomService.findAll(pageNumber);

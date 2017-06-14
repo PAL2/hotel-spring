@@ -19,8 +19,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ import java.util.List;
 
 @Service
 @Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
 public class BookingServiceImpl implements BookingService {
     private final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
@@ -55,28 +57,28 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void chooseRoom(int bookingId, int roomId) throws ServiceException {
-        try {
-            bookingRepository.chooseRoom(bookingId, roomId);
-            Booking booking = bookingRepository.findOne(bookingId);
-            Room room = roomRepository.findOne(booking.getRoomId());
-            LocalDateTime endDate = booking.getEndDate().atStartOfDay();
-            LocalDateTime startDate = booking.getStartDate().atStartOfDay();
-            Duration duration = Duration.between(startDate, endDate);
-            int sum = (int) duration.toDays() * room.getPrice();
-            Account account = new Account();
-            account.setSum(sum);
-            booking.setStatus("billed");
-            account.setBooking(booking);
-            booking.setAccount(account);
-            bookingRepository.save(booking);
-            accountRepository.save(account);
-            LOG.info(booking);
-            LOG.info(room);
-            LOG.info("");
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public void chooseRoom(int bookingId, int roomId) {
+        bookingRepository.chooseRoom(bookingId, roomId);
+        Booking booking = bookingRepository.findOne(bookingId);
+        Room room = roomRepository.findOne(booking.getRoomId());
+        java.util.Date date = new java.util.Date(booking.getEndDate().getTime());
+        Instant instant = date.toInstant();
+        LocalDateTime endDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        date = new java.util.Date(booking.getStartDate().getTime());
+        instant = date.toInstant();
+        LocalDateTime startDate = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        Duration duration = Duration.between(startDate, endDate);
+        int sum = (int) duration.toDays() * room.getPrice();
+        Account account = new Account();
+        account.setSum(sum);
+        booking.setStatus("billed");
+        account.setBooking(booking);
+        booking.setAccount(account);
+        bookingRepository.save(booking);
+        accountRepository.save(account);
+        LOG.info(booking);
+        LOG.info(room);
+        LOG.info("");
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -89,13 +91,9 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllNewBooking() throws ServiceException {
-        try {
-            return Lists.newArrayList(bookingRepository.findByStatus("new"));
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    @Transactional(readOnly = true)
+    public List<Booking> getAllNewBooking() {
+        return Lists.newArrayList(bookingRepository.findByStatus("new"));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -136,7 +134,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addBooking(LocalDate startDate, LocalDate endDate, int userId, int place, String category)
+    public void addBooking(Date startDate, Date endDate, int userId, int place, String category)
             throws ServiceException {
         try {
             User user = userRepository.findOne(userId);
@@ -144,26 +142,26 @@ public class BookingServiceImpl implements BookingService {
             booking.setUser(user);
             bookingRepository.save(booking);
             LOG.info("New booking ordered: " + booking);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void payBooking(int bookingId) throws ServiceException{
+    public void payBooking(int bookingId) throws ServiceException {
         try {
             bookingRepository.payBooking(bookingId);
             LOG.info("Booking № " + bookingId + " payed");
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ServiceException("", e);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException{
+    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException {
         try {
             return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ServiceException("", e);
         }
     }

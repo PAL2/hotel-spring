@@ -42,6 +42,7 @@
         <javax.persistence.version>1.0.0.Final</javax.persistence.version>
         <javax.validation.version>1.1.0.Final</javax.validation.version>
         <guava.version>21.0</guava.version>
+        <hsql.version>2.4.0</hsql.version>
     </properties>
 
     <dependencyManagement>
@@ -146,6 +147,12 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 
@@ -288,6 +295,13 @@
                 <version>${guava.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

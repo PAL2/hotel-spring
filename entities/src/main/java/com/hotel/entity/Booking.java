@@ -1,25 +1,27 @@
 package com.hotel.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by Алексей on 16.10.2016.
  */
 @Entity
 @Table(name = "booking")
-public class Booking extends AbstractEntity {
+public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id", nullable = false, unique = true)
     private Integer bookingId;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @Column(name = "place", nullable = false)
     private int place;
@@ -54,7 +56,7 @@ public class Booking extends AbstractEntity {
     public Booking() {
     }
 
-    public Booking(LocalDate startDate, LocalDate endDate, int place, String category, int userId, String status) {
+    public Booking(Date startDate, Date endDate, int place, String category, int userId, String status) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.place = place;
@@ -63,7 +65,7 @@ public class Booking extends AbstractEntity {
         this.status = status;
     }
 
-    public Booking(LocalDate startDate, LocalDate endDate, int place, String category, Integer roomId, int userId,
+    public Booking(Date startDate, Date endDate, int place, String category, Integer roomId, int userId,
                    Integer accountId, String status, Room room, User user, Account account) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -86,19 +88,19 @@ public class Booking extends AbstractEntity {
         this.bookingId = bookingId;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 @Immutable
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "room", include = "non-lazy")
-public class Room extends AbstractEntity {
+public class Room {
 
     @Id
     @Column(name = "room_id", nullable = false, unique = true)

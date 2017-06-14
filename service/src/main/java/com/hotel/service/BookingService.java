@@ -3,7 +3,7 @@ package com.hotel.service;
 import com.hotel.entity.Booking;
 import com.hotel.service.exceptions.ServiceException;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ public interface BookingService {
 
     List<Booking> getAllBookingByUser(int userId) throws ServiceException;
 
-    void addBooking(LocalDate startDate, LocalDate endDate, int userId, int place, String category)
+    void addBooking(Date startDate, Date endDate, int userId, int place, String category)
             throws ServiceException;
 
     void payBooking(int bookingId) throws ServiceException;

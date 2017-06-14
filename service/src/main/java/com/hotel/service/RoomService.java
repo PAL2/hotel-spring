@@ -12,5 +12,5 @@ import java.util.List;
 public interface RoomService {
     List<Room> getAvailableRooms(int bookingId) throws ServiceException;
 
-    Page<Room> findAll(Integer pageNumber) throws ServiceException;
+    Page<Room> findAll(int pageNumber) throws ServiceException;
 }

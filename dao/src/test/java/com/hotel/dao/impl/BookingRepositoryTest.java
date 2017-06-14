@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -41,8 +41,8 @@ public class BookingRepositoryTest {
 
     @Before
     public void setup() {
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, 1, "new", null, null, null);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, 1, "new", null, null, null);
+        bookingExpected = new Booking(new Date(), new Date(), 1, "lux", 1, 1, 1, "new", null, null, null);
+        bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, 1, 1, "new", null, null, null);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class BookingRepositoryTest {
         User user = new User("firstName", "lastName", "client", "login", "password");
         userRepository.save(user);
         int userId = user.getUserId();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, 1, "new", null, user, null);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, 1, "new", null, user, null);
+        bookingExpected = new Booking(new Date(), new Date(), 1, "lux", 1, userId, 1, "new", null, user, null);
+        bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, userId, 1, "new", null, user, null);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
         assertEquals(2, bookingRepository.findByUserId(userId).size());
@@ -76,8 +76,8 @@ public class BookingRepositoryTest {
         Account account = new Account(400, null);
         accountRepository.save(account);
         int accountId = account.getAccountId();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, accountId, "new", null, null, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, 1, accountId, "new", null, null, account);
+        bookingExpected = new Booking(new Date(), new Date(), 1, "lux", 1, 1, accountId, "new", null, null, account);
+        bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, 1, accountId, "new", null, null, account);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
         assertEquals(2, bookingRepository.findByAccountIdNot(0).size());
@@ -91,8 +91,8 @@ public class BookingRepositoryTest {
         Account account = new Account(400, null);
         accountRepository.save(account);
         int accountId = account.getAccountId();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
+        bookingExpected = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
+        bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
         assertEquals(2, bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId).size());
@@ -106,8 +106,8 @@ public class BookingRepositoryTest {
         Account account = new Account(400, null);
         accountRepository.save(account);
         int accountId = account.getAccountId();
-        bookingExpected = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "paid", null, user, account);
-        bookingActual = new Booking(LocalDate.now(), LocalDate.now(), 1, "lux", 1, userId, accountId, "refused", null, user, account);
+        bookingExpected = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "paid", null, user, account);
+        bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "refused", null, user, account);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
         assertEquals(2, bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused").size());

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +66,9 @@ public class ClientController {
             LocalDate startDate = LocalDate.parse(startDateString, formatter);
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             if (startDate.isAfter(LocalDate.now().minusDays(1)) && startDate.isBefore(endDate)) {
-                bookingService.addBooking(startDate, endDate, getUserIdByPrincipal(), place, category);
+                bookingService.addBooking(Date.from(startDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                        , Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        getUserIdByPrincipal(), place, category);
                 page = ConfigurationManager.getProperty("path.page.order");
                 model.addAttribute("roomSuccess", messageSource.getMessage("message.roomSuccess", null, locale));
             } else {

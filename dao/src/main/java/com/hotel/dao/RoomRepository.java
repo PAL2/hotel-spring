@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +18,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
             + "(b.start_date BETWEEN :startDate AND :endDate OR b.end_date BETWEEN :startDate AND :endDate)) AS v "
             + "ON (v.room_id=b.room_id) WHERE (r.category=:category) AND (r.place=:place) AND (b.room_id IS NULL))",
             nativeQuery = true)
-    List<Room> findAvailableRooms(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,
+    List<Room> findAvailableRooms(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
                                   @Param("category") String category, @Param("place") int place);
 }

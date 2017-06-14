@@ -32,18 +32,14 @@ public class RoomServiceImpl implements RoomService {
     private BookingRepository bookingRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Room> getAvailableRooms(int bookingId) throws ServiceException {
-        try {
-            Booking booking = bookingRepository.findOne(bookingId);
-            return roomRepository.findAvailableRooms(booking.getStartDate(), booking.getEndDate(),
-                    booking.getCategory(), booking.getPlace());
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Room> getAvailableRooms(int bookingId) {
+        Booking booking = bookingRepository.findOne(bookingId);
+        return roomRepository.findAvailableRooms(booking.getStartDate(), booking.getEndDate(),
+                booking.getCategory(), booking.getPlace());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public Page<Room> findAll(Integer pageNumber) throws ServiceException {
+    public Page<Room> findAll(int pageNumber) throws ServiceException {
         try {
             PageRequest request = new PageRequest(pageNumber - 1, 10);
             return roomRepository.findAll(request);

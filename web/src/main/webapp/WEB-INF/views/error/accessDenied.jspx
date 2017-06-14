@@ -9,4 +9,6 @@
     </head>
     <br/>
     <h3><s:message code="page.access.denied.message"/></h3>
+    <br/>
+    <a href="${pageContext.request.contextPath}/logout"><s:message code="page.logout"/></a>
 </div>

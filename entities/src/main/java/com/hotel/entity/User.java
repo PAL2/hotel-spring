@@ -11,10 +11,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 

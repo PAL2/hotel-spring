@@ -19,7 +19,7 @@
         <form-login
                 login-page="/login"
                 authentication-success-handler-ref="customSuccessHandler"
-                authentication-failure-url="/Access_Denied"
+                authentication-failure-url="/accessDenied"
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-success-url="/login?logout" />
