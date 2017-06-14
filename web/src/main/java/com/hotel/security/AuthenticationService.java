@@ -2,7 +2,6 @@ package com.hotel.security;
 
 import com.hotel.entity.User;
 import com.hotel.service.UserService;
-import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +32,7 @@ public class AuthenticationService implements UserDetailsService {
             if (user == null) {
                 throw new UsernameNotFoundException("Login " + login + " doesn't exist!");
             }
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new org.springframework.security.core.userdetails.User
