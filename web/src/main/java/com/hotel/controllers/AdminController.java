@@ -9,7 +9,6 @@ import com.hotel.service.AccountService;
 import com.hotel.service.BookingService;
 import com.hotel.service.RoomService;
 import com.hotel.service.UserService;
-import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -62,12 +61,12 @@ public class AdminController {
             @ManagedOperationParameter(name = "locale", description = "Locale")
     })
     @RequestMapping(value = "/newbooking", method = RequestMethod.GET)
-    public String newBookingGet(Model model, Locale locale) throws ServiceException {
+    public String newBookingGet(Model model, Locale locale) {
         String page = null;
         try {
             List<Booking> bookings = bookingService.getAllNewBooking();
             model.addAttribute("newBooking", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -85,7 +84,7 @@ public class AdminController {
         try {
             List<Booking> bookings = bookingService.findAll();
             model.addAttribute("allBooking", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -106,7 +105,7 @@ public class AdminController {
             bookingService.delete(bookingId);
             List<Booking> bookings = bookingService.findAll();
             model.addAttribute("allBooking", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -126,7 +125,7 @@ public class AdminController {
             List<User> users = userService.
                     findAll();
             model.addAttribute("allUsers", users);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             /*model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));*/
         }
@@ -141,7 +140,7 @@ public class AdminController {
         try {
             List<User> users = userService.findAll();
             model.addAttribute("allUsers", users);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             /*model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));*/
         }
@@ -189,7 +188,7 @@ public class AdminController {
             bookingService.rejectBooking(bookingId);
             List<Booking> bookings = bookingService.getAllNewBooking();
             model.addAttribute("newBooking", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -210,7 +209,7 @@ public class AdminController {
             List<Room> rooms = roomService.getAvailableRooms(bookingId);
             model.addAttribute("availableRooms", rooms);
             model.addAttribute("id", bookingId);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -250,7 +249,7 @@ public class AdminController {
             bookingService.chooseRoom(bookingId, roomId);
             List<Booking> bookings = bookingService.getAllNewBooking();
             model.addAttribute("newBooking", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }

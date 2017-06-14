@@ -10,7 +10,6 @@ import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.entity.User;
 import com.hotel.service.BookingService;
-import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,12 +47,8 @@ public class BookingServiceImpl implements BookingService {
     private UserRepository userRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingWithAccount() throws ServiceException {
-        try {
-            return Lists.newArrayList(bookingRepository.findByAccountIdNot(0));
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Booking> getAllBookingWithAccount() {
+        return Lists.newArrayList(bookingRepository.findByAccountIdNot(0));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -82,13 +77,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(int bookingId) throws ServiceException {
-        try {
-            bookingRepository.delete(bookingId);
-            LOG.info("Deleted booking №" + bookingId);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public void delete(int bookingId) {
+        bookingRepository.delete(bookingId);
+        LOG.info("Deleted booking №" + bookingId);
     }
 
     @Transactional(readOnly = true)
@@ -97,72 +88,43 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void rejectBooking(int bookingId) throws ServiceException {
-        try {
-            LOG.info("Booking № " + bookingId + " rejected");
-            bookingRepository.rejectBooking(bookingId);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public void rejectBooking(int bookingId) {
+        LOG.info("Booking № " + bookingId + " rejected");
+        bookingRepository.rejectBooking(bookingId);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingWithFinishedAccount(int userId) throws ServiceException {
-        try {
-            return bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused");
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Booking> getAllBookingWithFinishedAccount(int userId) {
+        return bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused");
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> findAll() throws ServiceException {
-        try {
-            return Lists.newArrayList(bookingRepository.findAll());
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Booking> findAll() {
+        return Lists.newArrayList(bookingRepository.findAll());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingByUser(int userId) throws ServiceException {
-        try {
-            return Lists.newArrayList(bookingRepository.findByUserId(userId));
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Booking> getAllBookingByUser(int userId) {
+        return Lists.newArrayList(bookingRepository.findByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addBooking(Date startDate, Date endDate, int userId, int place, String category)
-            throws ServiceException {
-        try {
-            User user = userRepository.findOne(userId);
-            Booking booking = new Booking(startDate, endDate, place, category, userId, "new");
-            booking.setUser(user);
-            bookingRepository.save(booking);
-            LOG.info("New booking ordered: " + booking);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public void addBooking(Date startDate, Date endDate, int userId, int place, String category) {
+        User user = userRepository.findOne(userId);
+        Booking booking = new Booking(startDate, endDate, place, category, userId, "new");
+        booking.setUser(user);
+        bookingRepository.save(booking);
+        LOG.info("New booking ordered: " + booking);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void payBooking(int bookingId) throws ServiceException {
-        try {
-            bookingRepository.payBooking(bookingId);
-            LOG.info("Booking № " + bookingId + " payed");
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public void payBooking(int bookingId) {
+        bookingRepository.payBooking(bookingId);
+        LOG.info("Booking № " + bookingId + " payed");
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<Booking> getAllBookingWithAccountByUser(int userId) throws ServiceException {
-        try {
-            return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<Booking> getAllBookingWithAccountByUser(int userId) {
+        return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
     }
 }

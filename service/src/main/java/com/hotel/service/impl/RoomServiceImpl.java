@@ -5,7 +5,6 @@ import com.hotel.dao.RoomRepository;
 import com.hotel.entity.Booking;
 import com.hotel.entity.Room;
 import com.hotel.service.RoomService;
-import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,12 +38,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public Page<Room> findAll(int pageNumber) throws ServiceException {
-        try {
-            PageRequest request = new PageRequest(pageNumber - 1, 10);
-            return roomRepository.findAll(request);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public Page<Room> findAll(int pageNumber) {
+        PageRequest request = new PageRequest(pageNumber - 1, 10);
+        return roomRepository.findAll(request);
     }
 }

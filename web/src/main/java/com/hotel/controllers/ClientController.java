@@ -6,7 +6,6 @@ import com.hotel.manager.ConfigurationManager;
 import com.hotel.service.AccountService;
 import com.hotel.service.BookingService;
 import com.hotel.service.UserService;
-import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,7 +74,7 @@ public class ClientController {
                 page = ConfigurationManager.getProperty("path.page.order");
                 model.addAttribute("incorrectDate", messageSource.getMessage("message.incorrectDate", null, locale));
             }
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -88,7 +87,7 @@ public class ClientController {
         try {
             List<Booking> bookings = bookingService.getAllBookingByUser(getUserIdByPrincipal());
             model.addAttribute("bookingByUser", bookings);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -104,7 +103,7 @@ public class ClientController {
             model.addAttribute("bookingByUser", bookings);
             List<Account> accounts = accountService.findAccountByUser(userId);
             model.addAttribute("accountById", accounts);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -120,7 +119,7 @@ public class ClientController {
             model.addAttribute("bookingByUser", bookings);
             List<Account> accounts = accountService.findAccountByUser(userId);
             model.addAttribute("accountById", accounts);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
@@ -139,14 +138,14 @@ public class ClientController {
             model.addAttribute("accountById", accounts);
             /*model.addAttribute("paySuccess", messageSource.getMessage("message.paySuccess", null, locale));*/
             page = ConfigurationManager.getProperty("path.page.myAccounts");
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }
         return page;
     }
 
-    private int getUserIdByPrincipal() throws ServiceException {
+    private int getUserIdByPrincipal() {
         int userId = 0;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {

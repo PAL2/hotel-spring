@@ -1,7 +1,6 @@
 package com.hotel.service;
 
 import com.hotel.entity.User;
-import com.hotel.service.exceptions.ServiceException;
 
 import java.util.List;
 
@@ -10,11 +9,11 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<User> findAll() throws ServiceException;
+    List<User> findAll();
 
-    User findByLogin(String login) throws ServiceException;
+    User findByLogin(String login);
 
-    boolean register(String firstName, String lastName, String login, String password) throws ServiceException;
+    boolean register(String firstName, String lastName, String login, String password);
 
     String hash(String input);
 }

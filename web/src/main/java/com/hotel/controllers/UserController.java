@@ -3,7 +3,6 @@ package com.hotel.controllers;
 import com.hotel.entity.User;
 import com.hotel.manager.ConfigurationManager;
 import com.hotel.service.UserService;
-import com.hotel.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -68,7 +67,7 @@ public class UserController {
             }
             model.addAttribute("regSuccess", messageSource.getMessage("message.regSuccess", null, locale));
             page = ConfigurationManager.getProperty("path.page.login");
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             page = ConfigurationManager.getProperty("path.page.errorDatabase");
             model.addAttribute("errorDatabase", messageSource.getMessage("message.errorDatabase", null, locale));
         }

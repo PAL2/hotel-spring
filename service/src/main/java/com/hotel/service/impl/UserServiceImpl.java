@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.hotel.dao.UserRepository;
 import com.hotel.entity.User;
 import com.hotel.service.UserService;
-import com.hotel.service.exceptions.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,35 +30,23 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public User findByLogin(String login) throws ServiceException {
-        try {
-            return userRepository.findByLogin(login);
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-    public List<User> findAll() throws ServiceException {
-        try {
-            return Lists.newArrayList(userRepository.findAll());
-        } catch (Exception e) {
-            throw new ServiceException("", e);
-        }
+    public List<User> findAll() {
+        return Lists.newArrayList(userRepository.findAll());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public boolean register(String firstName, String lastName, String login, String password) throws ServiceException {
+    public boolean register(String firstName, String lastName, String login, String password) {
         boolean successRegistration = false;
-        try {
-            User user = new User(firstName, lastName, "client", login, hash(password));
-            if (userRepository.findByLogin(login) == null) {
-                userRepository.save(user);
-                LOG.info("New user: " + user);
-                successRegistration = true;
-            }
-        } catch (Exception e) {
-            throw new ServiceException("", e);
+        User user = new User(firstName, lastName, "client", login, hash(password));
+        if (userRepository.findByLogin(login) == null) {
+            userRepository.save(user);
+            LOG.info("New user: " + user);
+            successRegistration = true;
         }
         return successRegistration;
     }
