@@ -44,15 +44,6 @@
         </property>
     </bean>
 
-    <!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/bookings"/>
-        <property name="username" value="root"/>
-        <property name="password" value="1234"/>
-        <property name="initialSize" value="3"/>
-        <property name="maxTotal" value="10"/>
-    </bean>-->
-
     <jdbc:embedded-database id="dataSource" type="HSQL">
         <jdbc:script location="classpath:schema.sql"/>
         <jdbc:script location="classpath:data.sql"/>
