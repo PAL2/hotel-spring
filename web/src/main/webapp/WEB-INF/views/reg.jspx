@@ -10,7 +10,7 @@
     </head>
     <br/>
     <form:form modelAttribute="regUser" method="POST" cssClass="reg">
-        <h3>${userExist}</h3>
+        <h3 class="error">${userExist}</h3>
         <fieldset>
             <div>
                 <label for="firstName"><s:message code="page.table.name"/>:</label>

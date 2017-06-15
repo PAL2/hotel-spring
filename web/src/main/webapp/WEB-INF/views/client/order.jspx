@@ -10,43 +10,43 @@
     </head>
     <h2><s:message code="page.client.order"/></h2>
     <div class="order">
-            <form:form method="post">
-                <fieldset>
-                    <h3>${roomSuccess}</h3>
-                    <div>
-                        <s:message code="page.client.number.places"/>: <select name="numberPlaces">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                    </div>
+        <form:form method="post">
+            <fieldset>
+                <h3>${roomSuccess}</h3>
+                <div>
+                    <s:message code="page.client.number.places"/>: <select name="numberPlaces">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                </div>
+                <br/>
+                <div>
+                    <s:message code="page.table.check-in"/>:
                     <br/>
-                    <div>
-                        <s:message code="page.table.check-in"/>:
-                        <br/>
-                        <input type="date" name="startDate" value="" required="true"/>
-                    </div>
+                    <input type="date" name="startDate" value="" required="true"/>
+                </div>
+                <br/>
+                <div>
+                    <s:message code="page.table.check-out"/>:
                     <br/>
-                    <div>
-                        <s:message code="page.table.check-out"/>:
-                        <br/>
-                        <input type="date" name="endDate" value="" required="true"/>
-                    </div>
-                    <br/>
-                    <div>
-                        <s:message code="page.table.category"/>:<select name="category">
-                        <option value="standard"><s:message code="page.client.category.standard"/></option>
-                        <option value="lux"><s:message code="page.client.category.lux"/></option>
-                    </select>
-                    </div>
-                    <h3>${incorrectDate}</h3>
-                    <div>
-                        <input type="hidden" name="command" value="order"/>
-                        <s:message var="book" code="page.client.book"/>
-                        <input type="submit" value="${book}"/>
-                    </div>
-                </fieldset>
-                <input type="hidden" name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
-            </form:form>
+                    <input type="date" name="endDate" value="" required="true"/>
+                </div>
+                <br/>
+                <div>
+                    <s:message code="page.table.category"/>:<select name="category">
+                    <option value="standard"><s:message code="page.client.category.standard"/></option>
+                    <option value="lux"><s:message code="page.client.category.lux"/></option>
+                </select>
+                </div>
+                <h3 class="error">${incorrectDate}</h3>
+                <div>
+                    <input type="hidden" name="command" value="order"/>
+                    <s:message var="book" code="page.client.book"/>
+                    <input type="submit" value="${book}"/>
+                </div>
+            </fieldset>
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+        </form:form>
     </div>
 </div>
