@@ -1,3 +1,8 @@
+INSERT INTO account VALUES
+	(1, 150),
+	(2, 700),
+	(3, 80);
+
 INSERT INTO room VALUES
 	(1, 'standard', 1, 50),
 	(2, 'standard', 1, 50),
@@ -40,17 +45,13 @@ INSERT INTO room VALUES
 	(39, 'lux', 2, 100),
 	(40, 'lux', 2, 100);
 
-INSERT INTO account VALUES
-	(1, 150),
-	(2, 700),
-	(3, 80);
-
 INSERT INTO user VALUES
 	(1, 'Админ', 'Админов', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
 	(2, 'Юзер', 'Юзеров', 'client', 'user', 'ee11cbb19052e40b07aac0ca060c23ee');
 
 INSERT INTO booking VALUES
+	(1, '2017-06-16', '2017-06-19', 2, 'standard', 1, 2, 1, 'paid'),
 	(2, '2017-06-15', '2017-06-22', 2, 'lux', 40, 2, 2, 'paid'),
 	(3, '2017-06-21', '2017-06-22', 2, 'standard', 20, 2, 3, 'billed'),
-	(4, '2017-06-21', '2017-06-28', 1, 'standard', NULL, 2, NULL, 'rejected'),
+	(4, '2017-06-21', '2017-06-28', 1, 'standard', NULL, 2, NULL, 'new'),
 	(5, '2017-06-29', '2017-06-30', 2, 'lux', NULL, 2, NULL, 'new');
