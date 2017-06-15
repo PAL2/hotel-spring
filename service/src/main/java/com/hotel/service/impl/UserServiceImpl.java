@@ -22,24 +22,23 @@ import java.util.List;
 
 @Service
 @Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
     private final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public User findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<User> findAll() {
         return Lists.newArrayList(userRepository.findAll());
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public boolean register(String firstName, String lastName, String login, String password) {
         boolean successRegistration = false;
         User user = new User(firstName, lastName, "client", login, hash(password));

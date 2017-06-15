@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
@@ -30,14 +30,12 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Room> getAvailableRooms(int bookingId) {
         Booking booking = bookingRepository.findOne(bookingId);
         return roomRepository.findAvailableRooms(booking.getStartDate(), booking.getEndDate(),
                 booking.getCategory(), booking.getPlace());
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public Page<Room> findAll(int pageNumber) {
         PageRequest request = new PageRequest(pageNumber - 1, 10);
         return roomRepository.findAll(request);

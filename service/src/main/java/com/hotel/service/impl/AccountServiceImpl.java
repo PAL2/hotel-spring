@@ -18,18 +18,16 @@ import java.util.List;
 
 @Service
 @Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Account> findAll() {
         return Lists.newArrayList(accountRepository.findAll());
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     public List<Account> findAccountByUser(int userId) {
         return accountRepository.findAccountByUser(userId);
     }

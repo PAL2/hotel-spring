@@ -30,7 +30,7 @@ import java.util.List;
 
 @Service
 @Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
+@Transactional(propagation = Propagation.REQUIRED)
 public class BookingServiceImpl implements BookingService {
     private final Logger LOG = Logger.getLogger(BookingServiceImpl.class);
 
@@ -46,12 +46,11 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<Booking> getAllBookingWithAccount() {
         return Lists.newArrayList(bookingRepository.findByAccountIdNot(0));
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void chooseRoom(int bookingId, int roomId) {
         bookingRepository.chooseRoom(bookingId, roomId);
         Booking booking = bookingRepository.findOne(bookingId);
@@ -70,7 +69,6 @@ public class BookingServiceImpl implements BookingService {
         LOG.info(room);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(int bookingId) {
         bookingRepository.delete(bookingId);
         LOG.info("Deleted booking №" + bookingId);
@@ -81,28 +79,26 @@ public class BookingServiceImpl implements BookingService {
         return Lists.newArrayList(bookingRepository.findByStatus("new"));
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void rejectBooking(int bookingId) {
         LOG.info("Booking № " + bookingId + " rejected");
         bookingRepository.rejectBooking(bookingId);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<Booking> getAllBookingWithFinishedAccount(int userId) {
         return bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused");
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<Booking> findAll() {
         return Lists.newArrayList(bookingRepository.findAll());
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<Booking> getAllBookingByUser(int userId) {
         return Lists.newArrayList(bookingRepository.findByUserId(userId));
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addBooking(Date startDate, Date endDate, int userId, int place, String category) {
         User user = userRepository.findOne(userId);
         Booking booking = new Booking(startDate, endDate, place, category, userId, "new");
@@ -111,13 +107,12 @@ public class BookingServiceImpl implements BookingService {
         LOG.info("New booking ordered: " + booking);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void payBooking(int bookingId) {
         bookingRepository.payBooking(bookingId);
         LOG.info("Booking № " + bookingId + " payed");
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(readOnly = true)
     public List<Booking> getAllBookingWithAccountByUser(int userId) {
         return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
     }
