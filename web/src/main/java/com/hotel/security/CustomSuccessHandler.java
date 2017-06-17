@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by Алексей on 19.11.2016.
@@ -31,7 +32,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             System.out.println("Can't redirect");
             return;
         }
-
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
@@ -44,11 +44,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        List<String> roles = new ArrayList<String>();
-
-        for (GrantedAuthority a : authorities) {
-            roles.add(a.getAuthority());
-        }
+        List<String> roles = authorities.stream().map((Function<GrantedAuthority, String>)
+                GrantedAuthority::getAuthority).collect(Collectors.toList());
 
         if (isAdmin(roles)) {
             url = "/admin/";
@@ -62,15 +59,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private boolean isUser(List<String> roles) {
-        if (roles.contains("ROLE_CLIENT")) return true;
-        return false;
+        return roles.contains("ROLE_CLIENT");
     }
 
     private boolean isAdmin(List<String> roles) {
-        if (roles.contains("ROLE_ADMIN")) {
-            return true;
-        }
-        return false;
+        return roles.contains("ROLE_ADMIN");
     }
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
@@ -80,5 +73,4 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }
-
 }
