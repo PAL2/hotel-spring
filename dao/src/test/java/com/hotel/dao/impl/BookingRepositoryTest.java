@@ -95,7 +95,7 @@ public class BookingRepositoryTest {
         bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "billed", null, user, account);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
-        assertEquals(2, bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId).size());
+        assertEquals(2, bookingRepository.findByAccountIdNotNullAndStatusAndUserId("billed", userId).size());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class BookingRepositoryTest {
         bookingActual = new Booking(new Date(), new Date(), 1, "lux", 1, userId, accountId, "refused", null, user, account);
         bookingRepository.save(bookingExpected);
         bookingRepository.save(bookingActual);
-        assertEquals(2, bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused").size());
+        assertEquals(2, bookingRepository.findByAccountIdNotNullAndStatusAndUserIdOrStatus("paid", userId, "refused").size());
     }
 
     @Test

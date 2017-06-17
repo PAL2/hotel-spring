@@ -86,7 +86,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional(readOnly = true)
     public List<Booking> getAllBookingWithFinishedAccount(int userId) {
-        return bookingRepository.findByAccountIdNotAndStatusAndUserIdOrStatus(0, "paid", userId, "refused");
+        return bookingRepository.findByAccountIdNotNullAndStatusAndUserIdOrStatus("paid", userId, "refused");
     }
 
     @Transactional(readOnly = true)
@@ -114,7 +114,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional(readOnly = true)
     public List<Booking> getAllBookingWithAccountByUser(int userId) {
-        return bookingRepository.findByAccountIdNotAndStatusAndUserId(0, "billed", userId);
+        return bookingRepository.findByAccountIdNotNullAndStatusAndUserId("billed", userId);
     }
 
     private LocalDateTime dateToLocalDateTime(Date input) {

@@ -26,11 +26,11 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     List<Booking> findByAccountIdNot(int accountId);
 
-    List<Booking> findByAccountIdNotAndStatusAndUserId(int accountId, String status, int userId);
+    List<Booking> findByAccountIdNotNullAndStatusAndUserId(String status, int userId);
 
     @Modifying
     @Query("UPDATE Booking B SET B.status='paid' WHERE B.bookingId=:bookingId")
     void payBooking(@Param("bookingId") int bookingId);
 
-    List<Booking> findByAccountIdNotAndStatusAndUserIdOrStatus(int accountId, String paid, int userId, String refused);
+    List<Booking> findByAccountIdNotNullAndStatusAndUserIdOrStatus(String paid, int userId, String refused);
 }
