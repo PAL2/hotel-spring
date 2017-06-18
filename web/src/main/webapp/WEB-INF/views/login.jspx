@@ -32,5 +32,11 @@
     </form>
     <br/>
     <a href="${pageContext.request.contextPath}/reg"><s:message code="page.login.reg"/></a>
-
+    <br/>
+    <br/>
+    Admin role: login: admin ; password: admin
+    <br/>
+    User role: login: user ; password: user
+    <br/>
+    <a href="https://github.com/PAL2/hotel-spring">Github</a>
 </div>
